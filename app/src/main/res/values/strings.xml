@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">BrLifeAdmin</string>
+    <string name="title_activity_crud">Tipo Producto</string>
+    <string name="escanearCodigoBarra">ESCANEAR CODIGO BARRA</string>
+    <string name="mensajeCancelasteEscaneoCodigoBarra">Cancelaste escaneo</string>
+    <string name="mensajeBarraProgresoCargando">Cargando...</string>
+    <string name="URLwebServicePart1">http://www.brotherwareoficial.com/WebServices/Mantenedor</string>
+    <string name="URLwebServicePart2">.php?tipoconsulta=s</string>
+    <string name="ERROR">ERROR</string>
+</resources>
