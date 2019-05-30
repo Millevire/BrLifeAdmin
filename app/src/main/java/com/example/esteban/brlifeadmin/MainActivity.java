@@ -15,7 +15,7 @@ private Button btnIngresar;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //Hola
         etContraseña=(EditText)findViewById(R.id.etContraseña);
         btnIngresar=(Button)findViewById(R.id.btnIngresar);
 
