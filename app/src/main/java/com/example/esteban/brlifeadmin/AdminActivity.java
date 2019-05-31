@@ -15,7 +15,7 @@ public class AdminActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
-        //Hola 40404
+        //Hola 40333
         btnTipoProducto=(Button)findViewById(R.id.btnTipoProducto);
         btnRegiones=(Button)findViewById(R.id.btnRegiones);
         btnRol=(Button)findViewById(R.id.btnRol);
