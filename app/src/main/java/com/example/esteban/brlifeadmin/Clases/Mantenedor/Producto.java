@@ -3,41 +3,29 @@ package com.example.esteban.brlifeadmin.Clases.Mantenedor;
 public class Producto {
     private int idProducto;
     private String codigoBarra;
-    private String nombreProducto;
+    private int fkTipoProducto;
     private int idMarca;
     private int idSabor;
-    private int fkTipoProducto;
+    private String nombreProducto;
     private float cantidadRacion;
     private int tipoMedicion;
-    private int calorias;
-    private float proteinas;
-    private float grasaTotal;
-    private float colesterol;
-    private float carbohidratos;
-    private float azucarTotal;
-    private float sodio;
+    private boolean validacion;
     private String nombreTipoProducto;
 
     public Producto() {
     }
 
-    public Producto(int idProducto, String codigoBarra, String nombreProducto, int idMarca, int idSabor, int fkTipoProducto, float cantidadRacion, int tipoMedicion, int calorias, float proteinas, float grasaTotal, float colesterol, float carbohidratos, float azucarTotal, float sodio,String nombreTipoProducto) {
+    public Producto(int idProducto, String codigoBarra, int fkTipoProducto, int idMarca, int idSabor, String nombreProducto,  float cantidadRacion, int tipoMedicion, boolean validacion, String nombreTipoProducto) {
         this.idProducto = idProducto;
         this.codigoBarra = codigoBarra;
-        this.nombreProducto = nombreProducto;
+        this.fkTipoProducto = fkTipoProducto;
         this.idMarca = idMarca;
         this.idSabor = idSabor;
-        this.fkTipoProducto = fkTipoProducto;
+        this.nombreProducto = nombreProducto;
         this.cantidadRacion = cantidadRacion;
         this.tipoMedicion = tipoMedicion;
-        this.calorias = calorias;
-        this.proteinas = proteinas;
-        this.grasaTotal = grasaTotal;
-        this.colesterol = colesterol;
-        this.carbohidratos = carbohidratos;
-        this.azucarTotal = azucarTotal;
-        this.sodio = sodio;
-        this.nombreTipoProducto=nombreTipoProducto;
+        this.validacion = validacion;
+        this.nombreTipoProducto = nombreTipoProducto;
     }
 
     public int getIdProducto() {
@@ -104,64 +92,16 @@ public class Producto {
         this.tipoMedicion = tipoMedicion;
     }
 
-    public int getCalorias() {
-        return calorias;
-    }
-
-    public void setCalorias(int calorias) {
-        this.calorias = calorias;
-    }
-
-    public float getProteinas() {
-        return proteinas;
-    }
-
-    public void setProteinas(float proteinas) {
-        this.proteinas = proteinas;
-    }
-
-    public float getGrasaTotal() {
-        return grasaTotal;
-    }
-
-    public void setGrasaTotal(float grasaTotal) {
-        this.grasaTotal = grasaTotal;
-    }
-
-    public float getColesterol() {
-        return colesterol;
-    }
-
-    public void setColesterol(float colesterol) {
-        this.colesterol = colesterol;
-    }
-
-    public float getCarbohidratos() {
-        return carbohidratos;
-    }
-
-    public void setCarbohidratos(float carbohidratos) {
-        this.carbohidratos = carbohidratos;
-    }
-
-    public float getAzucarTotal() {
-        return azucarTotal;
-    }
-
-    public void setAzucarTotal(float azucarTotal) {
-        this.azucarTotal = azucarTotal;
-    }
-
-    public float getSodio() {
-        return sodio;
-    }
-
-    public void setSodio(float sodio) {
-        this.sodio = sodio;
-    }
-
     public String getNombreTipoProducto() {
         return nombreTipoProducto;
+    }
+
+    public boolean isValidacion() {
+        return validacion;
+    }
+
+    public void setValidacion(boolean validacion) {
+        this.validacion = validacion;
     }
 
     public void setNombreTipoProducto(String nombreTipoProducto) {

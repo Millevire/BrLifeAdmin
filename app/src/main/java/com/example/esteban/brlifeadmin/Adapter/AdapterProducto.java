@@ -52,9 +52,9 @@ public class AdapterProducto extends BaseAdapter {
         TextView tvCaloriasProducto=(TextView)convertView.findViewById(R.id.tvCaloriasProducto);
         ImageView ivImagen=(ImageView)convertView.findViewById(R.id.ivImagen);
 
-
         //.setImageResource(R.drawable.agua);
-
+        //Variables en caso de que los id sabor y marca sean 0
+        int sabor, marca;
 
         SeleccionTipoProducto nombreTipoProducto= SeleccionTipoProducto.valueOf(listaProducto.get(position).getNombreTipoProducto());
 
@@ -89,14 +89,24 @@ public class AdapterProducto extends BaseAdapter {
             case Frutas:
                 ivImagen.setImageResource(R.drawable.fruta);
                 break;
+            case Galleta:
+                ivImagen.setImageResource(R.drawable.galleta);
+                break;
 
         }
 
 
         tvNombreProducto.setText(listaProducto.get(position).getNombreProducto());
-        tvSaborProducto.setText(Integer.toString(listaProducto.get(position).getIdSabor()));
-        tvMarcaProducto.setText(Integer.toString(listaProducto.get(position).getIdMarca()));
-        tvCaloriasProducto.setText(Float.toString(listaProducto.get(position).getCalorias()));
+        sabor = listaProducto.get(position).getIdSabor();
+        marca = listaProducto.get(position).getIdMarca();
+        if (sabor > 0){
+            tvSaborProducto.setText(Integer.toString(listaProducto.get(position).getIdSabor()));
+        }
+
+        if (marca > 0){
+            tvMarcaProducto.setText(Integer.toString(listaProducto.get(position).getIdMarca()));
+        }
+        //tvCaloriasProducto.setText(Float.toString(listaProducto.get(position).getCalorias()));
         return convertView;
     }
 }

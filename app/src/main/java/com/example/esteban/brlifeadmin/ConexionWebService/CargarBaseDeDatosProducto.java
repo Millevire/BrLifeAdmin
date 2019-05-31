@@ -50,19 +50,17 @@ public class CargarBaseDeDatosProducto implements Response.Listener<JSONObject>,
         }
     }
 
-    public static void editar(int id,String nombre,int marca,int fkTipoProducto, int calorias, float proteinas, float grasaTotal, float colesterol, float carbohidratos, float azucarTotal, float sodio){
+    public static void editar(int id, int fkTipoProducto, int marca, int sabor, String nombre, float cantidadracion, int tipomedicion, boolean validacion){
         for(int x = 0; x< listaProducto.size(); ++x){
             if (listaProducto.get(x).getIdProducto()==id){
-                listaProducto.get(x).setNombreProducto(nombre);
-                listaProducto.get(x).setIdMarca(marca);
                 listaProducto.get(x).setFkTipoProducto(fkTipoProducto);
-                listaProducto.get(x).setCalorias(calorias);
-                listaProducto.get(x).setProteinas(proteinas);
-                listaProducto.get(x).setGrasaTotal(grasaTotal);
-                listaProducto.get(x).setColesterol(colesterol);
-                listaProducto.get(x).setCarbohidratos(carbohidratos);
-                listaProducto.get(x).setAzucarTotal(azucarTotal);
-                listaProducto.get(x).setSodio(sodio);
+                listaProducto.get(x).setIdMarca(marca);
+                listaProducto.get(x).setIdSabor(sabor);
+                listaProducto.get(x).setNombreProducto(nombre);
+                listaProducto.get(x).setCantidadRacion(cantidadracion);
+                listaProducto.get(x).setCantidadRacion(cantidadracion);
+                listaProducto.get(x).setTipoMedicion(tipomedicion);
+                listaProducto.get(x).setValidacion(validacion);
             }
 
 
@@ -114,7 +112,7 @@ public class CargarBaseDeDatosProducto implements Response.Listener<JSONObject>,
             for (int i=0; i<json.length(); i++){
                 JSONObject jsonObject=null;
 
-
+                int validacion = 0;
 
                  producto=new Producto();
                 jsonObject=json.getJSONObject(i);
@@ -126,14 +124,14 @@ public class CargarBaseDeDatosProducto implements Response.Listener<JSONObject>,
                 producto.setNombreProducto(jsonObject.getString("Nombre"+ this.mantenedor));
                 producto.setCantidadRacion((float) jsonObject.getDouble("CantidadRacion"));
                 producto.setTipoMedicion(jsonObject.getInt("TipoMedicion"));
-                producto.setCalorias(jsonObject.getInt("Calorias"));
-                producto.setProteinas((float) jsonObject.getDouble("Proteina"));
-                producto.setGrasaTotal((float) jsonObject.getDouble("GrasasTotales"));
-                producto.setColesterol((float) jsonObject.getDouble("Colesterol"));
-                producto.setCarbohidratos((float) jsonObject.getDouble("CarboHidratos"));
-                producto.setAzucarTotal((float) jsonObject.getDouble("AzucaresTotales"));
-                producto.setSodio((float) jsonObject.getDouble("Sodio"));
-                producto.setNombreTipoProducto(jsonObject.getString("Nombre_TipoProducto"));
+
+                if (validacion == 0){
+                    producto.setValidacion(false);
+                }else{
+                    producto.setValidacion(true);
+                }
+
+                producto.setNombreTipoProducto(jsonObject.getString("Nombre_Tipo"+this.mantenedor));
                 listaProducto.add(producto);
 
             }

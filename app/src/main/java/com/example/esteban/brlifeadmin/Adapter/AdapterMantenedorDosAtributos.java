@@ -18,12 +18,10 @@ import com.example.esteban.brlifeadmin.R;
 import java.util.ArrayList;
 
 public class AdapterMantenedorDosAtributos extends BaseAdapter implements PopupMenu.OnMenuItemClickListener,AlertDelete.FinalizoCuadroDialogo,AlertNuevoMantenedor.FinalizoCuadroDialogoAgregar {
+
     private Context context;
     private ArrayList<Mantenedor> mantenedor =new ArrayList<>();
     private String tipoMantenedor;
-
-
-
 
     public AdapterMantenedorDosAtributos(Context context, ArrayList<Mantenedor> mantenedor, String tipoMantenedor){
         this.context = context;
@@ -98,9 +96,6 @@ public class AdapterMantenedorDosAtributos extends BaseAdapter implements PopupM
 
                         default: return false;
 
-
-
-
                     }
 
                 }
@@ -108,12 +103,6 @@ public class AdapterMantenedorDosAtributos extends BaseAdapter implements PopupM
                 popup.show();
             }
         });
-
-
-
-
-
-
 
         return convertView;
     }

@@ -42,7 +42,7 @@ public class CargarBaseDeDatosDosAtributos implements Response.Listener<JSONObje
         mantenedor=tipoMantenedor;
         contexto=context;
         request= Volley.newRequestQueue(context);
-        llenarBaseDeDatosTipoProducto(context,mantenedor);
+        llenarBaseDeDatosDosAtributos(context,mantenedor);
 
     }
 
@@ -89,7 +89,7 @@ public class CargarBaseDeDatosDosAtributos implements Response.Listener<JSONObje
 
 
 
-    private void llenarBaseDeDatosTipoProducto(Context context, String mantenedor) {
+    private void llenarBaseDeDatosDosAtributos(Context context, String mantenedor) {
         progreso=new ProgressDialog(context);
         progreso.setMessage(context.getString(R.string.mensajeBarraProgresoCargando));
         progreso.show();

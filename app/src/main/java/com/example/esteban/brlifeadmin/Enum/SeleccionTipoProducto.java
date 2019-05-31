@@ -10,7 +10,8 @@ package com.example.esteban.brlifeadmin.Enum;
          Legrumbres("Legumbres"),
          Lacteos("Lacteos"),
          Bebidas("Bebidas"),
-         Frutas("Frutas")
+         Frutas("Frutas"),
+         Galleta("Galleta")
          ;
 
      private String seleccion;

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.esteban.brlifeadmin.Adapter.AdaptaderTipoProducto;
 import com.example.esteban.brlifeadmin.Adapter.AdapterMantenedorDosAtributos;
 import com.example.esteban.brlifeadmin.Adapter.AdapterMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Adapter.AdapterProducto;
@@ -22,6 +23,7 @@ import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAt
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProducto;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
+import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 
 import java.util.ArrayList;
@@ -35,6 +37,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
 
  private AdapterMantenedorDosAtributos adapterMantenedorDosAtributos;
  private AdapterMantenedorTresAtributos adapterMantenedorTresAtributos;
+ private AdaptaderTipoProducto adaptaderTipoProducto;
  private AdapterProducto adapterProducto;
  private  String mantenedor;
 
@@ -71,7 +74,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
                     lvLista.setAdapter(null);
                    tvTitulo.setText(SelccionMantenedor.TipoProducto.getSeleccion().toString());
                     //cargarWebService();
-                    new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.TipoProducto.getSeleccion());
+                    new CargarBaseDeDatosTIpoProducto(this,SelccionMantenedor.TipoProducto.getSeleccion());
                     break;
 
                 case Region:
@@ -189,17 +192,19 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
     public void llenr(){
 
 
-       if (mantenedor.equals(SelccionMantenedor.Producto.getSeleccion())){
-
-    adapterProducto=new AdapterProducto(this, CargarBaseDeDatosProducto.getListaProducto(),mantenedor);
-    lvLista.setAdapter(adapterProducto);
+       if (mantenedor.equals(SelccionMantenedor.Producto.getSeleccion())) {
+           adapterProducto = new AdapterProducto(this, CargarBaseDeDatosProducto.getListaProducto(), mantenedor);
+           lvLista.setAdapter(adapterProducto);
+       }else if (mantenedor.equals(SelccionMantenedor.TipoProducto.getSeleccion())){
+           adaptaderTipoProducto =new AdaptaderTipoProducto(this, CargarBaseDeDatosTIpoProducto.getListaTipoProducto(),mantenedor);
+           lvLista.setAdapter(adaptaderTipoProducto);
         }else if (mantenedor.equals(SelccionMantenedor.Sabor.getSeleccion()) || mantenedor.equals(SelccionMantenedor.Marca.getSeleccion()) || mantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
            adapterMantenedorTresAtributos =new AdapterMantenedorTresAtributos(this,CargarBaseDeDatosMantenedorTresAtributos.getListaMantenedorTresAtributos(),mantenedor);
            lvLista.setAdapter(adapterMantenedorTresAtributos);
        }else{
-    adapterMantenedorDosAtributos =new AdapterMantenedorDosAtributos(this, CargarBaseDeDatosDosAtributos.getListaMantenedors(),mantenedor);
-    lvLista.setAdapter(adapterMantenedorDosAtributos);
-     }
+            adapterMantenedorDosAtributos =new AdapterMantenedorDosAtributos(this, CargarBaseDeDatosDosAtributos.getListaMantenedors(),mantenedor);
+            lvLista.setAdapter(adapterMantenedorDosAtributos);
+        }
 
 
 
@@ -213,8 +218,10 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
     @Override
     protected void onResume() {
         super.onResume();
-        if (mantenedor.equals(SelccionMantenedor.Producto.getSeleccion())){
+        if (mantenedor.equals(SelccionMantenedor.Producto.getSeleccion())) {
             adapterProducto.notifyDataSetChanged();
+        }else if (mantenedor.equals(SelccionMantenedor.TipoProducto.getSeleccion())){
+            adaptaderTipoProducto.notifyDataSetChanged();
 
         }else if (mantenedor.equals(SelccionMantenedor.Sabor.getSeleccion()) || mantenedor.equals(SelccionMantenedor.Marca.getSeleccion()) || mantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
             adapterMantenedorTresAtributos.notifyDataSetChanged();
