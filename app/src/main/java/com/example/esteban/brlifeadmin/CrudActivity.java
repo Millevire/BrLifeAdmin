@@ -15,12 +15,14 @@ import android.widget.Toast;
 
 
 import com.example.esteban.brlifeadmin.Adapter.AdapterMantenedorDosAtributos;
+import com.example.esteban.brlifeadmin.Adapter.AdapterMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Adapter.AdapterProducto;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedor;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.CargarBaseDeDatos;
+import com.example.esteban.brlifeadmin.Clases.Mantenedor.CargarBaseDeDatosMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.CargarBaseDeDatosProducto;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
-import com.example.esteban.brlifeadmin.Clases.Mantenedor.SelccionMantenedor;
+import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 
 import java.util.ArrayList;
 

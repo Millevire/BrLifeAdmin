@@ -1,4 +1,4 @@
-package com.example.esteban.brlifeadmin;
+package com.example.esteban.brlifeadmin.Clases.Mantenedor;
 
 public class MantenedorTresAtributos {
     private int idMantenedorTresAtributos;

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.esteban.brlifeadmin.Clases.Mantenedor.SelccionMantenedor;
+import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 
 public class AdminActivity extends AppCompatActivity {
     private Button btnTipoProducto,btnRegiones,btnInteres,btnRol,btnHorarioComida,btnProducto,btnSabor,btnMarca,btnNutriente,btnProvincia,btnComuna;

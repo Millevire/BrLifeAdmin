@@ -1,4 +1,4 @@
-package com.example.esteban.brlifeadmin;
+package com.example.esteban.brlifeadmin.Enum;
 
 
     public enum  SeleccionTipoMedicion {

@@ -8,9 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.esteban.brlifeadmin.Producto;
+import com.example.esteban.brlifeadmin.Clases.Mantenedor.Producto;
 import com.example.esteban.brlifeadmin.R;
-import com.example.esteban.brlifeadmin.SeleccionTipoProducto;
+import com.example.esteban.brlifeadmin.Enum.SeleccionTipoProducto;
 
 import java.util.ArrayList;
 

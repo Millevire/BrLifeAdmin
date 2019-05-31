@@ -1,4 +1,4 @@
-package com.example.esteban.brlifeadmin;
+package com.example.esteban.brlifeadmin.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,10 +10,8 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import com.example.esteban.brlifeadmin.Adapter.AdapterMantenedorDosAtributos;
-import com.example.esteban.brlifeadmin.AlertDialog.AlertDelete;
-import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedor;
-import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
+import com.example.esteban.brlifeadmin.Clases.Mantenedor.MantenedorTresAtributos;
+import com.example.esteban.brlifeadmin.R;
 
 import java.util.ArrayList;
 

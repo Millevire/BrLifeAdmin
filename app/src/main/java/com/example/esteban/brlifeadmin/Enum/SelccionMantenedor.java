@@ -1,4 +1,4 @@
-package com.example.esteban.brlifeadmin.Clases.Mantenedor;
+package com.example.esteban.brlifeadmin.Enum;
 
      public enum  SelccionMantenedor {
         TipoProducto("TipoProducto"),
