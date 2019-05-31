@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
-import com.example.esteban.brlifeadmin.Clases.Mantenedor.CargarBaseDeDatos;
-import com.example.esteban.brlifeadmin.Clases.Mantenedor.CrudMantenedor;
+import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
+import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorDosAtibutos;
 import com.example.esteban.brlifeadmin.CrudActivity;
 import com.example.esteban.brlifeadmin.R;
 
@@ -47,9 +47,9 @@ public class AlertDelete {
 
 
                     interfaz.ResultadoCuadroDialogo(true);
-                    new CrudMantenedor("",contexto,"eliminar",id,mantenedor);
-                    //new CargarBaseDeDatos(contexto);
-                    CargarBaseDeDatos.eliminar(id);
+                    new CrudMantenedorDosAtibutos("",contexto,"eliminar",id,mantenedor);
+                    //new CargarBaseDeDatosDosAtributos(contexto);
+                    CargarBaseDeDatosDosAtributos.eliminar(id);
                     dialogo.dismiss();
 
 

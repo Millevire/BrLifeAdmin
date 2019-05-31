@@ -1,4 +1,4 @@
-package com.example.esteban.brlifeadmin.Clases.Mantenedor;
+package com.example.esteban.brlifeadmin.ConexionWebService;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.esteban.brlifeadmin.Clases.Mantenedor.MantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 import com.example.esteban.brlifeadmin.R;
 

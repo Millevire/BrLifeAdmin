@@ -84,7 +84,7 @@ public class AdapterMantenedorDosAtributos extends BaseAdapter implements PopupM
                     switch (item.getItemId()){
                         case R.id.itemEdit:
                         new AlertNuevoMantenedor(context,AdapterMantenedorDosAtributos.this,true, mantenedor.get(position),tipoMantenedor);
-                            //new CargarBaseDeDatos(context);
+                            //new CargarBaseDeDatosDosAtributos(context);
 
                             return true;
 
@@ -92,7 +92,7 @@ public class AdapterMantenedorDosAtributos extends BaseAdapter implements PopupM
                             int id= mantenedor.get(position).getIdTipoProducto();
 
                          new AlertDelete(context,id,AdapterMantenedorDosAtributos.this,tipoMantenedor);
-                            //new CargarBaseDeDatos(context);
+                            //new CargarBaseDeDatosDosAtributos(context);
 
                             return true;
 

@@ -1,4 +1,4 @@
-package com.example.esteban.brlifeadmin.Clases.Mantenedor;
+package com.example.esteban.brlifeadmin.ConexionWebService;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -14,7 +14,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
-public class CrudMantenedor implements Response.Listener<JSONObject>,Response.ErrorListener{
+public class CrudMantenedorDosAtibutos implements Response.Listener<JSONObject>,Response.ErrorListener{
 
 
 
@@ -25,7 +25,7 @@ public class CrudMantenedor implements Response.Listener<JSONObject>,Response.Er
 
 
 
-    public CrudMantenedor(String nombre, Context context, String tipoConsulta, int id , String mantenedor){
+    public CrudMantenedorDosAtibutos(String nombre, Context context, String tipoConsulta, int id , String mantenedor){
         request= Volley.newRequestQueue(context);
       if (tipoConsulta.equals("nuevo")){
           agregarNuevoTipoProducto(nombre,context,mantenedor);
@@ -79,7 +79,7 @@ public class CrudMantenedor implements Response.Listener<JSONObject>,Response.Er
 
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
         request.add(jsonObjectRequest);
-        CargarBaseDeDatos.eliminar(id);
+        CargarBaseDeDatosDosAtributos.eliminar(id);
     }
 
     @Override

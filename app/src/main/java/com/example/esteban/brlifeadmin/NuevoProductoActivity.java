@@ -3,7 +3,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -12,8 +11,7 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.esteban.brlifeadmin.Clases.Mantenedor.CargarBaseDeDatos;
-import com.example.esteban.brlifeadmin.Clases.Mantenedor.CargarBaseDeDatosProducto;
+import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -83,7 +81,7 @@ public class NuevoProductoActivity extends AppCompatActivity {
 
 
     public void CargarSpinner(){
-        adapterTipoProducto= new ArrayAdapter(this,android.R.layout.simple_list_item_1, CargarBaseDeDatos.getListaMantenedors());
+        adapterTipoProducto= new ArrayAdapter(this,android.R.layout.simple_list_item_1, CargarBaseDeDatosDosAtributos.getListaMantenedors());
         spTipoProducto.setAdapter(adapterTipoProducto);
 
     }

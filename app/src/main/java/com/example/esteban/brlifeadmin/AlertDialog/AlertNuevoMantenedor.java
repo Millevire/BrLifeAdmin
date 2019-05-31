@@ -10,8 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.esteban.brlifeadmin.Clases.Mantenedor.CargarBaseDeDatos;
-import com.example.esteban.brlifeadmin.Clases.Mantenedor.CrudMantenedor;
+import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
+import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorDosAtibutos;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
 import com.example.esteban.brlifeadmin.CrudActivity;
 import com.example.esteban.brlifeadmin.R;
@@ -62,20 +62,20 @@ public class AlertNuevoMantenedor {
                     Toast.makeText(contexto, "El campo no puede estar vacio", Toast.LENGTH_SHORT).show();
                 }else
                 if (tipo==true){
-                    new CrudMantenedor(etAlertNuevoTipoProoducto.getText().toString(),contexto,"editar", tipoProducto.getIdTipoProducto(),mantenedor);
-                    //new CargarBaseDeDatos(contexto);
+                    new CrudMantenedorDosAtibutos(etAlertNuevoTipoProoducto.getText().toString(),contexto,"editar", tipoProducto.getIdTipoProducto(),mantenedor);
+                    //new CargarBaseDeDatosDosAtributos(contexto);
                     interfaz.ResultadoCuadroDialogoAgregar(true);
-                    CargarBaseDeDatos.editar(tipoProducto.getIdTipoProducto(),etAlertNuevoTipoProoducto.getText().toString());
+                    CargarBaseDeDatosDosAtributos.editar(tipoProducto.getIdTipoProducto(),etAlertNuevoTipoProoducto.getText().toString());
                     dialogo.dismiss();
                    // contexto.startActivity(intent);
                 }else {
 
                     // interfaz.ResultadoCuadroDialogoAgregar(etAlertNuevoTipoProoducto.getText().toString());
-                    new CrudMantenedor(etAlertNuevoTipoProoducto.getText().toString(),contexto,"nuevo", 0,mantenedor);
-                   // new CargarBaseDeDatos(contexto);
+                    new CrudMantenedorDosAtibutos(etAlertNuevoTipoProoducto.getText().toString(),contexto,"nuevo", 0,mantenedor);
+                   // new CargarBaseDeDatosDosAtributos(contexto);
                     actividad.ResultadoCuadroDialogoAgregar(true);
 
-                    CargarBaseDeDatos.agregar(new Mantenedor(etAlertNuevoTipoProoducto.getText().toString()));
+                    CargarBaseDeDatosDosAtributos.agregar(new Mantenedor(etAlertNuevoTipoProoducto.getText().toString()));
 
                     dialogo.dismiss();
                     //contexto.startActivity(intent);

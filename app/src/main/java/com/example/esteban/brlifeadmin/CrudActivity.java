@@ -18,9 +18,9 @@ import com.example.esteban.brlifeadmin.Adapter.AdapterMantenedorDosAtributos;
 import com.example.esteban.brlifeadmin.Adapter.AdapterMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Adapter.AdapterProducto;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedor;
-import com.example.esteban.brlifeadmin.Clases.Mantenedor.CargarBaseDeDatos;
-import com.example.esteban.brlifeadmin.Clases.Mantenedor.CargarBaseDeDatosMantenedorTresAtributos;
-import com.example.esteban.brlifeadmin.Clases.Mantenedor.CargarBaseDeDatosProducto;
+import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
+import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
+import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProducto;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 
@@ -71,39 +71,39 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
                     lvLista.setAdapter(null);
                    tvTitulo.setText(SelccionMantenedor.TipoProducto.getSeleccion().toString());
                     //cargarWebService();
-                    new CargarBaseDeDatos(this,SelccionMantenedor.TipoProducto.getSeleccion());
+                    new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.TipoProducto.getSeleccion());
                     break;
 
                 case Region:
                     lvLista.setAdapter(null);
                     tvTitulo.setText(SelccionMantenedor.Region.getSeleccion().toString());
                     //cargarWebService();
-                    new CargarBaseDeDatos(this,SelccionMantenedor.Region.getSeleccion());
+                    new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.Region.getSeleccion());
                     break;
                 case Rol:
                     lvLista.setAdapter(null);
                     tvTitulo.setText(SelccionMantenedor.Rol.getSeleccion().toString());
                     //cargarWebService();
-                    new CargarBaseDeDatos(this,SelccionMantenedor.Rol.getSeleccion());
+                    new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.Rol.getSeleccion());
                     break;
                 case Interes:
                     lvLista.setAdapter(null);
                     tvTitulo.setText(SelccionMantenedor.Interes.getSeleccion().toString());
                     //cargarWebService();
-                    new CargarBaseDeDatos(this,SelccionMantenedor.Interes.getSeleccion());
+                    new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.Interes.getSeleccion());
                     break;
                 case HorarioComida:
                     lvLista.setAdapter(null);
                     tvTitulo.setText(SelccionMantenedor.HorarioComida.getSeleccion().toString());
                     //cargarWebService();
-                    new CargarBaseDeDatos(this,SelccionMantenedor.HorarioComida.getSeleccion());
+                    new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.HorarioComida.getSeleccion());
                     break;
                 case Producto:
                     lvLista.setAdapter(null);
                     tvTitulo.setText(SelccionMantenedor.Producto.getSeleccion().toString());
                     //cargarWebService();
                     new CargarBaseDeDatosProducto(this,SelccionMantenedor.Producto.getSeleccion());
-                    new CargarBaseDeDatos(this,SelccionMantenedor.TipoProducto.getSeleccion());
+                    new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.TipoProducto.getSeleccion());
                     break;
                 case Sabor:
                     lvLista.setAdapter(null);
@@ -121,19 +121,19 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
                     lvLista.setAdapter(null);
                     tvTitulo.setText(SelccionMantenedor.Nutriente.getSeleccion().toString());
                     //cargarWebService();
-                    new CargarBaseDeDatos(this,SelccionMantenedor.Nutriente.getSeleccion());
+                    new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.Nutriente.getSeleccion());
                     break;
                 case TipoPersona:
                     lvLista.setAdapter(null);
                     tvTitulo.setText(SelccionMantenedor.TipoPersona.getSeleccion().toString());
                     //cargarWebService();
-                    new CargarBaseDeDatos(this,SelccionMantenedor.TipoPersona.getSeleccion());
+                    new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.TipoPersona.getSeleccion());
                     break;
                 case Objetivo:
                     lvLista.setAdapter(null);
                     tvTitulo.setText(SelccionMantenedor.Objetivo.getSeleccion().toString());
                     //cargarWebService();
-                    new CargarBaseDeDatos(this,SelccionMantenedor.Objetivo.getSeleccion());
+                    new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.Objetivo.getSeleccion());
                     break;
                 case Provincia:
                     lvLista.setAdapter(null);
@@ -145,7 +145,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
                     lvLista.setAdapter(null);
                     tvTitulo.setText(SelccionMantenedor.Comuna.getSeleccion().toString());
                     //cargarWebService();
-                    new CargarBaseDeDatos(this,SelccionMantenedor.Comuna.getSeleccion());
+                    new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.Comuna.getSeleccion());
                     break;
                 default:
                     break;
@@ -197,7 +197,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
            adapterMantenedorTresAtributos =new AdapterMantenedorTresAtributos(this,CargarBaseDeDatosMantenedorTresAtributos.getListaMantenedorTresAtributos(),mantenedor);
            lvLista.setAdapter(adapterMantenedorTresAtributos);
        }else{
-    adapterMantenedorDosAtributos =new AdapterMantenedorDosAtributos(this,CargarBaseDeDatos.getListaMantenedors(),mantenedor);
+    adapterMantenedorDosAtributos =new AdapterMantenedorDosAtributos(this, CargarBaseDeDatosDosAtributos.getListaMantenedors(),mantenedor);
     lvLista.setAdapter(adapterMantenedorDosAtributos);
      }
 
@@ -222,7 +222,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
 
 
        // Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
-      //adaptador.actualizarLista(CargarBaseDeDatos.getListaMantenedors());
+      //adaptador.actualizarLista(CargarBaseDeDatosDosAtributos.getListaMantenedors());
       //llenr();
 
 

@@ -1,4 +1,4 @@
-package com.example.esteban.brlifeadmin.Clases.Mantenedor;
+package com.example.esteban.brlifeadmin.ConexionWebService;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
 import com.example.esteban.brlifeadmin.R;
 
 import org.json.JSONArray;
@@ -18,7 +19,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class CargarBaseDeDatos implements Response.Listener<JSONObject>,Response.ErrorListener{
+/**
+ *
+ *
+ */
+public class CargarBaseDeDatosDosAtributos implements Response.Listener<JSONObject>,Response.ErrorListener{
     public static ArrayList<Mantenedor> listaMantenedors =new ArrayList<>();
 
     static RequestQueue request;
@@ -27,8 +32,13 @@ public class CargarBaseDeDatos implements Response.Listener<JSONObject>,Response
     public Context contexto;
     public String mantenedor;
 
-
-    public CargarBaseDeDatos(Context context,String tipoMantenedor){
+    /**
+     *
+     * @param context variable de contexto proveniente de donde se invoque metodo.
+     * @param tipoMantenedor variable que nos dara el nombre del mantenedor al que estemos llamando.
+     * Metodo contructor que llenara una lista
+     */
+    public CargarBaseDeDatosDosAtributos(Context context, String tipoMantenedor){
         mantenedor=tipoMantenedor;
         contexto=context;
         request= Volley.newRequestQueue(context);
