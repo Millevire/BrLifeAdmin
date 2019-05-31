@@ -9,7 +9,7 @@ import android.widget.Button;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 
 public class AdminActivity extends AppCompatActivity {
-    private Button btnTipoProducto,btnRegiones,btnInteres,btnRol,btnHorarioComida,btnProducto,btnSabor,btnMarca,btnNutriente,btnProvincia,btnComuna;
+    private Button btnTipoProducto,btnRegiones,btnInteres,btnRol,btnHorarioComida,btnProducto,btnSabor,btnMarca,btnNutriente,btnProvincia,btnComuna, btnTipoPersona, btnObjetivo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +27,8 @@ public class AdminActivity extends AppCompatActivity {
         btnNutriente=(Button)findViewById(R.id.btnNutriente);
         btnProvincia=(Button)findViewById(R.id.btnProvincia);
         btnComuna=(Button)findViewById(R.id.btnComuna);
+        btnTipoPersona=(Button)findViewById(R.id.btnTipoPersona);
+        btnObjetivo=(Button)findViewById(R.id.btnObjetivo);
         final Intent intent =new Intent(this,CrudActivity.class);
 
         btnTipoProducto.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +111,21 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 intent.putExtra("mantenedor",SelccionMantenedor.Comuna.getSeleccion());
+                startActivity(intent);
+            }
+        });
+
+        btnTipoPersona.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent.putExtra("mantenedor",SelccionMantenedor.TipoPersona.getSeleccion());
+                startActivity(intent);
+            }
+        });
+        btnObjetivo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent.putExtra("mantenedor",SelccionMantenedor.Objetivo.getSeleccion());
                 startActivity(intent);
             }
         });

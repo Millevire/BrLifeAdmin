@@ -123,6 +123,18 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
                     //cargarWebService();
                     new CargarBaseDeDatos(this,SelccionMantenedor.Nutriente.getSeleccion());
                     break;
+                case TipoPersona:
+                    lvLista.setAdapter(null);
+                    tvTitulo.setText(SelccionMantenedor.TipoPersona.getSeleccion().toString());
+                    //cargarWebService();
+                    new CargarBaseDeDatos(this,SelccionMantenedor.TipoPersona.getSeleccion());
+                    break;
+                case Objetivo:
+                    lvLista.setAdapter(null);
+                    tvTitulo.setText(SelccionMantenedor.Objetivo.getSeleccion().toString());
+                    //cargarWebService();
+                    new CargarBaseDeDatos(this,SelccionMantenedor.Objetivo.getSeleccion());
+                    break;
                 case Provincia:
                     lvLista.setAdapter(null);
                     tvTitulo.setText(SelccionMantenedor.Provincia.getSeleccion().toString());

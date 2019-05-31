@@ -11,7 +11,9 @@ package com.example.esteban.brlifeadmin.Enum;
          Marca("Marca"),
          Nutriente("Nutriente"),
          Provincia("Provincia"),
-         Comuna("Comuna")
+         Comuna("Comuna"),
+         TipoPersona("TipoPersona"),
+         Objetivo("Objetivo")
          ;
 
         private String seleccion;

@@ -137,7 +137,7 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
                 }
 
                 // mantenedor.setIdTipoProducto(Integer.parseInt(jsonObject.toString()));
-                mantenedorTresAtributos.setNombreMantenedorTresAtributos(jsonObject.getString("Nombre"+ this.mantenedor));
+                mantenedorTresAtributos.setNombreMantenedorTresAtributos(jsonObject.getString("Nombre_"+ this.mantenedor));
                 listaMantenedorTresAtributos.add(mantenedorTresAtributos);
 
             }
