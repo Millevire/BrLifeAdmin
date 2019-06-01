@@ -11,15 +11,17 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.esteban.brlifeadmin.Clases.Mantenedor.TipoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
+import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 public class NuevoProductoActivity extends AppCompatActivity {
  private Spinner spTipoProducto;
  private RadioButton rbRegistroCodigoBarra,rbRegistroNormal;
- private ArrayAdapter<Mantenedor> adapterTipoProducto;
+ private ArrayAdapter<TipoProducto> adapterTipoProducto;
  private Button btnOpenBarCode,btnBack;
  private EditText etBarCode;
     @Override
@@ -81,7 +83,7 @@ public class NuevoProductoActivity extends AppCompatActivity {
 
 
     public void CargarSpinner(){
-        adapterTipoProducto= new ArrayAdapter(this,android.R.layout.simple_list_item_1, CargarBaseDeDatosDosAtributos.getListaMantenedors());
+        adapterTipoProducto= new ArrayAdapter(this,android.R.layout.simple_list_item_1, CargarBaseDeDatosTIpoProducto.getListaTipoProducto());
         spTipoProducto.setAdapter(adapterTipoProducto);
 
     }

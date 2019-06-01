@@ -2,43 +2,25 @@ package com.example.esteban.brlifeadmin.ConexionWebService;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
 
 import org.json.JSONObject;
 
-public class CrudMantenedorDosAtibutos implements Response.Listener<JSONObject>,Response.ErrorListener{
-
-
-
+public class CrudMantenedorTresAtributos implements Response.Listener<JSONObject>,Response.ErrorListener {
     static RequestQueue request;
     static JsonObjectRequest jsonObjectRequest;
     static ProgressDialog progreso;
 
 
 
-
-    public CrudMantenedorDosAtibutos(String nombre, Context context, String tipoConsulta, int id , String mantenedor){
-        request= Volley.newRequestQueue(context);
-      if (tipoConsulta.equals("nuevo")){
-          agregarNuevoTipoProducto(nombre,context,mantenedor);
-      }else if (tipoConsulta.equals("editar")){
-          editarTipoProducto(id,nombre,context,mantenedor);
-      }else if (tipoConsulta.equals("eliminar")){
-          eliminarTipoProducto(id, context,mantenedor);
-      }
-
-
-    }
-
-    private void agregarNuevoTipoProducto(String nombre,Context contexto,String mantenedor) {
+    //Nuevo mantenedor 3 atributos
+    private void agregarNuevoMantenedorTresAtributos( Context contexto,String nombre,int fk_mantenedor, String mantenedor) {
         progreso=new ProgressDialog(contexto);
         progreso.setMessage("Cargando...");
         progreso.show();
@@ -52,13 +34,14 @@ public class CrudMantenedorDosAtibutos implements Response.Listener<JSONObject>,
         request.add(jsonObjectRequest);
     }
 
-    private void editarTipoProducto(int id,String nombre,Context contexto,String mantenedor){
+    //Editar mantenedor 3 atributos
+    private void editarTipoProducto(int id_mantenedor,String nombre,int fk_mantenedor,Context contexto,String mantenedor){
         progreso=new ProgressDialog(contexto);
         progreso.setMessage("Cargando...");
         progreso.show();
 
 
-        String url="http://www.brotherwareoficial.com/WebServices/Mantenedor"+mantenedor+".php?tipoconsulta=a&id"+mantenedor+"="+id+"&nombre"+mantenedor+"="
+        String url="http://www.brotherwareoficial.com/WebServices/Mantenedor"+mantenedor+".php?tipoconsulta=a&id"+mantenedor+"="+id_mantenedor+"&nombre"+mantenedor+"="
                 +nombre;
 
 
@@ -67,6 +50,7 @@ public class CrudMantenedorDosAtibutos implements Response.Listener<JSONObject>,
 
     }
 
+    //Eliminar mantenedor 3 atributos
     private void eliminarTipoProducto(int id, Context contexto,String mantenedor) {
         progreso=new ProgressDialog(contexto);
         progreso.setMessage("Cargando...");
@@ -79,21 +63,15 @@ public class CrudMantenedorDosAtibutos implements Response.Listener<JSONObject>,
 
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
         request.add(jsonObjectRequest);
-        CargarBaseDeDatosDosAtributos.eliminar(id);
+        CargarBaseDeDatosMantenedorTresAtributos.eliminar(id);
     }
-
     @Override
     public void onErrorResponse(VolleyError error) {
-        progreso.hide();
-       // Toast.makeText(context, "ERROR"+error.toString(), Toast.LENGTH_SHORT).show();
-        Log.d("ERROR",error.toString());
 
     }
 
     @Override
     public void onResponse(JSONObject response) {
-        progreso.hide();
-
 
     }
 }

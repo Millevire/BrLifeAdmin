@@ -47,4 +47,9 @@ public class TipoProducto {
     public void setVariedadMarca(boolean variedadMarca) {
         this.variedadMarca = variedadMarca;
     }
+
+    @Override
+    public String toString() {
+        return nombreTipoProducto;
+    }
 }

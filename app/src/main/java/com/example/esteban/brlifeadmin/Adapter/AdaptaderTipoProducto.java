@@ -10,13 +10,13 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertDelete;
-import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedor;
+import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorDosAtributos;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.TipoProducto;
 import com.example.esteban.brlifeadmin.R;
 
 import java.util.ArrayList;
 
-public class AdaptaderTipoProducto extends BaseAdapter implements PopupMenu.OnMenuItemClickListener,AlertDelete.FinalizoCuadroDialogo,AlertNuevoMantenedor.FinalizoCuadroDialogoAgregar {
+public class AdaptaderTipoProducto extends BaseAdapter implements PopupMenu.OnMenuItemClickListener,AlertDelete.FinalizoCuadroDialogo,AlertNuevoMantenedorDosAtributos.FinalizoCuadroDialogoAgregar {
 
     private Context context;
     private ArrayList<TipoProducto> listaTipoProductos =new ArrayList<>();
@@ -72,7 +72,7 @@ public class AdaptaderTipoProducto extends BaseAdapter implements PopupMenu.OnMe
 
                         switch (item.getItemId()){
                             case R.id.itemEdit:
-                                new AlertNuevoMantenedor(context,AdaptaderTipoProducto.this,true, listaTipoProductos.get(position),tipoMantenedor);
+                                new AlertNuevoMantenedorDosAtributos(context,AdaptaderTipoProducto.this,true, listaTipoProductos.get(position),tipoMantenedor);
                                 //new CargarBaseDeDatosDosAtributos(context);
 
                                 return true;

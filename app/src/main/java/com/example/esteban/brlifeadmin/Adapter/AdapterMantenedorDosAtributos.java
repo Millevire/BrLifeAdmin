@@ -11,17 +11,18 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.example.esteban.brlifeadmin.AlertDialog.AlertDelete;
-import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedor;
+import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorDosAtributos;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
 import com.example.esteban.brlifeadmin.R;
 
 import java.util.ArrayList;
 
-public class AdapterMantenedorDosAtributos extends BaseAdapter implements PopupMenu.OnMenuItemClickListener,AlertDelete.FinalizoCuadroDialogo,AlertNuevoMantenedor.FinalizoCuadroDialogoAgregar {
+public class AdapterMantenedorDosAtributos extends BaseAdapter implements PopupMenu.OnMenuItemClickListener,AlertDelete.FinalizoCuadroDialogo,AlertNuevoMantenedorDosAtributos.FinalizoCuadroDialogoAgregar {
 
     private Context context;
     private ArrayList<Mantenedor> mantenedor =new ArrayList<>();
     private String tipoMantenedor;
+
 
     public AdapterMantenedorDosAtributos(Context context, ArrayList<Mantenedor> mantenedor, String tipoMantenedor){
         this.context = context;
@@ -81,7 +82,7 @@ public class AdapterMantenedorDosAtributos extends BaseAdapter implements PopupM
 
                     switch (item.getItemId()){
                         case R.id.itemEdit:
-                        new AlertNuevoMantenedor(context,AdapterMantenedorDosAtributos.this,true, mantenedor.get(position),tipoMantenedor);
+                        new AlertNuevoMantenedorDosAtributos(context,AdapterMantenedorDosAtributos.this,true, mantenedor.get(position),tipoMantenedor);
                             //new CargarBaseDeDatosDosAtributos(context);
 
                             return true;
