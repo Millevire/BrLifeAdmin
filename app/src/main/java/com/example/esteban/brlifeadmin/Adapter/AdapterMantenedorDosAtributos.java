@@ -120,9 +120,6 @@ public class AdapterMantenedorDosAtributos extends BaseAdapter implements PopupM
 
 
 
-
-
-
     @Override
     public void ResultadoCuadroDialogo(Boolean val) {
 

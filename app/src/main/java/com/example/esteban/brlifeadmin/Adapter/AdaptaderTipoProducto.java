@@ -1,6 +1,7 @@
 package com.example.esteban.brlifeadmin.Adapter;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,12 +12,13 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertDelete;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorDosAtributos;
+import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorTipoProducto;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.TipoProducto;
 import com.example.esteban.brlifeadmin.R;
 
 import java.util.ArrayList;
 
-public class AdaptaderTipoProducto extends BaseAdapter implements PopupMenu.OnMenuItemClickListener,AlertDelete.FinalizoCuadroDialogo,AlertNuevoMantenedorDosAtributos.FinalizoCuadroDialogoAgregar {
+public class AdaptaderTipoProducto extends BaseAdapter implements PopupMenu.OnMenuItemClickListener,AlertDelete.FinalizoCuadroDialogo,AlertNuevoMantenedorDosAtributos.FinalizoCuadroDialogoAgregar, AlertNuevoMantenedorTipoProducto.FinalizoCuadroDialogoAgregar {
 
     private Context context;
     private ArrayList<TipoProducto> listaTipoProductos =new ArrayList<>();
@@ -72,7 +74,7 @@ public class AdaptaderTipoProducto extends BaseAdapter implements PopupMenu.OnMe
 
                         switch (item.getItemId()){
                             case R.id.itemEdit:
-                                new AlertNuevoMantenedorDosAtributos(context,AdaptaderTipoProducto.this,true, listaTipoProductos.get(position),tipoMantenedor);
+                                new AlertNuevoMantenedorTipoProducto(context,  AdaptaderTipoProducto.this,true, listaTipoProductos.get(position),tipoMantenedor);
                                 //new CargarBaseDeDatosDosAtributos(context);
 
                                 return true;
@@ -99,6 +101,7 @@ public class AdaptaderTipoProducto extends BaseAdapter implements PopupMenu.OnMe
     }
 
 
+
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
         return false;
@@ -106,11 +109,19 @@ public class AdaptaderTipoProducto extends BaseAdapter implements PopupMenu.OnMe
 
     @Override
     public void ResultadoCuadroDialogo(Boolean val) {
+        this.notifyDataSetChanged();
 
     }
 
     @Override
     public void ResultadoCuadroDialogoAgregar(boolean val) {
+        this.notifyDataSetChanged();
 
+
+    }
+
+    @Override
+    public void ResultadoCuadroDialogoAgregarTipoProducto(boolean val) {
+        this.notifyDataSetChanged();
     }
 }

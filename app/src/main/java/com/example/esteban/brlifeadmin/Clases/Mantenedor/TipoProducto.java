@@ -6,7 +6,14 @@ public class TipoProducto {
     private boolean varidadSabor;
     private boolean variedadMarca;
 
+
     public TipoProducto() {
+    }
+
+    public TipoProducto(String s, boolean checked, boolean switchmarcaChecked) {
+        this.nombreTipoProducto = s;
+        this.varidadSabor = checked;
+        this.variedadMarca = switchmarcaChecked;
     }
 
     public TipoProducto(int idTipoProducto, String nombreTipoProducto, boolean varidadSabor, boolean variedadMarca) {

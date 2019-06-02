@@ -19,6 +19,7 @@ import com.example.esteban.brlifeadmin.Adapter.AdapterMantenedorDosAtributos;
 import com.example.esteban.brlifeadmin.Adapter.AdapterMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Adapter.AdapterProducto;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorDosAtributos;
+import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorTipoProducto;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
@@ -26,7 +27,7 @@ import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProdu
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 
-public class CrudActivity extends AppCompatActivity implements  AlertNuevoMantenedorDosAtributos.FinalizoCuadroDialogoAgregar,AlertNuevoMantenedorTresAtributos.FinalizoCuadroDialogo{
+public class CrudActivity extends AppCompatActivity implements  AlertNuevoMantenedorDosAtributos.FinalizoCuadroDialogoAgregar,AlertNuevoMantenedorTresAtributos.FinalizoCuadroDialogo, AlertNuevoMantenedorTipoProducto.FinalizoCuadroDialogoAgregar {
  private EditText etBuscar;
  private Button btnBuscar,btnBack;
  private TextView tvTitulo;
@@ -223,6 +224,9 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
                     case Marca:
                         new AlertNuevoMantenedorTresAtributos(CrudActivity.this,CrudActivity.this,SelccionMantenedor.Marca.getSeleccion());
                         break;
+                    case TipoProducto:
+                        new AlertNuevoMantenedorTipoProducto(CrudActivity.this,  CrudActivity.this,false,null,mantenedor);
+                        break;
 
                     //Abrir Alert dialogo para agregar mantenedor de dos atributos
                         default:
@@ -297,5 +301,10 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
     @Override
     public void ResultadoCuadroDialogo(Boolean val) {
 
+    }
+
+    @Override
+    public void ResultadoCuadroDialogoAgregarTipoProducto(boolean hasCapture) {
+        adaptaderTipoProducto.notifyDataSetChanged();
     }
 }

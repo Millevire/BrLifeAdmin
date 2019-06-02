@@ -11,8 +11,13 @@ import android.view.Window;
 import android.widget.Button;
 
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
+import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
+import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorDosAtibutos;
+import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTipoProducto;
+import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.CrudActivity;
+import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 import com.example.esteban.brlifeadmin.R;
 
 public class AlertDelete {
@@ -47,9 +52,23 @@ public class AlertDelete {
 
 
                     interfaz.ResultadoCuadroDialogo(true);
+                if (mantenedor.equals(SelccionMantenedor.Producto.getSeleccion())) {
+                    //adapterProducto.notifyDataSetChanged();}
+                }else if (mantenedor.equals(SelccionMantenedor.TipoProducto.getSeleccion())){
+                    //    public CrudMantenedorTipoProducto(String nombre, boolean variedadsabor, boolean variedadmarca, Context context, String tipoConsulta, int id , String mantenedor){
+                    new CrudMantenedorTipoProducto("",false,false,contexto,"eliminar", id,mantenedor);
+                    CargarBaseDeDatosTIpoProducto.eliminar(id);
+                }else if (mantenedor.equals(SelccionMantenedor.Sabor.getSeleccion()) || mantenedor.equals(SelccionMantenedor.Marca.getSeleccion()) || mantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
+                    //new CrudMantenedorTresAtributos("",contexto,"eliminar",id,mantenedor);
+                    CargarBaseDeDatosMantenedorTresAtributos.eliminar(id);
+                }else{
                     new CrudMantenedorDosAtibutos("",contexto,"eliminar",id,mantenedor);
-                    //new CargarBaseDeDatosDosAtributos(contexto);
                     CargarBaseDeDatosDosAtributos.eliminar(id);
+                }
+
+
+
+
                     dialogo.dismiss();
 
 

@@ -10,7 +10,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.esteban.brlifeadmin.Clases.Mantenedor.Producto;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.TipoProducto;
 import com.example.esteban.brlifeadmin.R;
 
@@ -36,6 +35,46 @@ public class CargarBaseDeDatosTIpoProducto implements Response.Listener<JSONObje
         request= Volley.newRequestQueue(contexto);
         llenarBaseDeDatosTipoProducto(contexto,mantenedor);
     }
+
+    public static void eliminar(int id){
+        for(int x = 0; x< listaTipoProducto.size(); ++x){
+            if (listaTipoProducto.get(x).getIdTipoProducto()==id){
+                listaTipoProducto.remove(x);
+
+            }
+
+//
+        }
+    }
+
+    public static TipoProducto buscar(int idMantenedor){
+        for(TipoProducto tipoProducto: listaTipoProducto){
+            if (tipoProducto.getIdTipoProducto()==idMantenedor){
+                return tipoProducto;
+            }
+        }
+        return null;
+    }
+
+    public static void editar(int id,String nombre){
+        for(int x = 0; x< listaTipoProducto.size(); ++x){
+            if (listaTipoProducto.get(x).getIdTipoProducto()==id){
+                listaTipoProducto.get(x).setNombreTipoProducto(nombre);
+
+            }
+
+
+        }
+
+    }
+
+    public static void agregar(TipoProducto tipoProducto){
+
+        listaTipoProducto.add(tipoProducto);
+    }
+
+
+
 
     private void llenarBaseDeDatosTipoProducto(Context context, String mantenedor) {
         progreso=new ProgressDialog(context);
