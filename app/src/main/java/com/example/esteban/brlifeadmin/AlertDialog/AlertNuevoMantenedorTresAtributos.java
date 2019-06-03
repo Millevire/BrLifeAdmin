@@ -4,35 +4,40 @@ import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
+import com.example.esteban.brlifeadmin.Clases.Mantenedor.MantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.TipoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
+import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
+import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 import com.example.esteban.brlifeadmin.R;
 
 public class AlertNuevoMantenedorTresAtributos {
     ArrayAdapter <Mantenedor>adapterRegion;
     ArrayAdapter <TipoProducto>adapterTipoProducto;
-
+    int posicion;
 
 
 
     //metodo interfaz que comunicara Alert dialogo con actividad donde se implemente
-    public interface FinalizoCuadroDialogo{
-        void ResultadoCuadroDialogo(Boolean val);
+    public interface FinalizoCuadroDialogoAgregarTrestAtributos{
+        void ResultadoCuadroDialogoAgregarTresAtributos(boolean val);
     }
 
     //interfaz de comunicacion
-    private FinalizoCuadroDialogo interfaz;
+    private FinalizoCuadroDialogoAgregarTrestAtributos interfaz;
 
-    public AlertNuevoMantenedorTresAtributos(final Context contexto, FinalizoCuadroDialogo actividad, String mantenedor){
+    public AlertNuevoMantenedorTresAtributos(final Context contexto, final FinalizoCuadroDialogoAgregarTrestAtributos actividad, final boolean tipo, final MantenedorTresAtributos mantenedorTresAtributos, final String tipoMantenedor){
 
 
 
@@ -49,24 +54,19 @@ public class AlertNuevoMantenedorTresAtributos {
 
 
         //Declaracion de widget
-        EditText etAlertNuevoMantenedorTresAtributos=dialogo.findViewById(R.id.etAlertNuevoMantenedorTresAtributos);
+        final EditText etAlertNuevoMantenedorTresAtributos=dialogo.findViewById(R.id.etAlertNuevoMantenedorTresAtributos);
         Spinner spAlertMantenedorTresAtributos=dialogo.findViewById(R.id.spAlertMantenedorTresAtributos);
         Button btnCancelarAlertNuevoMantenedorTresAtributos=dialogo.findViewById(R.id.btnCancelarAlertNuevoMantenedorTresAtributos);
         Button btnAceptarlarAlertNuevaMantenedorTresAtributos=dialogo.findViewById(R.id.btnAceptarlarAlertNuevaMantenedorTresAtributos);
-        TextView tvTituloAlertNuevoMantenedorTresAtributo=dialogo.findViewById(R.id.tvTituloAlertNuevoMantenedorTresAtributo);
+        final TextView tvTituloAlertNuevoMantenedorTresAtributo=dialogo.findViewById(R.id.tvTituloAlertNuevoMantenedorTresAtributo);
         TextView tvTipoMantenedorSpinner=dialogo.findViewById(R.id.tvTipoMantenedorSpinner);
 
-        //cambiar titulo dpendiendo de mantenedor
-        tvTituloAlertNuevoMantenedorTresAtributo.setText("Nuevo "+mantenedor);
 
-        //Cambiar hint dependiendo de nombre de mantenedor
-
-        etAlertNuevoMantenedorTresAtributos.setHint("Ingrese nuevo "+mantenedor);
 
 
 
         //Region llenar Spinner con informacion dependiendo de mantenedor
-        if (mantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
+        if (tipoMantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
 
             tvTipoMantenedorSpinner.setText("Region:");
             adapterRegion=new ArrayAdapter(contexto,android.R.layout.simple_list_item_1, CargarBaseDeDatosDosAtributos.getListaMantenedors());
@@ -80,6 +80,67 @@ public class AlertNuevoMantenedorTresAtributos {
             adapterTipoProducto=new ArrayAdapter(contexto,android.R.layout.simple_list_item_1, CargarBaseDeDatosTIpoProducto.getListaTipoProducto());
             spAlertMantenedorTresAtributos.setAdapter(adapterTipoProducto);
         }
+
+        spAlertMantenedorTresAtributos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+              //enviar posicion
+               posicion(position);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+        //Accion de editar
+        if (tipo){
+            etAlertNuevoMantenedorTresAtributos.setText(mantenedorTresAtributos.getNombreMantenedorTresAtributos());
+
+        }
+
+
+        btnAceptarlarAlertNuevaMantenedorTresAtributos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (tipo){
+
+                       //new CrudMantenedorTresAtributos(contexto,etAlertNuevoMantenedorTresAtributos.getText().toString(),CargarBaseDeDatosDosAtributos.getListaMantenedors().get(posicion).getIdTipoProducto(),"editar",mantenedorTresAtributos.getIdMantenedorTresAtributos(),tipoMantenedor);
+                       CargarBaseDeDatosMantenedorTresAtributos.editar(mantenedorTresAtributos.getIdMantenedorTresAtributos(),mantenedorTresAtributos.getFkMantenedorTresAtributos(),etAlertNuevoMantenedorTresAtributos.getText().toString());
+                      actividad.ResultadoCuadroDialogoAgregarTresAtributos(true);
+                       dialogo.dismiss();
+                }else{
+
+                    if (tipoMantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
+
+                        new CrudMantenedorTresAtributos(contexto,etAlertNuevoMantenedorTresAtributos.getText().toString(),CargarBaseDeDatosDosAtributos.getListaMantenedors().get(posicion).getIdTipoProducto(),"nuevo",0,tipoMantenedor);
+                        actividad.ResultadoCuadroDialogoAgregarTresAtributos(true);
+                        CargarBaseDeDatosMantenedorTresAtributos.agregar(new MantenedorTresAtributos(0,CargarBaseDeDatosDosAtributos.getListaMantenedors().get(posicion).getIdTipoProducto(),etAlertNuevoMantenedorTresAtributos.getText().toString()));
+
+                        dialogo.dismiss();
+
+                    }else{
+
+                        new CrudMantenedorTresAtributos(contexto,etAlertNuevoMantenedorTresAtributos.getText().toString(),CargarBaseDeDatosTIpoProducto.getListaTipoProducto().get(posicion).getIdTipoProducto(),"nuevo",0,tipoMantenedor);
+                        actividad.ResultadoCuadroDialogoAgregarTresAtributos(true);
+                        CargarBaseDeDatosMantenedorTresAtributos.agregar(new MantenedorTresAtributos(0,CargarBaseDeDatosTIpoProducto.getListaTipoProducto().get(posicion).getIdTipoProducto(),etAlertNuevoMantenedorTresAtributos.getText().toString()));
+
+
+                        dialogo.dismiss();
+                    }
+                }
+
+
+
+
+
+                }
+
+        });
 
 
 
@@ -97,6 +158,17 @@ public class AlertNuevoMantenedorTresAtributos {
 
 
     }
+
+    /** /
+     * metodo para obtener osicion de un objeto en un spinner
+     * @param posicion parametro de posicion
+     */
+
+    public void posicion(int posicion){
+
+        this.posicion=posicion;
+    }
+
 
 
 }

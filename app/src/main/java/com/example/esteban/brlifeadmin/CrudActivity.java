@@ -27,7 +27,7 @@ import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProdu
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 
-public class CrudActivity extends AppCompatActivity implements  AlertNuevoMantenedorDosAtributos.FinalizoCuadroDialogoAgregar,AlertNuevoMantenedorTresAtributos.FinalizoCuadroDialogo, AlertNuevoMantenedorTipoProducto.FinalizoCuadroDialogoAgregar {
+public class CrudActivity extends AppCompatActivity implements  AlertNuevoMantenedorDosAtributos.FinalizoCuadroDialogoAgregar,AlertNuevoMantenedorTresAtributos.FinalizoCuadroDialogoAgregarTrestAtributos, AlertNuevoMantenedorTipoProducto.FinalizoCuadroDialogoAgregar {
  private EditText etBuscar;
  private Button btnBuscar,btnBack;
  private TextView tvTitulo;
@@ -212,17 +212,17 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
 
                     //Abrir Alert dialogo para agregar Provincia
                     case Provincia:
-                        new AlertNuevoMantenedorTresAtributos(CrudActivity.this,CrudActivity.this,SelccionMantenedor.Provincia.getSeleccion());
+                        new AlertNuevoMantenedorTresAtributos(CrudActivity.this,CrudActivity.this,false,null,SelccionMantenedor.Provincia.getSeleccion());
                         break;
 
                     //Abrir Alert dialogo para agregar Sabor
                     case Sabor:
-                        new AlertNuevoMantenedorTresAtributos(CrudActivity.this,CrudActivity.this,SelccionMantenedor.Sabor.getSeleccion());
+                        new AlertNuevoMantenedorTresAtributos(CrudActivity.this,CrudActivity.this,false,null,SelccionMantenedor.Sabor.getSeleccion());
                         break;
 
                     //Abrir Alert dialogo para agregar Marca
                     case Marca:
-                        new AlertNuevoMantenedorTresAtributos(CrudActivity.this,CrudActivity.this,SelccionMantenedor.Marca.getSeleccion());
+                        new AlertNuevoMantenedorTresAtributos(CrudActivity.this,CrudActivity.this,false,null,SelccionMantenedor.Marca.getSeleccion());
                         break;
                     case TipoProducto:
                         new AlertNuevoMantenedorTipoProducto(CrudActivity.this,  CrudActivity.this,false,null,mantenedor);
@@ -299,8 +299,8 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
 
 
     @Override
-    public void ResultadoCuadroDialogo(Boolean val) {
-
+    public void ResultadoCuadroDialogoAgregarTresAtributos(boolean val) {
+      adapterMantenedorTresAtributos.notifyDataSetChanged();
     }
 
     @Override

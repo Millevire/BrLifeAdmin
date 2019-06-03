@@ -60,7 +60,8 @@ public class AlertDelete {
                     CargarBaseDeDatosTIpoProducto.eliminar(id);
                 }else if (mantenedor.equals(SelccionMantenedor.Sabor.getSeleccion()) || mantenedor.equals(SelccionMantenedor.Marca.getSeleccion()) || mantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
                     //new CrudMantenedorTresAtributos("",contexto,"eliminar",id,mantenedor);
-                    CargarBaseDeDatosMantenedorTresAtributos.eliminar(id);
+                   
+                    new CrudMantenedorTresAtributos(contexto,"",0,"eliminar",id,mantenedor);
                 }else{
                     new CrudMantenedorDosAtibutos("",contexto,"eliminar",id,mantenedor);
                     CargarBaseDeDatosDosAtributos.eliminar(id);

@@ -28,11 +28,11 @@ public class AlertNuevoMantenedorDosAtributos {
     public interface FinalizoCuadroDialogoAgregar{
         void ResultadoCuadroDialogoAgregar(boolean val);}
 
-    private FinalizoCuadroDialogoAgregar interfaz;
+    private FinalizoCuadroDialogoAgregar prueba;
 
 
     public AlertNuevoMantenedorDosAtributos(final Context contexto, final FinalizoCuadroDialogoAgregar actividad, final boolean tipo, final Mantenedor tipoProducto, final String mantenedor){
-        interfaz= actividad;
+        prueba= actividad;
 
         //Intent para cargar actividad CrudActivity
         final Intent intent =new Intent(contexto,CrudActivity.class);
@@ -79,7 +79,7 @@ public class AlertNuevoMantenedorDosAtributos {
                     if (tipo==true){
                         new CrudMantenedorDosAtibutos(etAlertNuevoMantenedorDosAtributos.getText().toString(),contexto,"editar", tipoProducto.getIdTipoProducto(),mantenedor);
                         //new CargarBaseDeDatosDosAtributos(contexto);
-                        interfaz.ResultadoCuadroDialogoAgregar(true);
+                        actividad.ResultadoCuadroDialogoAgregar(true);
                         CargarBaseDeDatosDosAtributos.editar(tipoProducto.getIdTipoProducto(),etAlertNuevoMantenedorDosAtributos.getText().toString());
                         dialogo.dismiss();
                         // contexto.startActivity(intent);
