@@ -127,7 +127,8 @@ public class AdapterMantenedorTresAtributos extends BaseAdapter implements Alert
                                 return true;
 
                             case R.id.itemDelete:
-                              new AlertDelete(context,listaMantenedorTresAtributos.get(position).getIdMantenedorTresAtributos(),AdapterMantenedorTresAtributos.this,tipoMantenedor);
+
+                              new AlertDelete(context,listaMantenedorTresAtributos.get(position).getIdMantenedorTresAtributos(),listaMantenedorTresAtributos.get(position).getFkMantenedorTresAtributos(),AdapterMantenedorTresAtributos.this,tipoMantenedor);
 
                                 return true;
 

@@ -4,23 +4,29 @@
     android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/tvNombreTipoProducto"
-            android:layout_width="328dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:text="nombre tipo"
             android:textColor="@color/colorPrimaryDark" />
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:gravity="right">
+         <Button
+             android:id="@+id/btnMoreTipoProducto"
+             style="@style/Widget.AppCompat.Button.Borderless"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:drawableRight="@drawable/ic_dialog_more" />
+     </LinearLayout>
 
-        <Button
-            android:id="@+id/btnMoreTipoProducto"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableRight="@drawable/ic_dialog_more" />
     </LinearLayout>
 
 </LinearLayout>

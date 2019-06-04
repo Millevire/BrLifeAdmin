@@ -74,10 +74,14 @@ public class CrudMantenedorTresAtributos implements Response.Listener<JSONObject
         progreso=new ProgressDialog(contexto);
         progreso.setMessage("Cargando...");
         progreso.show();
+String url;
+if (mantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
 
-
-        String url="http://www.brotherwareoficial.com/WebServices/Mantenedor"+mantenedor+".php?tipoconsulta=a&id"+mantenedor+"="+id_mantenedor+"&nombre"+mantenedor+"="
-                +nombre;
+  url="http://www.brotherwareoficial.com/WebServices/Mantenedor"+mantenedor+".php?tipoconsulta=a&id"+mantenedor+"="+id_mantenedor+"&nombre"+mantenedor+"="
+            +nombre+"&idRegion="+fk_mantenedor;
+}else{
+       url="http://www.brotherwareoficial.com/WebServices/Mantenedor"+mantenedor+".php?tipoconsulta=a&id"+mantenedor+"="+id_mantenedor+"&nombre"+mantenedor+"="
+                +nombre+"&idTipoProducto="+fk_mantenedor;}
 
 
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
@@ -91,10 +95,16 @@ public class CrudMantenedorTresAtributos implements Response.Listener<JSONObject
         progreso.setMessage("Cargando...");
         progreso.show();
 
+       String url;
+        if (mantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
 
-        String url="http://www.brotherwareoficial.com/WebServices/Mantenedor"+mantenedor+".php?tipoconsulta=e&id"+mantenedor+"="
-                +String.valueOf(id);
-        //url=url.replace(" ","%20");
+            url="http://www.brotherwareoficial.com/WebServices/Mantenedor"+mantenedor+".php?tipoconsulta=e&id"+mantenedor+"="
+                    +String.valueOf(id)+"&idRegion="+fkMantenedor;
+        }else {
+
+           url = "http://www.brotherwareoficial.com/WebServices/Mantenedor" + mantenedor + ".php?tipoconsulta=e&id" + mantenedor + "="
+                    + String.valueOf(id) + "&idTipoProducto=" + fkMantenedor;
+        }
 
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
         request.add(jsonObjectRequest);
@@ -110,6 +120,8 @@ public class CrudMantenedorTresAtributos implements Response.Listener<JSONObject
 
     @Override
     public void onResponse(JSONObject response) {
+
+        //Al momento de ingrear un nuevo Mantenedor, la respuesta llenara un objeto en la lista con todos los atributos, includo id para poder hacer accion de eliminar y editar.
         if (tipoConsulta.equals("nuevo")){
             JSONArray json=response.optJSONArray("Id_"+this.mantenedor+"_Nuevo");
 
@@ -117,7 +129,8 @@ public class CrudMantenedorTresAtributos implements Response.Listener<JSONObject
             try {
                 jsonObject=json.getJSONObject(0);
 
-           //  CargarBaseDeDatosMantenedorTresAtributos.agregar(new MantenedorTresAtributos(jsonObject.getInt("Id_"+ this.mantenedor+"_Nuevo"),fkMantenedor,nombre));
+                //Agregar a lista un nuevo mantenedor con la respuesta de webservic al agregar.
+           CargarBaseDeDatosMantenedorTresAtributos.agregar(new MantenedorTresAtributos(jsonObject.getInt("Id_"+ this.mantenedor+"_Nuevo"),fkMantenedor,nombre));
 
             } catch (JSONException e) {
                 e.printStackTrace();

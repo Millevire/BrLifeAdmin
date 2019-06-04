@@ -108,13 +108,15 @@ public class AlertNuevoMantenedorTresAtributos {
             public void onClick(View v) {
 
                 if (tipo){
-
-                       //new CrudMantenedorTresAtributos(contexto,etAlertNuevoMantenedorTresAtributos.getText().toString(),CargarBaseDeDatosDosAtributos.getListaMantenedors().get(posicion).getIdTipoProducto(),"editar",mantenedorTresAtributos.getIdMantenedorTresAtributos(),tipoMantenedor);
+                         //En el caso editar
+                       new CrudMantenedorTresAtributos(contexto,etAlertNuevoMantenedorTresAtributos.getText().toString(),mantenedorTresAtributos.getFkMantenedorTresAtributos(),"editar",mantenedorTresAtributos.getIdMantenedorTresAtributos(),tipoMantenedor);
                        CargarBaseDeDatosMantenedorTresAtributos.editar(mantenedorTresAtributos.getIdMantenedorTresAtributos(),mantenedorTresAtributos.getFkMantenedorTresAtributos(),etAlertNuevoMantenedorTresAtributos.getText().toString());
                       actividad.ResultadoCuadroDialogoAgregarTresAtributos(true);
                        dialogo.dismiss();
                 }else{
 
+
+                    //En e caso de agregar
                     if (tipoMantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
 
                         new CrudMantenedorTresAtributos(contexto,etAlertNuevoMantenedorTresAtributos.getText().toString(),CargarBaseDeDatosDosAtributos.getListaMantenedors().get(posicion).getIdTipoProducto(),"nuevo",0,tipoMantenedor);

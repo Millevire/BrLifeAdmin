@@ -59,7 +59,7 @@ public class AlertDelete {
                     new CrudMantenedorTipoProducto("",false,false,contexto,"eliminar", id,mantenedor);
                     CargarBaseDeDatosTIpoProducto.eliminar(id);
                 }else if (mantenedor.equals(SelccionMantenedor.Sabor.getSeleccion()) || mantenedor.equals(SelccionMantenedor.Marca.getSeleccion()) || mantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
-                    //new CrudMantenedorTresAtributos("",contexto,"eliminar",id,mantenedor);
+                    //new CrudMantenedorTresAtributos(contexto,"",);
                    
                     new CrudMantenedorTresAtributos(contexto,"",0,"eliminar",id,mantenedor);
                 }else{
@@ -71,6 +71,58 @@ public class AlertDelete {
 
 
                     dialogo.dismiss();
+
+
+
+
+            }
+        });
+
+        //Accion boton cancear
+        btnAlertCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogo.dismiss();
+            }
+        });
+    }
+
+
+    public AlertDelete(final Context contexto, final int id,final int fk, FinalizoCuadroDialogo actividad, final String mantenedor){
+        interfaz =actividad;
+        final Intent intent =new Intent(contexto,CrudActivity.class);
+
+        //inflar vista para alert dialogo eliminar
+        final Dialog dialogo=new Dialog(contexto);
+        dialogo.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogo.setCancelable(false);
+        dialogo.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogo.setContentView(R.layout.alert_delete);
+        dialogo.show();
+
+        //Widget
+        Button btnAlertEliminar=dialogo.findViewById(R.id.btnAlertEliminar);
+        Button btnAlertCancelar=dialogo.findViewById(R.id.btnAlertCancelar);
+
+        //Accion boton Eliminar
+        btnAlertEliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                 if (mantenedor.equals(SelccionMantenedor.Sabor.getSeleccion()) || mantenedor.equals(SelccionMantenedor.Marca.getSeleccion()) || mantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
+                    //new CrudMantenedorTresAtributos(contexto,"",);
+
+                    new CrudMantenedorTresAtributos(contexto,"",fk,"eliminar",id,mantenedor);
+                    CargarBaseDeDatosTIpoProducto.eliminar(id);
+                     interfaz.ResultadoCuadroDialogo(true);
+                }
+
+
+
+
+                dialogo.dismiss();
 
 
 
