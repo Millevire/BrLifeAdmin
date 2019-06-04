@@ -49,17 +49,26 @@ public class AdaptaderTipoProducto extends BaseAdapter implements PopupMenu.OnMe
     public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView==null){
             LayoutInflater layoutInflater=(LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-            convertView = View.inflate(context, R.layout.adapter_mantenedor_dos_atributos,null);
+            convertView = View.inflate(context, R.layout.adapter_mantenedor_tres_atributos,null);
 
         }
 
+        //Variables auxiliares informativas
+        String sabor, marca;
 
-
-        TextView tvNombreTipoProducto=(TextView)convertView.findViewById(R.id.tvNombreTipoProducto);
-        Button btnMoresTipoProducto=(Button)convertView.findViewById(R.id.btnMoreTipoProducto);
-
+        TextView tvNombreTipoProducto=(TextView)convertView.findViewById(R.id.tvNombreMantenedorTresAtributo);
+        Button btnMoresTipoProducto=(Button)convertView.findViewById(R.id.btnMoreMantenedorTresAtributos);
         tvNombreTipoProducto.setText(listaTipoProductos.get(position).getNombreTipoProducto().toString());
 
+        //Operador ternario
+        sabor = (listaTipoProductos.get(position).isVaridadSabor())?"Si":"No";
+        marca = (listaTipoProductos.get(position).isVariedadMarca())?"Si":"No";
+
+
+        //Para mostrar si tienen variedad marca y sabor
+        TextView tvTipoProducto_Region=convertView.findViewById(R.id.tvTipoProducto_Region);
+
+        tvTipoProducto_Region.setText("Variedad Marca: " + marca + " Variedad Sabor: " + sabor);
 
         btnMoresTipoProducto.setOnClickListener(new View.OnClickListener() {
             @Override

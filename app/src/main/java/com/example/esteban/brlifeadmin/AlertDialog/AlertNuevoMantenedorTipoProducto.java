@@ -80,7 +80,8 @@ public class AlertNuevoMantenedorTipoProducto {
                         new CrudMantenedorTipoProducto(etAlertTipoProducto.getText().toString(), switchsabor.isChecked(), switchmarca.isChecked(), contexto,"editar", tipoProducto.getIdTipoProducto(),mantenedor);
                         //new CargarBaseDeDatosDosAtributos(contexto);
                         interfaz.ResultadoCuadroDialogoAgregarTipoProducto(true);
-                        CargarBaseDeDatosTIpoProducto.editar(tipoProducto.getIdTipoProducto(),etAlertTipoProducto.getText().toString());
+                        //Se pasan todos los parametros al momento de editar para actualizarlo en la lista estatica y verse reflejada en la vista
+                        CargarBaseDeDatosTIpoProducto.editar(tipoProducto.getIdTipoProducto(),etAlertTipoProducto.getText().toString(), switchsabor.isChecked(), switchmarca.isChecked());
                         dialogo.dismiss();
                         // contexto.startActivity(intent);
                     }else {

@@ -55,12 +55,13 @@ public class CargarBaseDeDatosTIpoProducto implements Response.Listener<JSONObje
         }
         return null;
     }
-
-    public static void editar(int id,String nombre){
+    //Se pasan todos los parametros para actualizarlo en la lista
+    public static void editar(int id,String nombre, boolean sabor, boolean marca){
         for(int x = 0; x< listaTipoProducto.size(); ++x){
             if (listaTipoProducto.get(x).getIdTipoProducto()==id){
                 listaTipoProducto.get(x).setNombreTipoProducto(nombre);
-
+                listaTipoProducto.get(x).setVaridadSabor(sabor);
+                listaTipoProducto.get(x).setVariedadMarca(marca);
             }
 
 
