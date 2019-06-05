@@ -15,19 +15,22 @@ import android.widget.Toast;
 
 
 import com.example.esteban.brlifeadmin.Adapter.AdaptaderTipoProducto;
+import com.example.esteban.brlifeadmin.Adapter.AdapterComuna;
 import com.example.esteban.brlifeadmin.Adapter.AdapterMantenedorDosAtributos;
 import com.example.esteban.brlifeadmin.Adapter.AdapterMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Adapter.AdapterProducto;
+import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantendorComuna;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorDosAtributos;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorTipoProducto;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorTresAtributos;
+import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosComuna;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 
-public class CrudActivity extends AppCompatActivity implements  AlertNuevoMantenedorDosAtributos.FinalizoCuadroDialogoAgregar,AlertNuevoMantenedorTresAtributos.FinalizoCuadroDialogoAgregarTrestAtributos, AlertNuevoMantenedorTipoProducto.FinalizoCuadroDialogoAgregar {
+public class CrudActivity extends AppCompatActivity implements  AlertNuevoMantenedorDosAtributos.FinalizoCuadroDialogoAgregar,AlertNuevoMantenedorTresAtributos.FinalizoCuadroDialogoAgregarTrestAtributos, AlertNuevoMantenedorTipoProducto.FinalizoCuadroDialogoAgregar, AlertNuevoMantendorComuna.FinalizoCuadroDialogoAgregar {
  private EditText etBuscar;
  private Button btnBuscar,btnBack;
  private TextView tvTitulo;
@@ -36,9 +39,14 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
  private AdapterMantenedorDosAtributos adapterMantenedorDosAtributos;
  private AdapterMantenedorTresAtributos adapterMantenedorTresAtributos;
  private AdaptaderTipoProducto adaptaderTipoProducto;
+ private AdapterComuna adaptaderComuna;
  private AdapterProducto adapterProducto;
  private  String mantenedor;
 
+    /**
+     * AL momento de agregar un nuevo mantenedor especifico hay que agregarlo
+     *
+     */
 
 
     @Override
@@ -169,7 +177,11 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
 
                     tvTitulo.setText(SelccionMantenedor.Comuna.getSeleccion().toString());
 
-                    new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.Comuna.getSeleccion());
+                    new CargarBaseDeDatosComuna(this,SelccionMantenedor.Comuna.getSeleccion());
+                    //Para Cargar la provincia
+                    new CargarBaseDeDatosMantenedorTresAtributos(this,SelccionMantenedor.Provincia.getSeleccion());
+                    //Cargar base de datos para Spinner de AlertNuevoMantenedorTresAtributos con Region
+                    new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.Region.getSeleccion());
                     break;
                 default:
                     break;
@@ -220,6 +232,11 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
                         new AlertNuevoMantenedorTresAtributos(CrudActivity.this,CrudActivity.this,false,null,SelccionMantenedor.Sabor.getSeleccion());
                         break;
 
+                        //Abrir Alert dialogo para agregar Comuna
+                    case Comuna:
+                        new AlertNuevoMantendorComuna(CrudActivity.this,CrudActivity.this,false,null,SelccionMantenedor.Comuna.getSeleccion());
+                        break;
+
                     //Abrir Alert dialogo para agregar Marca
                     case Marca:
                         new AlertNuevoMantenedorTresAtributos(CrudActivity.this,CrudActivity.this,false,null,SelccionMantenedor.Marca.getSeleccion());
@@ -251,6 +268,10 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
        }else if (mantenedor.equals(SelccionMantenedor.TipoProducto.getSeleccion())){
            adaptaderTipoProducto =new AdaptaderTipoProducto(this, CargarBaseDeDatosTIpoProducto.getListaTipoProducto(),mantenedor);
            lvLista.setAdapter(adaptaderTipoProducto);
+       }
+       else if (mantenedor.equals(SelccionMantenedor.Comuna.getSeleccion())){
+           adaptaderComuna =new AdapterComuna(this, CargarBaseDeDatosComuna.getListaComuna(),mantenedor);
+               lvLista.setAdapter(adaptaderComuna);
         }else if (mantenedor.equals(SelccionMantenedor.Sabor.getSeleccion()) || mantenedor.equals(SelccionMantenedor.Marca.getSeleccion()) || mantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
            adapterMantenedorTresAtributos =new AdapterMantenedorTresAtributos(this,CargarBaseDeDatosMantenedorTresAtributos.getListaMantenedorTresAtributos(),mantenedor);
            lvLista.setAdapter(adapterMantenedorTresAtributos);
@@ -258,8 +279,6 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
             adapterMantenedorDosAtributos =new AdapterMantenedorDosAtributos(this, CargarBaseDeDatosDosAtributos.getListaMantenedors(),mantenedor);
             lvLista.setAdapter(adapterMantenedorDosAtributos);
         }
-
-
 
 
     }
@@ -275,7 +294,8 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
             adapterProducto.notifyDataSetChanged();
         }else if (mantenedor.equals(SelccionMantenedor.TipoProducto.getSeleccion())){
             adaptaderTipoProducto.notifyDataSetChanged();
-
+        }else if (mantenedor.equals(SelccionMantenedor.Comuna.getSeleccion())){
+            adaptaderComuna.notifyDataSetChanged();
         }else if (mantenedor.equals(SelccionMantenedor.Sabor.getSeleccion()) || mantenedor.equals(SelccionMantenedor.Marca.getSeleccion()) || mantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
             adapterMantenedorTresAtributos.notifyDataSetChanged();
         }else adapterMantenedorDosAtributos.notifyDataSetChanged();
@@ -306,5 +326,10 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
     @Override
     public void ResultadoCuadroDialogoAgregarTipoProducto(boolean hasCapture) {
         adaptaderTipoProducto.notifyDataSetChanged();
+    }
+
+    @Override
+    public void ResultadoCuadroDialogoAgregarComuna(boolean val) {
+        adaptaderComuna.notifyDataSetChanged();
     }
 }

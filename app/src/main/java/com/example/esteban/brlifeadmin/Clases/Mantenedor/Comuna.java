@@ -13,6 +13,9 @@ public class Comuna {
         this.idRegion = idRegion;
     }
 
+    public Comuna() {
+    }
+
     public int getIdComuna() {
         return idComuna;
     }

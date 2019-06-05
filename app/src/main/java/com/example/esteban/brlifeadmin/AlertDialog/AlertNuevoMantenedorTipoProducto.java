@@ -22,7 +22,8 @@ public class AlertNuevoMantenedorTipoProducto {
 
     //metodo interfaz que comunicara Alert dialogo con actividad donde se implemente
     public interface FinalizoCuadroDialogoAgregar{
-        void ResultadoCuadroDialogoAgregarTipoProducto(boolean val);}
+        void ResultadoCuadroDialogoAgregarTipoProducto(boolean val);
+    }
 
     private FinalizoCuadroDialogoAgregar interfaz;
 
