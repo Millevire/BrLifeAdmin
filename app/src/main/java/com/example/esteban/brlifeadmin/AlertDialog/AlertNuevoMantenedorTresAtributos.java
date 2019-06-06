@@ -17,6 +17,7 @@ import com.example.esteban.brlifeadmin.Clases.Mantenedor.MantenedorTresAtributos
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.TipoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
+import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
@@ -55,7 +56,7 @@ public class AlertNuevoMantenedorTresAtributos {
 
         //Declaracion de widget
         final EditText etAlertNuevoMantenedorTresAtributos=dialogo.findViewById(R.id.etAlertNuevoMantenedorTresAtributos);
-        Spinner spAlertMantenedorTresAtributos=dialogo.findViewById(R.id.spAlertMantenedorTresAtributos);
+        final Spinner spAlertMantenedorTresAtributos=dialogo.findViewById(R.id.spAlertMantenedorTresAtributos);
         Button btnCancelarAlertNuevoMantenedorTresAtributos=dialogo.findViewById(R.id.btnCancelarAlertNuevoMantenedorTresAtributos);
         Button btnAceptarlarAlertNuevaMantenedorTresAtributos=dialogo.findViewById(R.id.btnAceptarlarAlertNuevaMantenedorTresAtributos);
         final TextView tvTituloAlertNuevoMantenedorTresAtributo=dialogo.findViewById(R.id.tvTituloAlertNuevoMantenedorTresAtributo);
@@ -67,7 +68,7 @@ public class AlertNuevoMantenedorTresAtributos {
 
         //Region llenar Spinner con informacion dependiendo de mantenedor
         if (tipoMantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
-
+            tvTituloAlertNuevoMantenedorTresAtributo.setText(tipoMantenedor);
             tvTipoMantenedorSpinner.setText("Region:");
             adapterRegion=new ArrayAdapter(contexto,android.R.layout.simple_list_item_1, CargarBaseDeDatosDosAtributos.getListaMantenedors());
             spAlertMantenedorTresAtributos.setAdapter(adapterRegion);
@@ -75,10 +76,12 @@ public class AlertNuevoMantenedorTresAtributos {
         }else {
 
             //Cambiar titulo de Spinner
+            tvTituloAlertNuevoMantenedorTresAtributo.setText(tipoMantenedor);
             tvTipoMantenedorSpinner.setText("Tipo de Producto:");
+                adapterTipoProducto=new ArrayAdapter(contexto,android.R.layout.simple_list_item_1, CargarBaseDeDatosTIpoProducto.getListaTipoProducto());
+                spAlertMantenedorTresAtributos.setAdapter(adapterTipoProducto);
 
-            adapterTipoProducto=new ArrayAdapter(contexto,android.R.layout.simple_list_item_1, CargarBaseDeDatosTIpoProducto.getListaTipoProducto());
-            spAlertMantenedorTresAtributos.setAdapter(adapterTipoProducto);
+
         }
 
         spAlertMantenedorTresAtributos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -100,6 +103,12 @@ public class AlertNuevoMantenedorTresAtributos {
         if (tipo){
             etAlertNuevoMantenedorTresAtributos.setText(mantenedorTresAtributos.getNombreMantenedorTresAtributos());
 
+            if (tipoMantenedor.equals(SelccionMantenedor.Marca.getSeleccion())|| tipoMantenedor.equals(SelccionMantenedor.Sabor.getSeleccion())){
+            spAlertMantenedorTresAtributos.setVisibility(View.INVISIBLE);
+            tvTipoMantenedorSpinner.setVisibility(View.INVISIBLE);
+            }else
+
+            btnAceptarlarAlertNuevaMantenedorTresAtributos.setText("actualizar");
         }
 
 
@@ -109,9 +118,18 @@ public class AlertNuevoMantenedorTresAtributos {
 
                 if (tipo){
                          //En el caso editar
-                       new CrudMantenedorTresAtributos(contexto,etAlertNuevoMantenedorTresAtributos.getText().toString(),mantenedorTresAtributos.getFkMantenedorTresAtributos(),"editar",mantenedorTresAtributos.getIdMantenedorTresAtributos(),tipoMantenedor);
-                       CargarBaseDeDatosMantenedorTresAtributos.editar(mantenedorTresAtributos.getIdMantenedorTresAtributos(),mantenedorTresAtributos.getFkMantenedorTresAtributos(),etAlertNuevoMantenedorTresAtributos.getText().toString());
-                      actividad.ResultadoCuadroDialogoAgregarTresAtributos(true);
+                    if (tipoMantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
+                        new CrudMantenedorTresAtributos(contexto,etAlertNuevoMantenedorTresAtributos.getText().toString(), CargarBaseDeDatosDosAtributos.getListaMantenedors().get(posicion).getIdTipoProducto(),"editar",mantenedorTresAtributos.getIdMantenedorTresAtributos(),tipoMantenedor);
+                        CargarBaseDeDatosMantenedorTresAtributos.editar(mantenedorTresAtributos.getIdMantenedorTresAtributos(),CargarBaseDeDatosDosAtributos.getListaMantenedors().get(posicion).getIdTipoProducto(),etAlertNuevoMantenedorTresAtributos.getText().toString());
+                        actividad.ResultadoCuadroDialogoAgregarTresAtributos(true);
+                    }else{
+                        new CrudMantenedorTresAtributos(contexto,etAlertNuevoMantenedorTresAtributos.getText().toString(),mantenedorTresAtributos.getFkMantenedorTresAtributos(),"editar",mantenedorTresAtributos.getIdMantenedorTresAtributos(),tipoMantenedor);
+                        CargarBaseDeDatosMantenedorTresAtributos.editar(mantenedorTresAtributos.getIdMantenedorTresAtributos(),mantenedorTresAtributos.getFkMantenedorTresAtributos(),etAlertNuevoMantenedorTresAtributos.getText().toString());
+                        actividad.ResultadoCuadroDialogoAgregarTresAtributos(true);
+
+
+                    }
+
                        dialogo.dismiss();
                 }else{
 
@@ -129,7 +147,7 @@ public class AlertNuevoMantenedorTresAtributos {
 
                         new CrudMantenedorTresAtributos(contexto,etAlertNuevoMantenedorTresAtributos.getText().toString(),CargarBaseDeDatosTIpoProducto.getListaTipoProducto().get(posicion).getIdTipoProducto(),"nuevo",0,tipoMantenedor);
                         actividad.ResultadoCuadroDialogoAgregarTresAtributos(true);
-                        CargarBaseDeDatosMantenedorTresAtributos.agregar(new MantenedorTresAtributos(0,CargarBaseDeDatosTIpoProducto.getListaTipoProducto().get(posicion).getIdTipoProducto(),etAlertNuevoMantenedorTresAtributos.getText().toString()));
+                        CargarBaseDeDatosMantenedorTresAtributos.agregar(new MantenedorTresAtributos(CrudMantenedorTresAtributos.idNuevoMantenedorTresAtributos,CargarBaseDeDatosTIpoProducto.getListaTipoProducto().get(posicion).getIdTipoProducto(),etAlertNuevoMantenedorTresAtributos.getText().toString()));
 
 
                         dialogo.dismiss();

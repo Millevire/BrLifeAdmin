@@ -125,8 +125,23 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
 
                     tvTitulo.setText(SelccionMantenedor.Producto.getSeleccion().toString());
                     //cargarWebService();
+
+                    //llenar lsta de productos en actividad
                     new CargarBaseDeDatosProducto(this,SelccionMantenedor.Producto.getSeleccion());
+
+                    //llenar lista de Marca
                     new CargarBaseDeDatosTIpoProducto(this,SelccionMantenedor.TipoProducto.getSeleccion());
+
+                    //Cargar listas marca y tipo medicion para spinner de ActivityNuevoProducto con listas dedicadas
+                    new CargarBaseDeDatosMantenedorTresAtributos(this,SelccionMantenedor.Marca.getSeleccion());
+
+
+
+                    //Cargar listas Sabor y tipo medicion para spinner de ActivityNuevoProducto con listas dedicadas
+                    new CargarBaseDeDatosMantenedorTresAtributos(this,SelccionMantenedor.Sabor.getSeleccion());
+                    //CargarBaseDeDatosMantenedorTresAtributos.llenarListaSabor();
+
+
                     break;
                 case Sabor:
 

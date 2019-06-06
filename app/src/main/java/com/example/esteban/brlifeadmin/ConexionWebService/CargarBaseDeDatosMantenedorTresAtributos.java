@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.MantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 import com.example.esteban.brlifeadmin.R;
@@ -22,7 +23,21 @@ import java.util.ArrayList;
 
 public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listener<JSONObject>,Response.ErrorListener {
 
+    //lista general para mantenedores de tes atributos
     public static ArrayList<MantenedorTresAtributos> listaMantenedorTresAtributos =new ArrayList<>();
+
+    //lista especifica de Sabor para usos como llenar mas de un spinner en una actividad. la lista sigue siendo de tres atributos
+    public static ArrayList<MantenedorTresAtributos> listaSabor =new ArrayList<>();
+
+    //lista especifica de Marca para usos como llenar mas de un spinner en una actividad. la lista sigue siendo de tres atributos
+    public static ArrayList<MantenedorTresAtributos> listaMarca =new ArrayList<>();
+
+
+    //listas filtro
+
+    public static ArrayList<MantenedorTresAtributos>listaFiltroMarca=new ArrayList<>();
+    public static ArrayList<MantenedorTresAtributos>listaFiltrSabor=new ArrayList<>();
+
 
     static RequestQueue request;
     static JsonObjectRequest jsonObjectRequest;
@@ -38,6 +53,34 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
         llenarBaseDeDatosTipoProducto(context,mantenedor);
 
     }
+    public  CargarBaseDeDatosMantenedorTresAtributos(Context context){
+
+
+        //Llenar lista Marca
+        this.mantenedor=SelccionMantenedor.Marca.getSeleccion();
+        request= Volley.newRequestQueue(context);
+        llenarBaseDeDatosTipoProducto(context,this.mantenedor);
+        llenarListaMarca();
+
+        //Llenar lista Marca
+        //this.mantenedor=SelccionMantenedor.Sabor.getSeleccion();
+        //request= Volley.newRequestQueue(context);
+        //llenarBaseDeDatosTipoProducto(context,this.mantenedor);
+        //this.listaSabor=listaMantenedorTresAtributos;
+
+
+    }
+
+   public static void llenarListaMarca(){
+
+        listaMarca=listaMantenedorTresAtributos;
+
+   }
+
+   public static void llenarListaSabor(){
+
+        listaSabor=listaMantenedorTresAtributos;
+   }
 
     public static void eliminar(int id){
         for(int x = 0; x< listaMantenedorTresAtributos.size(); ++x){
@@ -87,12 +130,38 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
         return listaMantenedorTresAtributos;
     }
 
+    public static ArrayList<MantenedorTresAtributos>filtroSabor(int idTipoProducto){
+        listaFiltrSabor.clear();
+        for (MantenedorTresAtributos mantenedorTresAtributos: listaSabor){
+
+            if(mantenedorTresAtributos.getFkMantenedorTresAtributos()==idTipoProducto){
+                listaFiltrSabor.add(mantenedorTresAtributos);
+            }
+        }
+        return listaFiltrSabor;
+
+    }
+
+    public static ArrayList<MantenedorTresAtributos>filtroMarca(int idTipoProducto){
+        listaFiltroMarca.clear();
+        for (MantenedorTresAtributos mantenedorTresAtributos: listaMarca){
+
+            if(mantenedorTresAtributos.getFkMantenedorTresAtributos()==idTipoProducto){
+                listaFiltroMarca.add(mantenedorTresAtributos);
+            }
+        }
+
+        return listaFiltroMarca;
+
+    }
+
 
 
     private void llenarBaseDeDatosTipoProducto(Context context, String mantenedor) {
-        progreso=new ProgressDialog(context);
-        progreso.setMessage(context.getString(R.string.mensajeBarraProgresoCargando));
-        progreso.show();
+        //progreso=new ProgressDialog(context);
+       // progreso.setMessage(context.getString(R.string.mensajeBarraProgresoCargando));
+        //progreso.show();
+
 
         String url=context.getString(R.string.URLwebServicePart1)+mantenedor+context.getString(R.string.URLwebServicePart2);
 
@@ -104,17 +173,19 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
     }
 
 
+
+
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.d(contexto.getString(R.string.ERROR),error.toString());
-        progreso.hide();
+       // progreso.hide();
     }
 
     @Override
     public void onResponse(JSONObject response) {
         MantenedorTresAtributos mantenedorTresAtributos =null;
 
-        progreso.hide();
+       // progreso.hide();
         listaMantenedorTresAtributos.clear();
 
         JSONArray json=response.optJSONArray(this.mantenedor);
@@ -143,9 +214,17 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
 
                 }
 
-                // mantenedor.setIdTipoProducto(Integer.parseInt(jsonObject.toString()));
+                //mantenedor.setIdTipoProducto(Integer.parseInt(jsonObject.toString()));
                 mantenedorTresAtributos.setNombreMantenedorTresAtributos(jsonObject.getString("Nombre_"+ this.mantenedor));
                 listaMantenedorTresAtributos.add(mantenedorTresAtributos);
+
+                //llenar lista especifica marca
+                if (mantenedor.equals(SelccionMantenedor.Marca.getSeleccion())) listaMarca.add(mantenedorTresAtributos);
+
+               //llenar lsta especifica sabor
+                if (mantenedor.equals(SelccionMantenedor.Sabor.getSeleccion()))listaSabor.add(mantenedorTresAtributos);
+
+
 
             }
 
