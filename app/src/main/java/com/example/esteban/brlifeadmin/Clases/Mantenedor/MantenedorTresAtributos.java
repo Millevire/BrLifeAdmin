@@ -37,4 +37,9 @@ public class MantenedorTresAtributos {
     public void setNombreMantenedorTresAtributos(String nombreMantenedorTresAtributos) {
         this.nombreMantenedorTresAtributos = nombreMantenedorTresAtributos;
     }
+
+    @Override
+    public String toString() {
+        return this.nombreMantenedorTresAtributos;
+    }
 }

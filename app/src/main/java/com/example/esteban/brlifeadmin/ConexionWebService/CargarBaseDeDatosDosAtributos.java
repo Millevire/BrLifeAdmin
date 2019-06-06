@@ -11,6 +11,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
+import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 import com.example.esteban.brlifeadmin.R;
 
 import org.json.JSONArray;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
  */
 public class CargarBaseDeDatosDosAtributos implements Response.Listener<JSONObject>,Response.ErrorListener{
     public static ArrayList<Mantenedor> listaMantenedors =new ArrayList<>();
+    public static ArrayList<Mantenedor> listaTipoMedicion =new ArrayList<>();
 
     static RequestQueue request;
     static JsonObjectRequest jsonObjectRequest;
@@ -45,6 +47,10 @@ public class CargarBaseDeDatosDosAtributos implements Response.Listener<JSONObje
         llenarBaseDeDatosDosAtributos(context,mantenedor);
 
     }
+
+
+
+
 
     public static void eliminar(int id){
         for(int x = 0; x< listaMantenedors.size(); ++x){
@@ -102,6 +108,7 @@ public class CargarBaseDeDatosDosAtributos implements Response.Listener<JSONObje
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
         request.add(jsonObjectRequest);
     }
+
 
     @Override
     public void onErrorResponse(VolleyError error) {

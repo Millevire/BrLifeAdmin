@@ -29,6 +29,7 @@ public class CrudMantenedorTresAtributos implements Response.Listener<JSONObject
     int fkMantenedor;
     public String mantenedor;
     Context contexto;
+    public static int idNuevoMantenedorTresAtributos;
 
 
     public CrudMantenedorTresAtributos(Context context,String nombre,int fk,  String tipoConsulta, int id , String mantenedor){
@@ -129,9 +130,11 @@ if (mantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
             try {
                 jsonObject=json.getJSONObject(0);
 
+                //PENDIENTE DE RECUPERAR ID PARA PODER ACTUALIZAR INMEDIATAMENTE UN REGISTRO RECIEN INGRESADO
                 //Agregar a lista un nuevo mantenedor con la respuesta de webservic al agregar.
-           CargarBaseDeDatosMantenedorTresAtributos.agregar(new MantenedorTresAtributos(jsonObject.getInt("Id_"+ this.mantenedor+"_Nuevo"),fkMantenedor,nombre));
+           //CargarBaseDeDatosMantenedorTresAtributos.agregar(new MantenedorTresAtributos(jsonObject.getInt("Id_"+ this.mantenedor+"_Nuevo"),fkMantenedor,nombre));
 
+           idNuevoMantenedorTresAtributos=jsonObject.getInt("Id_"+ this.mantenedor+"_Nuevo");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
