@@ -57,6 +57,15 @@ public class CargarBaseDeDatosDosAtributos implements Response.Listener<JSONObje
         }
     }
 
+    public static Mantenedor buscar(int idMantenedor, Context context, String mantenedo){
+        for(Mantenedor mantenedor: listaMantenedors){
+            if (mantenedor.getIdTipoProducto()==idMantenedor){
+                return mantenedor;
+            }
+        }
+        return null;
+    }
+
     public static Mantenedor buscar(int idMantenedor){
         for(Mantenedor mantenedor: listaMantenedors){
             if (mantenedor.getIdTipoProducto()==idMantenedor){
@@ -64,6 +73,13 @@ public class CargarBaseDeDatosDosAtributos implements Response.Listener<JSONObje
             }
         }
         return null;
+    }
+
+
+    public static int buscarIndice(Mantenedor mantenedorTresAtributos){
+        int position;
+        position = listaMantenedors.indexOf(mantenedorTresAtributos);
+        return position;
     }
 
     public static void editar(int id,String nombre){

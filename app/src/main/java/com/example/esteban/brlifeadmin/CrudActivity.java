@@ -44,8 +44,13 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
  private  String mantenedor;
 
     /**
-     * AL momento de agregar un nuevo mantenedor especifico hay que agregarlo
-     *
+     * AL momento de agregar un nuevo mantenedor especifico hay que agregarlo en el metodo oncreate
+     *En el Oncreate se debe colocar el especifico por el switch y el metodo CargaBasedeDatos correcto y necesarios
+     * Luego en el metodo llenr se le pasa el adapter especifico con los datos a lvLista
+     * Luego se necesita implementar en la clase el AlertNuevoMantenedorXX.FinalizaCuadroDialogoAgregar para pasar al
+     *adapter especifico hacer un refresh con notifyDataSetChanged
+     * Por ultimo en el metodo onResume se necesita con el adaptador especifico refrescar con notifyDataSetChanged
+     * Para su carga completa
      */
 
 
@@ -75,7 +80,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
         CargarBaseDeDatosDosAtributos.getListaMantenedors().clear();
         CargarBaseDeDatosTIpoProducto.getListaTipoProducto().clear();
         CargarBaseDeDatosProducto.getListaProducto().clear();
-
+        CargarBaseDeDatosComuna.getListaComuna().clear();
 
 
         //Verificar estado de bundle

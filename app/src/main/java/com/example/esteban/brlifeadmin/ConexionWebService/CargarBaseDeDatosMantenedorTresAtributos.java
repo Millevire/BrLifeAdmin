@@ -59,6 +59,12 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
         return null;
     }
 
+    public static int buscarIndice(MantenedorTresAtributos mantenedorTresAtributos){
+        int position;
+        position = listaMantenedorTresAtributos.indexOf(mantenedorTresAtributos);
+        return position;
+    }
+
     public static void editar(int id,int idTipoProducto,String nombre){
         for(int x = 0; x< listaMantenedorTresAtributos.size(); ++x){
             if (listaMantenedorTresAtributos.get(x).getIdMantenedorTresAtributos()==id){

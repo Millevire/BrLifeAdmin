@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class AdapterComuna extends BaseAdapter implements PopupMenu.OnMenuItemClickListener, AlertDelete.FinalizoCuadroDialogo, AlertNuevoMantenedorDosAtributos.FinalizoCuadroDialogoAgregar, AlertNuevoMantenedorTipoProducto.FinalizoCuadroDialogoAgregar, AlertNuevoMantendorComuna.FinalizoCuadroDialogoAgregar {
     private Context context;
-    private ArrayList<Comuna> listaComuna =new ArrayList<>();
+    private static ArrayList<Comuna> listaComuna =new ArrayList<>();
     private String tipoMantenedor;
 
     public AdapterComuna(Context context, ArrayList<Comuna> listaComuna, String tipoMantenedor) {
@@ -59,7 +59,7 @@ public class AdapterComuna extends BaseAdapter implements PopupMenu.OnMenuItemCl
 
         //Referencia de widget
         TextView tvNombreMantenedorComuna=(TextView)convertView.findViewById(R.id.tvNombreMantenedorComuna);
-        Button btnMoreMantenedorTresAtributos=(Button)convertView.findViewById(R.id.btnMoreMantenedorComuna);
+        Button btnMoreMantenedorComuna=(Button)convertView.findViewById(R.id.btnMoreMantenedorComuna);
         TextView tvTipoProducto_Provincia=convertView.findViewById(R.id.tvTipoProducto_Provincia);
         TextView tvTipoProducto_Region=convertView.findViewById(R.id.tvTipoProducto_Region);
 
@@ -68,10 +68,48 @@ public class AdapterComuna extends BaseAdapter implements PopupMenu.OnMenuItemCl
 
         //Para Obtener el nombre de la region
         Mantenedor mantenedorRegion = CargarBaseDeDatosDosAtributos.buscar(listaComuna.get(position).getIdRegion());
-        MantenedorTresAtributos mantenedorProvincia = CargarBaseDeDatosMantenedorTresAtributos.buscar(listaComuna.get(position).getIdRegion());
+        MantenedorTresAtributos mantenedorProvincia = CargarBaseDeDatosMantenedorTresAtributos.buscar(listaComuna.get(position).getIdProvincia());
 
-        tvTipoProducto_Provincia.setText("Provincia: " + mantenedorProvincia.getNombreMantenedorTresAtributos());
-        tvTipoProducto_Region.setText(mantenedorRegion.getNombreTipoProducto());
+        if (mantenedorRegion != null || mantenedorProvincia != null){
+            tvTipoProducto_Provincia.setText("Provincia: " + mantenedorProvincia.getNombreMantenedorTresAtributos());
+            tvTipoProducto_Region.setText(mantenedorRegion.getNombreTipoProducto());
+        }
+
+        btnMoreMantenedorComuna.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup=new PopupMenu(context,v);
+                popup.setOnMenuItemClickListener(AdapterComuna.this);
+                popup.inflate(R.menu.popup_menu);
+
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        switch (item.getItemId()){
+                            case R.id.itemEdit:
+                                new AlertNuevoMantendorComuna(context,  AdapterComuna.this,true, listaComuna.get(position),tipoMantenedor);
+                                //new CargarBaseDeDatosDosAtributos(context);
+
+                                return true;
+
+                            case R.id.itemDelete:
+                                int id= listaComuna.get(position).getIdComuna();
+
+                                new AlertDelete(context,id,AdapterComuna.this,tipoMantenedor);
+                                //new CargarBaseDeDatosDosAtributos(context);
+
+                                return true;
+
+                            default: return false;
+
+                        }
+
+                    }
+                });
+                popup.show();
+            }
+        });
         return convertView;
     }
 
