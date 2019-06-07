@@ -3,6 +3,7 @@ package com.example.esteban.brlifeadmin.ConexionWebService;
 import android.app.ProgressDialog;
 import android.content.Context;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 
 public class CargarBaseDeDatosComuna implements Response.Listener<JSONObject>,Response.ErrorListener{
     public static ArrayList<Comuna> listaComuna =new ArrayList<>();
-
+    public static  DefaultRetryPolicy defaultRetryPolicy;
 
     static RequestQueue request;
     static JsonObjectRequest jsonObjectRequest;
@@ -88,8 +89,13 @@ public class CargarBaseDeDatosComuna implements Response.Listener<JSONObject>,Re
         url=url.replace(" ","%20");
 
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         request.add(jsonObjectRequest);
     }
+
+
+
 
     @Override
     public void onErrorResponse(VolleyError error) {
@@ -104,7 +110,7 @@ public class CargarBaseDeDatosComuna implements Response.Listener<JSONObject>,Re
 
         JSONArray json=response.optJSONArray(this.mantenedor);
         try {
-            for (int i=0; i<json.length(); i++){
+                for (int i=0; i<json.length(); i++){
                 JSONObject jsonObject=null;
 
                 Comuna = new Comuna();

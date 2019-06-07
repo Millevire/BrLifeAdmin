@@ -24,7 +24,7 @@ public class CrudMantenedorComuna implements Response.Listener<JSONObject>,Respo
 
             //Enviar a actividad para agregar Producto
             case "nuevo":
-                agregarNuevoComuna(idprovincia,idcomuna, nombrecomuna,context,mantenedor);
+                agregarNuevoComuna(idprovincia,idregion, nombrecomuna,context,mantenedor);
                 break;
             //Abrir Alert dialogo para agregar Provincia
             case "editar":
@@ -46,11 +46,13 @@ public class CrudMantenedorComuna implements Response.Listener<JSONObject>,Respo
 
 
         String url="http://www.brotherwareoficial.com/WebServices/Mantenedor"+mantenedor+".php?tipoconsulta=i&nombre"+mantenedor+"="
-                +nombrecomuna + "&idProvincia="+idprovincia+"&idRegion="+idprovincia;
+                +nombrecomuna + "&idProvincia="+idprovincia+"&idRegion="+idregion;
 
 
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
         request.add(jsonObjectRequest);
+
+
     }
 
     private void editarComuna(int idcomuna, int idprovincia, int idregion, String nombrecomuna, Context contexto, String mantenedor){
@@ -80,7 +82,7 @@ public class CrudMantenedorComuna implements Response.Listener<JSONObject>,Respo
 
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
         request.add(jsonObjectRequest);
-        CargarBaseDeDatosDosAtributos.eliminar(id);
+        CargarBaseDeDatosComuna.eliminar(id);
     }
 
 
@@ -92,6 +94,6 @@ public class CrudMantenedorComuna implements Response.Listener<JSONObject>,Respo
 
     @Override
     public void onResponse(JSONObject response) {
-
+        progreso.hide();
     }
 }

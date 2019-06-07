@@ -46,6 +46,8 @@ public class SpinAdapter extends ArrayAdapter<Mantenedor> {
     }
 
 
+
+
     // And the "magic" goes here
     // This is for the "passive" state of the spinner
     @Override

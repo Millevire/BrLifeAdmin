@@ -70,7 +70,7 @@ public class AdapterComuna extends BaseAdapter implements PopupMenu.OnMenuItemCl
         Mantenedor mantenedorRegion = CargarBaseDeDatosDosAtributos.buscar(listaComuna.get(position).getIdRegion());
         MantenedorTresAtributos mantenedorProvincia = CargarBaseDeDatosMantenedorTresAtributos.buscar(listaComuna.get(position).getIdProvincia());
 
-        if (mantenedorRegion != null || mantenedorProvincia != null){
+        if (mantenedorRegion != null && mantenedorProvincia != null){
             tvTipoProducto_Provincia.setText("Provincia: " + mantenedorProvincia.getNombreMantenedorTresAtributos());
             tvTipoProducto_Region.setText(mantenedorRegion.getNombreTipoProducto());
         }
