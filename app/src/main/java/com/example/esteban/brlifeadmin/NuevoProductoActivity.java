@@ -80,8 +80,8 @@ spTipoProducto.getSelectedItem();
                int idTipoproducto=CargarBaseDeDatosTIpoProducto.getListaTipoProducto().get(position).getIdTipoProducto();
 
                //Filtrar
-               listaFiltroSabor=CargarBaseDeDatosMantenedorTresAtributos.filtroSabor(idTipoproducto);
-               adapterSabor=new ArrayAdapter(NuevoProductoActivity.this,android.R.layout.simple_list_item_1,listaFiltroSabor);
+               listaFiltroSabor = CargarBaseDeDatosMantenedorTresAtributos.filtroSabor(idTipoproducto);
+               adapterSabor = new ArrayAdapter(NuevoProductoActivity.this,android.R.layout.simple_list_item_1,listaFiltroSabor);
                spSabor.setAdapter(adapterSabor);
 
 

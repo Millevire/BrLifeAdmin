@@ -25,6 +25,8 @@ import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorComuna;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.R;
 
+import java.util.ArrayList;
+
 public class AlertNuevoMantendorComuna {
     ArrayAdapter<Mantenedor> adapterRegion;
     ArrayAdapter<MantenedorTresAtributos> adapterProvincia;
@@ -37,6 +39,8 @@ public class AlertNuevoMantendorComuna {
     }
 
     private FinalizoCuadroDialogoAgregar interfaz;
+    private ArrayList<MantenedorTresAtributos> listaFiltroProvincia = new ArrayList<>();
+
 
     public AlertNuevoMantendorComuna(final Context contexto, final FinalizoCuadroDialogoAgregar actividad, final boolean tipo, final Comuna comuna, final String mantenedor) {
         interfaz = actividad;
@@ -62,27 +66,33 @@ public class AlertNuevoMantendorComuna {
         tvTipoMantenedorSpinnerRegion.setText("Region:");
         tvTipoMantenedorSpinnerProvincia.setText("Provincia:");
         adapterRegion=new SpinAdapter(contexto,android.R.layout.simple_list_item_1, CargarBaseDeDatosDosAtributos.getListaMantenedors());
-        //adapterProvincia =new ArrayAdapter(contexto,android.R.layout.simple_list_item_1, CargarBaseDeDatosMantenedorTresAtributos.getListaMantenedorTresAtributos());
         adapterProvincia =new SpinAdapterTresAtributos(contexto,android.R.layout.simple_list_item_1, CargarBaseDeDatosMantenedorTresAtributos.getListaMantenedorTresAtributos());
         spAlertMantenedorProvincia.setAdapter(adapterProvincia);
         spAlertMantenedorRegion.setAdapter(adapterRegion);
         tvTituloAlertNuevoMantenedorComuna.setText("Nueva Comuna:");
 
 
-        //Si es verdadero se edita
-        if (tipo){
-            etAlertNuevoMantenedorTresAtributos.setText(comuna.getNombreComuna());
-            int posi = (int) adapterRegion.getItemId(comuna.getIdRegion());
-            int posiprovi = (int) adapterProvincia.getItemId(comuna.getIdProvincia());
-            spAlertMantenedorRegion.setSelection(posi);
-            spAlertMantenedorProvincia.setSelection(posiprovi);
-        }
-
         spAlertMantenedorRegion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //enviar posicion
+                listaFiltroProvincia.clear();
                 posicionregion(position);
+                //Filtrar
+                int idregion = CargarBaseDeDatosDosAtributos.getListaMantenedors().get(posicionregion).getIdTipoProducto();
+                listaFiltroProvincia = CargarBaseDeDatosMantenedorTresAtributos.filtroSabor(idregion);
+                adapterProvincia = new SpinAdapterTresAtributos(contexto,android.R.layout.simple_list_item_1,listaFiltroProvincia);
+                spAlertMantenedorProvincia.setAdapter(adapterProvincia);
+
+                //Si es verdadero se edita
+                if (tipo){
+                    etAlertNuevoMantenedorTresAtributos.setText(comuna.getNombreComuna());
+                    int posi = (int) adapterRegion.getItemId(comuna.getIdRegion());
+                    int posiprovi = (int) adapterProvincia.getItemId(comuna.getIdProvincia());
+                    spAlertMantenedorRegion.setSelection(posi);
+                    spAlertMantenedorProvincia.setSelection(posiprovi);
+                }
+
             }
 
             @Override
@@ -102,6 +112,15 @@ public class AlertNuevoMantendorComuna {
 
             }
         });
+
+        //Si es verdadero se edita
+        if (tipo){
+            etAlertNuevoMantenedorTresAtributos.setText(comuna.getNombreComuna());
+            int posi = (int) adapterRegion.getItemId(comuna.getIdRegion());
+            int posiprovi = (int) adapterProvincia.getItemId(comuna.getIdProvincia());
+            spAlertMantenedorRegion.setSelection(posi);
+            spAlertMantenedorProvincia.setSelection(posiprovi);
+        }
 
         btnAceptarlarAlertNuevaMantenedorComuna.setOnClickListener(new View.OnClickListener() {
             @Override

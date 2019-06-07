@@ -132,7 +132,7 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
 
     public static ArrayList<MantenedorTresAtributos>filtroSabor(int idTipoProducto){
         listaFiltrSabor.clear();
-        for (MantenedorTresAtributos mantenedorTresAtributos: listaSabor){
+        for (MantenedorTresAtributos mantenedorTresAtributos: listaMantenedorTresAtributos){
 
             if(mantenedorTresAtributos.getFkMantenedorTresAtributos()==idTipoProducto){
                 listaFiltrSabor.add(mantenedorTresAtributos);

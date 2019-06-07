@@ -7,4 +7,7 @@
     <string name="URLwebServicePart1">http://www.brotherwareoficial.com/WebServices/Mantenedor</string>
     <string name="URLwebServicePart2">.php?tipoconsulta=s</string>
     <string name="ERROR">ERROR</string>
+    <string name="nueva_provincia">Nueva Provincia</string>
+    <string name="cancelar">CANCELAR</string>
+    <string name="aceptar">Aceptar</string>
 </resources>
