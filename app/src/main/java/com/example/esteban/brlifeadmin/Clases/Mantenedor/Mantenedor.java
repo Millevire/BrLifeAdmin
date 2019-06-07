@@ -9,6 +9,7 @@ public class Mantenedor {
     public Mantenedor() {
     }
 
+
     public Mantenedor(String nombreTipoProducto) {
         this.nombreTipoProducto = nombreTipoProducto;
     }

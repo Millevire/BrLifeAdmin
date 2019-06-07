@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.esteban.brlifeadmin.Adapter.SpinAdapter;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.MantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.TipoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
@@ -19,6 +20,7 @@ import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTresAtributos;
+import com.example.esteban.brlifeadmin.Enum.SeleccionTipoMedicion;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -28,11 +30,12 @@ public class NuevoProductoActivity extends AppCompatActivity {
  private Spinner spTipoProducto,spTipoMedicion,spMarca,spSabor;
  private RadioButton rbRegistroCodigoBarra,rbRegistroNormal;
  private ArrayAdapter<TipoProducto> adapterTipoProducto;
- private ArrayAdapter<Mantenedor> adapterTipoMedicion;
+ private SpinAdapter adapterTipoMedicion;
  private ArrayAdapter<MantenedorTresAtributos> adapterMarca;
  private ArrayAdapter<MantenedorTresAtributos> adapterSabor;
  private ArrayList<MantenedorTresAtributos>listaFiltroSabor=new ArrayList<>();
     private ArrayList<MantenedorTresAtributos>listaFiltroMarca=new ArrayList<>();
+    //private ArrayList<String>listaTipoMedicion=new ArrayList<>();
  private Button btnOpenBarCode,btnBack;
  private EditText etBarCode;
     @Override
@@ -51,6 +54,12 @@ public class NuevoProductoActivity extends AppCompatActivity {
         etBarCode=(EditText)findViewById(R.id.etBarCode);
         rbRegistroCodigoBarra=(RadioButton)findViewById(R.id.rbRegistroCodigoBarra);
         rbRegistroNormal=(RadioButton)findViewById(R.id.rbRegistroNormal);
+
+        //Limpiar listas
+        listaFiltroMarca.clear();
+        listaFiltroSabor.clear();
+
+//Cargar Spinner Tipo Medicion
 
 
 spTipoProducto.getSelectedItem();
@@ -154,6 +163,11 @@ spTipoProducto.getSelectedItem();
         adapterTipoProducto= new ArrayAdapter(this,android.R.layout.simple_list_item_1, CargarBaseDeDatosTIpoProducto.getListaTipoProducto());
         spTipoProducto.setAdapter(adapterTipoProducto);
 
+
+       new SeleccionTipoMedicion();
+       SeleccionTipoMedicion.getTipoMedicion();
+        adapterTipoMedicion=new SpinAdapter(this,android.R.layout.simple_list_item_1,SeleccionTipoMedicion.getTipoMedicion());
+        spTipoMedicion.setAdapter(adapterTipoMedicion);
 
     }
 
