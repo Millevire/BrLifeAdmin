@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content" android:gravity="center">
     <LinearLayout
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
         <LinearLayout
@@ -17,11 +17,11 @@
                 android:gravity="center">
 
                 <TextView
-                    android:id="@+id/tvTitutloAlertNuevoTipoProducto"
+                    android:id="@+id/tvTitutloAlertProductoNutriente"
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
-                    android:text="Nuevo Tipo Producto"
+                    android:text="Nuevo Nutriente"
                     android:textAlignment="center"
                     android:textColor="@color/blanco" />
             </LinearLayout>
@@ -37,9 +37,9 @@
                 >
 
                 <EditText
-                    android:id="@+id/etAlertMantenedorValor"
+                    android:id="@+id/etAlertProductoNutriente"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="30dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:hint="Valor"
@@ -57,14 +57,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tvTipoMantenedorNutriente"
-                    android:layout_width="90dp"
+                    android:id="@+id/tvAlertProductoNutriente"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nutriente"
                     android:textColor="@color/colorPrimaryDark" />
 
                 <Spinner
-                    android:id="@+id/spAlertMantenedorTresAtributos"
+                    android:id="@+id/spAlertProductoNutriente"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"></Spinner>
             </LinearLayout>
@@ -75,12 +75,12 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:orientation="horizontal"
-                android:gravity="right">
+                android:gravity="center">
 
                 <Button
-                    android:id="@+id/btnCancelarAlertNuevoTipoProduto"
+                    android:id="@+id/btnCancelarAlertProductoNutriente"
                     style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="111dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
                     android:backgroundTint="@color/colorPrimaryDark"
@@ -89,8 +89,8 @@
                     android:textSize="12sp" />
 
                 <Button
-                    android:id="@+id/btnAceptarlarAlertNuevoTipoProduto"
-                    android:layout_width="111dp"
+                    android:id="@+id/btnAceptarAlertProductoNutriente"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
                     android:backgroundTint="@color/colorPrimaryDark"

@@ -49,9 +49,9 @@ public class AlertNuevoMantenedorTipoProducto {
 
         //widget
         //Se declaran y referencian los botones y elementos del layout
-        Button btnAceptarAlertTipoProducto=dialogo.findViewById(R.id.btnAceptarlarAlertNuevoTipoProduto);
-        Button btnCancelarAlertTipoProducto=dialogo.findViewById(R.id.btnCancelarAlertNuevoTipoProduto);
-        TextView tvTitutloAlertTipoProducto=dialogo.findViewById(R.id.tvTitutloAlertNuevoTipoProducto);
+        Button btnAceptarAlertTipoProducto=dialogo.findViewById(R.id.btnAceptarAlertProductoNutriente);
+        Button btnCancelarAlertTipoProducto=dialogo.findViewById(R.id.btnCancelarAlertProductoNutriente);
+        TextView tvTitutloAlertTipoProducto=dialogo.findViewById(R.id.tvTitutloAlertProductoNutriente);
         final Switch switchsabor = dialogo.findViewById(R.id.switchSabor);
         final Switch switchmarca = dialogo.findViewById(R.id.switchMarca);
         final EditText etAlertTipoProducto=dialogo.findViewById(R.id.etAlertMantenedorTipoProducto);

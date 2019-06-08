@@ -10,14 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.MantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.TipoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.DialogKeyListener;
@@ -60,7 +58,7 @@ public class AlertNuevoMantenedorTresAtributos {
 
         //Declaracion de widget
         final EditText etAlertNuevoMantenedorTresAtributos=dialogo.findViewById(R.id.etAlertNuevoMantenedorTresAtributos);
-        final Spinner spAlertMantenedorTresAtributos=dialogo.findViewById(R.id.spAlertMantenedorTresAtributos);
+        final Spinner spAlertMantenedorTresAtributos=dialogo.findViewById(R.id.spAlertProductoNutriente);
         Button btnCancelarAlertNuevoMantenedorTresAtributos=dialogo.findViewById(R.id.btnCancelarAlertNuevoMantenedorTresAtributos);
         Button btnAceptarlarAlertNuevaMantenedorTresAtributos=dialogo.findViewById(R.id.btnAceptarlarAlertNuevaMantenedorTresAtributos);
         final TextView tvTituloAlertNuevoMantenedorTresAtributo=dialogo.findViewById(R.id.tvTituloAlertNuevoMantenedorTresAtributo);

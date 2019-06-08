@@ -19,6 +19,7 @@ import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorDosAtibu
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTipoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.CrudActivity;
+import com.example.esteban.brlifeadmin.DialogKeyListener;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 import com.example.esteban.brlifeadmin.R;
 
@@ -42,6 +43,11 @@ public class AlertDelete {
         dialogo.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialogo.setContentView(R.layout.alert_delete);
         dialogo.show();
+
+        //Detectar boton Back de celular
+        DialogKeyListener dkl=new DialogKeyListener();
+        dialogo.setOnKeyListener(dkl);
+
 
         //Widget
         Button btnAlertEliminar=dialogo.findViewById(R.id.btnAlertEliminar);
