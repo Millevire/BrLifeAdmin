@@ -34,6 +34,7 @@ public class AlertNuevoMantendorComuna {
     int posicionregion;
     int posicionprovincia;
 
+
     //metodo interfaz que comunicara Alert dialogo con actividad donde se implemente
     public interface FinalizoCuadroDialogoAgregar{
         void ResultadoCuadroDialogoAgregarComuna(boolean val);
@@ -86,7 +87,7 @@ public class AlertNuevoMantendorComuna {
                 posicionregion(position);
                 //Filtrar
                 int idregion = CargarBaseDeDatosDosAtributos.getListaMantenedors().get(posicionregion).getIdTipoProducto();
-                listaFiltroProvincia = CargarBaseDeDatosMantenedorTresAtributos.filtroSabor(idregion);
+                listaFiltroProvincia = CargarBaseDeDatosMantenedorTresAtributos.filtro(idregion);
                 adapterProvincia = new SpinAdapterTresAtributos(contexto,android.R.layout.simple_list_item_1,listaFiltroProvincia);
                 spAlertMantenedorProvincia.setAdapter(adapterProvincia);
 
@@ -95,8 +96,10 @@ public class AlertNuevoMantendorComuna {
                     etAlertNuevoMantenedorTresAtributos.setText(comuna.getNombreComuna());
                     int posi = (int) adapterRegion.getItemId(comuna.getIdRegion());
                     int posiprovi = (int) adapterProvincia.getItemId(comuna.getIdProvincia());
-                    spAlertMantenedorRegion.setSelection(posi);
-                    spAlertMantenedorProvincia.setSelection(posiprovi);
+                    if (idregion == comuna.getIdRegion()){
+                        spAlertMantenedorRegion.setSelection(posi);
+                        spAlertMantenedorProvincia.setSelection(posiprovi);
+                    }
                 }
 
             }

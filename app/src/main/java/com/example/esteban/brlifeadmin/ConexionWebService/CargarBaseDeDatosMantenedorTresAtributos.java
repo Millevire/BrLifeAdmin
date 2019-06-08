@@ -142,6 +142,19 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
 
     }
 
+    public static ArrayList<MantenedorTresAtributos>filtro(int idTipoProducto){
+        listaFiltrSabor.clear();
+        for (MantenedorTresAtributos mantenedorTresAtributos: listaMantenedorTresAtributos){
+
+            if(mantenedorTresAtributos.getFkMantenedorTresAtributos()==idTipoProducto){
+                listaFiltrSabor.add(mantenedorTresAtributos);
+            }
+        }
+        return listaFiltrSabor;
+
+    }
+
+
     public static ArrayList<MantenedorTresAtributos>filtroMarca(int idTipoProducto){
         listaFiltroMarca.clear();
         for (MantenedorTresAtributos mantenedorTresAtributos: listaMarca){
