@@ -19,6 +19,7 @@ import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorDosAtibu
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTipoProducto;
 import com.example.esteban.brlifeadmin.CrudActivity;
+import com.example.esteban.brlifeadmin.DialogKeyListener;
 import com.example.esteban.brlifeadmin.R;
 
 public class AlertNuevoMantenedorDosAtributos {
@@ -46,6 +47,10 @@ public class AlertNuevoMantenedorDosAtributos {
         dialogo.setContentView(R.layout.alert_nuevo_mantenedor_dos_atributos);
         dialogo.show();
 
+
+        //Detectar boton Back de celular
+        DialogKeyListener dkl=new DialogKeyListener();
+        dialogo.setOnKeyListener(dkl);
 
         //Declaracion widget
         Button btnAceptarlarAlertNuevoMantenedorDosAtributos=dialogo.findViewById(R.id.btnAceptarAlertNuevoMantenedorDosAtributos);

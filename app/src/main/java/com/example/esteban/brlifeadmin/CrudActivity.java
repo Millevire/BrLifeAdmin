@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -352,4 +353,5 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
     public void ResultadoCuadroDialogoAgregarComuna(boolean val) {
         adaptaderComuna.notifyDataSetChanged();
     }
+
 }

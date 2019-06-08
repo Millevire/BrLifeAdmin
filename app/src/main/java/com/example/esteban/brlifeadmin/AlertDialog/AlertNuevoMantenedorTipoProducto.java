@@ -15,6 +15,7 @@ import com.example.esteban.brlifeadmin.Clases.Mantenedor.TipoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTipoProducto;
 import com.example.esteban.brlifeadmin.CrudActivity;
+import com.example.esteban.brlifeadmin.DialogKeyListener;
 import com.example.esteban.brlifeadmin.R;
 
 public class AlertNuevoMantenedorTipoProducto {
@@ -42,6 +43,9 @@ public class AlertNuevoMantenedorTipoProducto {
         dialogo.setContentView(R.layout.alert_nuevo_mantenedor_tipoproducto);
         dialogo.show();
 
+        //Detectar boton Back de celular
+        DialogKeyListener dkl=new DialogKeyListener();
+        dialogo.setOnKeyListener(dkl);
 
         //widget
         //Se declaran y referencian los botones y elementos del layout

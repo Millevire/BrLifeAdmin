@@ -20,6 +20,7 @@ import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMante
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTresAtributos;
+import com.example.esteban.brlifeadmin.DialogKeyListener;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 import com.example.esteban.brlifeadmin.R;
 
@@ -53,6 +54,9 @@ public class AlertNuevoMantenedorTresAtributos {
         dialogo.setContentView(R.layout.alert_nuevo_mantenedor_tres_atributos);
         dialogo.show();
 
+        //Detectar boton Back de celular
+        DialogKeyListener dkl=new DialogKeyListener();
+        dialogo.setOnKeyListener(dkl);
 
         //Declaracion de widget
         final EditText etAlertNuevoMantenedorTresAtributos=dialogo.findViewById(R.id.etAlertNuevoMantenedorTresAtributos);

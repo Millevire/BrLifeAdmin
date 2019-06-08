@@ -23,6 +23,7 @@ import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAt
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorComuna;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTresAtributos;
+import com.example.esteban.brlifeadmin.DialogKeyListener;
 import com.example.esteban.brlifeadmin.R;
 
 import java.util.ArrayList;
@@ -53,6 +54,10 @@ public class AlertNuevoMantendorComuna {
         dialogo.setContentView(R.layout.alert_nuevo_mantenedor_comuna);
         dialogo.show();
 
+        //Detectar boton Back de celular
+        DialogKeyListener dkl=new DialogKeyListener();
+        dialogo.setOnKeyListener(dkl);
+
         //Declaracion de widget
         final EditText etAlertNuevoMantenedorTresAtributos=dialogo.findViewById(R.id.etAlertNuevoMantenedorComuna);
         final Spinner spAlertMantenedorProvincia = dialogo.findViewById(R.id.spAlertMantenedorProvincia);
@@ -70,6 +75,7 @@ public class AlertNuevoMantendorComuna {
         spAlertMantenedorProvincia.setAdapter(adapterProvincia);
         spAlertMantenedorRegion.setAdapter(adapterRegion);
         tvTituloAlertNuevoMantenedorComuna.setText("Nueva Comuna:");
+
 
 
         spAlertMantenedorRegion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -94,6 +100,7 @@ public class AlertNuevoMantendorComuna {
                 }
 
             }
+
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -171,6 +178,9 @@ public class AlertNuevoMantendorComuna {
             }
 
         });
+
+
+
 
 
 
