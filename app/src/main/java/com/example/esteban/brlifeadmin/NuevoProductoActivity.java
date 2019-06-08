@@ -1,5 +1,6 @@
 package com.example.esteban.brlifeadmin;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.esteban.brlifeadmin.Adapter.SpinAdapter;
+import com.example.esteban.brlifeadmin.AlertDialog.AlertMantenedorProductoNutriente;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.MantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.TipoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
@@ -26,7 +28,7 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 
-public class NuevoProductoActivity extends AppCompatActivity {
+public class NuevoProductoActivity extends AppCompatActivity implements AlertMantenedorProductoNutriente.FinalizoCuadroDialogoProductoNutriente {
  private Spinner spTipoProducto,spTipoMedicion,spMarca,spSabor;
  private RadioButton rbRegistroCodigoBarra,rbRegistroNormal;
  private ArrayAdapter<TipoProducto> adapterTipoProducto;
@@ -68,6 +70,13 @@ spTipoProducto.getSelectedItem();
 
         CargarSpinner();
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.nuevoNutriente);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertMantenedorProductoNutriente(NuevoProductoActivity.this,NuevoProductoActivity.this);
+            }
+        });
 
         /**
          * Spinner spTiporoducto:
@@ -211,5 +220,10 @@ spTipoProducto.getSelectedItem();
         }else {
             super.onActivityResult(requestCode,resultCode,data);
         }
+    }
+
+    @Override
+    public void ResultadoCuadroDialogoProductoNutriente(Boolean val) {
+
     }
 }
