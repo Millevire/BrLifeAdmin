@@ -42,9 +42,9 @@
                     android:layout_height="30dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:hint="Valor"
                     android:background="@null"
-                    android:inputType="number" />
+                    android:hint="Valor"
+                    android:inputType="numberDecimal" />
 
 
             </LinearLayout>

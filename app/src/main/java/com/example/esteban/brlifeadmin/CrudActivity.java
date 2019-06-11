@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -127,7 +126,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
 
                     tvTitulo.setText(SelccionMantenedor.Producto.getSeleccion().toString());
                     //cargarWebService();
-
+                      new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.Nutriente.getSeleccion());
                     //llenar lsta de productos en actividad
                     new CargarBaseDeDatosProducto(this,SelccionMantenedor.Producto.getSeleccion());
 
@@ -232,7 +231,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
 
         llenr();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.nuevo);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.nuevoNutriente);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
