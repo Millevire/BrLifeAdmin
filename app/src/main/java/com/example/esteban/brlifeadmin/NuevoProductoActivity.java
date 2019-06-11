@@ -18,8 +18,10 @@ import com.example.esteban.brlifeadmin.Clases.Mantenedor.TipoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
+import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosNuevoId;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTresAtributos;
+import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 import com.example.esteban.brlifeadmin.Enum.SeleccionTipoMedicion;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -38,6 +40,7 @@ public class NuevoProductoActivity extends AppCompatActivity {
     //private ArrayList<String>listaTipoMedicion=new ArrayList<>();
  private Button btnOpenBarCode,btnBack;
  private EditText etBarCode;
+ private int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +61,9 @@ public class NuevoProductoActivity extends AppCompatActivity {
         //Limpiar listas
         listaFiltroMarca.clear();
         listaFiltroSabor.clear();
+        //Cargar listas Sabor y tipo medicion para spinner de ActivityNuevoProducto con listas dedicadas
+
+
 
 //Cargar Spinner Tipo Medicion
 
@@ -83,7 +89,10 @@ spTipoProducto.getSelectedItem();
 
                listaFiltroMarca.clear();
                listaFiltroSabor.clear();
-
+                id = CargarBaseDeDatosNuevoId.getNuevaid();
+                if (id > 0){
+                    Toast.makeText(NuevoProductoActivity.this, "" + id, Toast.LENGTH_SHORT).show();
+                }
 
                //obtener id de tipo producto seleccionado
                int idTipoproducto=CargarBaseDeDatosTIpoProducto.getListaTipoProducto().get(position).getIdTipoProducto();

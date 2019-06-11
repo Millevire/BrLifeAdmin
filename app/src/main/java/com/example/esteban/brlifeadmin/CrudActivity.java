@@ -27,6 +27,7 @@ import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorTresAtrib
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosComuna;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
+import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosNuevoId;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
@@ -143,6 +144,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
                     //CargarBaseDeDatosMantenedorTresAtributos.llenarListaSabor();
 
 
+
                     break;
                 case Sabor:
 
@@ -240,7 +242,11 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
 
                     //Enviar a actividad para agregar Producto
                     case Producto:
+                        //Cargar listas Sabor y tipo medicion para spinner de ActivityNuevoProducto con listas dedicadas
+                        new CargarBaseDeDatosNuevoId(CrudActivity.this,SelccionMantenedor.Producto.getSeleccion());
+                        //CargarBaseDeDatosNuevoId.getNuevaid();
                         startActivity(intent);
+                        //CargarBaseDeDatosMantenedorTresAtributos.llenarListaSabor();
                         break;
 
                     //Abrir Alert dialogo para agregar Provincia
@@ -285,6 +291,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
 
        if (mantenedor.equals(SelccionMantenedor.Producto.getSeleccion())) {
            adapterProducto = new AdapterProducto(this, CargarBaseDeDatosProducto.getListaProducto(), mantenedor);
+
            lvLista.setAdapter(adapterProducto);
        }else if (mantenedor.equals(SelccionMantenedor.TipoProducto.getSeleccion())){
            adaptaderTipoProducto =new AdaptaderTipoProducto(this, CargarBaseDeDatosTIpoProducto.getListaTipoProducto(),mantenedor);
