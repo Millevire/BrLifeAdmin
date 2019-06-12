@@ -150,7 +150,7 @@ public class AlertNuevoMantenedorTresAtributos {
                         new CrudMantenedorTresAtributos(contexto,etAlertNuevoMantenedorTresAtributos.getText().toString(),CargarBaseDeDatosTIpoProducto.getListaTipoProducto().get(posicion).getIdTipoProducto(),"nuevo",0,tipoMantenedor);
                         actividad.ResultadoCuadroDialogoAgregarTresAtributos(true);
                         CargarBaseDeDatosMantenedorTresAtributos.agregar(new MantenedorTresAtributos(CrudMantenedorTresAtributos.idNuevoMantenedorTresAtributos,CargarBaseDeDatosTIpoProducto.getListaTipoProducto().get(posicion).getIdTipoProducto(),etAlertNuevoMantenedorTresAtributos.getText().toString()));
-
+                       // new CargarBaseDeDatosDosAtributos(contexto,tipoMantenedor);
 
                         dialogo.dismiss();
                     }

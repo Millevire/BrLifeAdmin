@@ -133,6 +133,10 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
                     //llenar lista de Marca
                     new CargarBaseDeDatosTIpoProducto(this,SelccionMantenedor.TipoProducto.getSeleccion());
 
+
+                    //Limpiar listas sabor y marca
+                    CargarBaseDeDatosMantenedorTresAtributos.limpiarListaMarcaSabor();
+
                     //Cargar listas marca y tipo medicion para spinner de ActivityNuevoProducto con listas dedicadas
                     new CargarBaseDeDatosMantenedorTresAtributos(this,SelccionMantenedor.Marca.getSeleccion());
 

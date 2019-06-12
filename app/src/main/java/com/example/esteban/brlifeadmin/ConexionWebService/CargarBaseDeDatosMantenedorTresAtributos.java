@@ -53,34 +53,29 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
         llenarBaseDeDatosTipoProducto(context,mantenedor);
 
     }
-    public  CargarBaseDeDatosMantenedorTresAtributos(Context context){
 
 
-        //Llenar lista Marca
-        this.mantenedor=SelccionMantenedor.Marca.getSeleccion();
-        request= Volley.newRequestQueue(context);
-        llenarBaseDeDatosTipoProducto(context,this.mantenedor);
-        llenarListaMarca();
+  public static String buscarMarca(int idMarca){
+        for (MantenedorTresAtributos mantenedorTresAtributos: listaMarca){
+            if (mantenedorTresAtributos.getIdMantenedorTresAtributos()==idMarca){
+                return mantenedorTresAtributos.getNombreMantenedorTresAtributos();
+            }
 
-        //Llenar lista Marca
-        //this.mantenedor=SelccionMantenedor.Sabor.getSeleccion();
-        //request= Volley.newRequestQueue(context);
-        //llenarBaseDeDatosTipoProducto(context,this.mantenedor);
-        //this.listaSabor=listaMantenedorTresAtributos;
+        }
+        return "";
 
+  }
+
+    public static String buscaSabor(int idMarca){
+        for (MantenedorTresAtributos mantenedorTresAtributos: listaSabor){
+            if (mantenedorTresAtributos.getIdMantenedorTresAtributos()==idMarca){
+                return mantenedorTresAtributos.getNombreMantenedorTresAtributos();
+            }
+
+        }
+        return "";
 
     }
-
-   public static void llenarListaMarca(){
-
-        listaMarca=listaMantenedorTresAtributos;
-
-   }
-
-   public static void llenarListaSabor(){
-
-        listaSabor=listaMantenedorTresAtributos;
-   }
 
     public static void eliminar(int id){
         for(int x = 0; x< listaMantenedorTresAtributos.size(); ++x){
@@ -132,7 +127,7 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
 
     public static ArrayList<MantenedorTresAtributos>filtroSabor(int idTipoProducto){
         listaFiltrSabor.clear();
-        for (MantenedorTresAtributos mantenedorTresAtributos: listaMantenedorTresAtributos){
+        for (MantenedorTresAtributos mantenedorTresAtributos: listaSabor){
 
             if(mantenedorTresAtributos.getFkMantenedorTresAtributos()==idTipoProducto){
                 listaFiltrSabor.add(mantenedorTresAtributos);
@@ -166,6 +161,11 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
 
         return listaFiltroMarca;
 
+    }
+
+    public static void limpiarListaMarcaSabor(){
+        listaSabor.clear();
+        listaMarca.clear();
     }
 
 

@@ -19,6 +19,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  *
@@ -33,6 +35,39 @@ public class CargarBaseDeDatosDosAtributos implements Response.Listener<JSONObje
     static ProgressDialog progreso;
     public Context contexto;
     public String mantenedor;
+
+
+
+
+
+
+
+//    public static void ordenar(){
+//
+//
+//Collections.sort(listaMantenedors, new Comparator<Mantenedor>() {
+//
+//            @Override
+//            public int compare(Mantenedor m1, Mantenedor m2) {
+//                return new Integer(m1.getIdTipoProducto()).compareTo(m2.getIdTipoProducto());
+//            }
+//
+//        });
+//
+//
+//        Collections.sort(listaMantenedors,Collections.sort(listaMantenedors, new Comparator<Mantenedor>() {
+//            @Override
+//            public int compare(Mantenedor o1, Mantenedor o2) {
+//                return 0;
+//            }
+//        }); );
+//
+//    }
+
+
+
+
+
 
     /**
      *
@@ -99,13 +134,13 @@ public class CargarBaseDeDatosDosAtributos implements Response.Listener<JSONObje
         }
 
     }
-
     public static void agregar(Mantenedor mantenedor){
-
+       // ordenar();
         listaMantenedors.add(mantenedor);
     }
 
     public static ArrayList<Mantenedor> getListaMantenedors() {
+        //ordenar();
         return listaMantenedors;
     }
 

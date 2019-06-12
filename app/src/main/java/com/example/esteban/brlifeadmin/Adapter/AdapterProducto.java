@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Producto;
+import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.R;
 import com.example.esteban.brlifeadmin.Enum.SeleccionTipoProducto;
 
@@ -52,9 +53,13 @@ public class AdapterProducto extends BaseAdapter {
         TextView tvCaloriasProducto=(TextView)convertView.findViewById(R.id.tvCaloriasProducto);
         ImageView ivImagen=(ImageView)convertView.findViewById(R.id.ivImagen);
 
-        //.setImageResource(R.drawable.agua);
-        //Variables en caso de que los id sabor y marca sean 0
-        int sabor, marca;
+
+        //Variables id
+        int idSabor;
+        int idMarca;
+        String nombreMarca;
+        String nombreSabor;
+
 
         SeleccionTipoProducto nombreTipoProducto= SeleccionTipoProducto.valueOf(listaProducto.get(position).getNombreTipoProducto());
 
@@ -96,17 +101,27 @@ public class AdapterProducto extends BaseAdapter {
         }
 
 
-        tvNombreProducto.setText(listaProducto.get(position).getNombreProducto());
-        sabor = listaProducto.get(position).getIdSabor();
-        marca = listaProducto.get(position).getIdMarca();
-        if (sabor > 0){
-            tvSaborProducto.setText(Integer.toString(listaProducto.get(position).getIdSabor()));
-        }
+        //Obtener nombre segun id de marca y sabor
 
-        if (marca > 0){
-            tvMarcaProducto.setText(Integer.toString(listaProducto.get(position).getIdMarca()));
-        }
-        //tvCaloriasProducto.setText(Float.toString(listaProducto.get(position).getCalorias()));
+        //id de marca y sabor de registro
+        idMarca=listaProducto.get(position).getIdMarca();
+        idSabor=listaProducto.get(position).getIdSabor();
+
+        //obtener nombre
+        nombreMarca= CargarBaseDeDatosMantenedorTresAtributos.buscarMarca(idMarca);
+        nombreSabor=CargarBaseDeDatosMantenedorTresAtributos.buscaSabor(idSabor);
+
+        //Setear nombres en textview
+        tvMarcaProducto.setText(nombreMarca);
+        tvSaborProducto.setText(nombreSabor);
+
+
+        //nombre producto
+        tvNombreProducto.setText(listaProducto.get(position).getNombreProducto());
+
+
+
+
         return convertView;
     }
 }
