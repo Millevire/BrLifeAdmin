@@ -23,6 +23,7 @@ import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantendorComuna;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorDosAtributos;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorTipoProducto;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorTresAtributos;
+import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosComuna;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
@@ -30,6 +31,8 @@ import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosNuevo
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
+
+import java.util.Collections;
 
 public class CrudActivity extends AppCompatActivity implements  AlertNuevoMantenedorDosAtributos.FinalizoCuadroDialogoAgregar,AlertNuevoMantenedorTresAtributos.FinalizoCuadroDialogoAgregarTrestAtributos, AlertNuevoMantenedorTipoProducto.FinalizoCuadroDialogoAgregar, AlertNuevoMantendorComuna.FinalizoCuadroDialogoAgregar {
  private EditText etBuscar;
@@ -133,6 +136,10 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
                     //llenar lista de Marca
                     new CargarBaseDeDatosTIpoProducto(this,SelccionMantenedor.TipoProducto.getSeleccion());
 
+
+                    //Limpiar listad de filtro marca y sabor
+                    CargarBaseDeDatosMantenedorTresAtributos.limpiarFiltroSaborMrca();
+
                     //Cargar listas marca y tipo medicion para spinner de ActivityNuevoProducto con listas dedicadas
                     new CargarBaseDeDatosMantenedorTresAtributos(this,SelccionMantenedor.Marca.getSeleccion());
 
@@ -141,6 +148,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
                     //Cargar listas Sabor y tipo medicion para spinner de ActivityNuevoProducto con listas dedicadas
                     new CargarBaseDeDatosMantenedorTresAtributos(this,SelccionMantenedor.Sabor.getSeleccion());
                     //CargarBaseDeDatosMantenedorTresAtributos.llenarListaSabor();
+
 
 
 
@@ -226,6 +234,8 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
             finish();
         }
     });
+
+
 
 
 
@@ -346,6 +356,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
 
     @Override
     public void ResultadoCuadroDialogoAgregarTresAtributos(boolean val) {
+
       adapterMantenedorTresAtributos.notifyDataSetChanged();
     }
 

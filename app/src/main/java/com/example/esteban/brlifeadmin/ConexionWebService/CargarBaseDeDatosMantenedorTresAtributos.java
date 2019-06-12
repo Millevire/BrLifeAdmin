@@ -102,6 +102,25 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
         return null;
     }
 
+
+    public static String buscarMarca(int idMarca){
+        for(MantenedorTresAtributos mantenedorTresAtributos: listaMarca){
+            if (mantenedorTresAtributos.getIdMantenedorTresAtributos()==idMarca){
+                return mantenedorTresAtributos.getNombreMantenedorTresAtributos() ;
+            }
+        }
+        return "";
+    }
+
+    public static String buscarSabor(int idSabor){
+        for(MantenedorTresAtributos mantenedorTresAtributos: listaSabor){
+            if (mantenedorTresAtributos.getIdMantenedorTresAtributos()==idSabor){
+                return mantenedorTresAtributos.getNombreMantenedorTresAtributos() ;
+            }
+        }
+        return "";
+    }
+
     public static int buscarIndice(MantenedorTresAtributos mantenedorTresAtributos){
         int position;
         position = listaMantenedorTresAtributos.indexOf(mantenedorTresAtributos);
@@ -132,7 +151,7 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
 
     public static ArrayList<MantenedorTresAtributos>filtroSabor(int idTipoProducto){
         listaFiltrSabor.clear();
-        for (MantenedorTresAtributos mantenedorTresAtributos: listaMantenedorTresAtributos){
+        for (MantenedorTresAtributos mantenedorTresAtributos: listaSabor){
 
             if(mantenedorTresAtributos.getFkMantenedorTresAtributos()==idTipoProducto){
                 listaFiltrSabor.add(mantenedorTresAtributos);
@@ -168,6 +187,10 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
 
     }
 
+    public static void limpiarFiltroSaborMrca(){
+        listaSabor.clear();
+        listaMarca.clear();
+    }
 
 
     private void llenarBaseDeDatosTipoProducto(Context context, String mantenedor) {
