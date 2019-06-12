@@ -2,6 +2,7 @@ package com.example.esteban.brlifeadmin.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -57,7 +58,8 @@ public class SpinAdapterTresAtributos extends ArrayAdapter<MantenedorTresAtribut
         // Then you can get the current item using the values array (Users array) and the current position
         // You can NOW reference each method you has created in your bean object (User class)
         label.setText(mantenedor.get(position).getNombreMantenedorTresAtributos());
-
+        label.setTextSize(14);
+        label.setGravity(Gravity.CENTER);
         // And finally return your dynamic (or custom) view for each spinner item
         return label;
     }
@@ -69,6 +71,8 @@ public class SpinAdapterTresAtributos extends ArrayAdapter<MantenedorTresAtribut
                                 ViewGroup parent) {
         TextView label = (TextView) super.getDropDownView(position, convertView, parent);
         label.setTextColor(Color.BLACK);
+        label.setTextSize(14);
+        label.setGravity(Gravity.CENTER);
         label.setText(mantenedor.get(position).getNombreMantenedorTresAtributos());
 
         return label;

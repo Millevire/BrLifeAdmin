@@ -14,8 +14,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.esteban.brlifeadmin.Adapter.SpinAdapter;
+import com.example.esteban.brlifeadmin.Adapter.SpinAdapterTresAtributos;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertMantenedorProductoNutriente;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.MantenedorTresAtributos;
+import com.example.esteban.brlifeadmin.Clases.Mantenedor.Producto;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.TipoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
@@ -33,14 +35,14 @@ import java.util.ArrayList;
 public class NuevoProductoActivity extends AppCompatActivity implements AlertMantenedorProductoNutriente.FinalizoCuadroDialogoProductoNutriente {
  private Spinner spTipoProducto,spTipoMedicion,spMarca,spSabor;
  private RadioButton rbRegistroCodigoBarra,rbRegistroNormal;
- private ArrayAdapter<TipoProducto> adapterTipoProducto;
+ private ArrayAdapter <TipoProducto> adapterTipoProducto;
  private SpinAdapter adapterTipoMedicion;
- private ArrayAdapter<MantenedorTresAtributos> adapterMarca;
- private ArrayAdapter<MantenedorTresAtributos> adapterSabor;
+ private SpinAdapterTresAtributos adapterMarca;
+ private SpinAdapterTresAtributos adapterSabor;
  private ArrayList<MantenedorTresAtributos>listaFiltroSabor=new ArrayList<>();
     private ArrayList<MantenedorTresAtributos>listaFiltroMarca=new ArrayList<>();
     //private ArrayList<String>listaTipoMedicion=new ArrayList<>();
- private Button btnOpenBarCode,btnBack;
+ private Button btnOpenBarCode,btnBack, btnAgregarProducto;
  private EditText etBarCode;
  private int id;
     @Override
@@ -56,6 +58,7 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
         spSabor=(Spinner)findViewById(R.id.spSabor);
         btnOpenBarCode=(Button)findViewById(R.id.btnOpenBarCode);
         btnBack=(Button)findViewById(R.id.btnBack);
+        btnAgregarProducto=(Button)findViewById(R.id.btnAgregarProducto);
         etBarCode=(EditText)findViewById(R.id.etBarCode);
         rbRegistroCodigoBarra=(RadioButton)findViewById(R.id.rbRegistroCodigoBarra);
         rbRegistroNormal=(RadioButton)findViewById(R.id.rbRegistroNormal);
@@ -66,11 +69,10 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
         //Cargar listas Sabor y tipo medicion para spinner de ActivityNuevoProducto con listas dedicadas
 
 
+        //Cargar Spinner Tipo Medicion
 
-//Cargar Spinner Tipo Medicion
 
-
-spTipoProducto.getSelectedItem();
+        spTipoProducto.getSelectedItem();
 
 
 
@@ -98,28 +100,20 @@ spTipoProducto.getSelectedItem();
 
                listaFiltroMarca.clear();
                listaFiltroSabor.clear();
-                id = CargarBaseDeDatosNuevoId.getNuevaid();
-                if (id > 0){
-                    Toast.makeText(NuevoProductoActivity.this, "" + id, Toast.LENGTH_SHORT).show();
-                }
 
                //obtener id de tipo producto seleccionado
                int idTipoproducto=CargarBaseDeDatosTIpoProducto.getListaTipoProducto().get(position).getIdTipoProducto();
 
                //Filtrar
                listaFiltroSabor = CargarBaseDeDatosMantenedorTresAtributos.filtroSabor(idTipoproducto);
-               adapterSabor = new ArrayAdapter(NuevoProductoActivity.this,android.R.layout.simple_list_item_1,listaFiltroSabor);
+               adapterSabor = new SpinAdapterTresAtributos(NuevoProductoActivity.this,android.R.layout.simple_list_item_1,listaFiltroSabor);
                spSabor.setAdapter(adapterSabor);
 
 
                //llenar spinner marca
                listaFiltroMarca=CargarBaseDeDatosMantenedorTresAtributos.filtroMarca(idTipoproducto);
-               adapterMarca=new ArrayAdapter(NuevoProductoActivity.this,android.R.layout.simple_list_item_1,listaFiltroMarca);
+               adapterMarca=new SpinAdapterTresAtributos(NuevoProductoActivity.this,android.R.layout.simple_list_item_1,listaFiltroMarca);
                spMarca.setAdapter(adapterMarca);
-
-
-
-
 
            }
 
@@ -172,6 +166,22 @@ spTipoProducto.getSelectedItem();
                 finish();
             }
         });
+
+
+        btnAgregarProducto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new CargarBaseDeDatosNuevoId(NuevoProductoActivity.this,SelccionMantenedor.Producto.getSeleccion());
+
+
+                id = CargarBaseDeDatosNuevoId.getNuevaid();
+                if (id > 0){
+                    Toast.makeText(NuevoProductoActivity.this, "" + id, Toast.LENGTH_SHORT).show();
+                }
+
+                finish();
+            }
+        });
     }
 
 
@@ -203,6 +213,17 @@ spTipoProducto.getSelectedItem();
         intent.setBeepEnabled(false);
         intent.setBarcodeImageEnabled(false);
         intent.initiateScan();
+    }
+
+    public Producto ObtenerDatosFormulario(){
+        Producto producto = new Producto();
+        try{
+
+        }catch (Exception e){
+
+        }
+
+        return producto;
     }
 
     /**
