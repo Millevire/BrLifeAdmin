@@ -13,8 +13,8 @@ package com.example.esteban.brlifeadmin.Enum;
          Provincia("Provincia"),
          Comuna("Comuna"),
          TipoPersona("TipoPersona"),
-         Objetivo("Objetivo")
-         ;
+         Objetivo("Objetivo"),
+         ProductoNutriente("ProductoNutriente");
 
         private String seleccion;
 

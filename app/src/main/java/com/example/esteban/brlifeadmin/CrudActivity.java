@@ -19,6 +19,7 @@ import com.example.esteban.brlifeadmin.Adapter.AdapterComuna;
 import com.example.esteban.brlifeadmin.Adapter.AdapterMantenedorDosAtributos;
 import com.example.esteban.brlifeadmin.Adapter.AdapterMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Adapter.AdapterProducto;
+import com.example.esteban.brlifeadmin.AlertDialog.AlertMantenedorProductoNutriente;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantendorComuna;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorDosAtributos;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorTipoProducto;
@@ -30,7 +31,11 @@ import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProdu
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 
-public class CrudActivity extends AppCompatActivity implements  AlertNuevoMantenedorDosAtributos.FinalizoCuadroDialogoAgregar,AlertNuevoMantenedorTresAtributos.FinalizoCuadroDialogoAgregarTrestAtributos, AlertNuevoMantenedorTipoProducto.FinalizoCuadroDialogoAgregar, AlertNuevoMantendorComuna.FinalizoCuadroDialogoAgregar {
+public class CrudActivity extends AppCompatActivity implements  AlertNuevoMantenedorDosAtributos.FinalizoCuadroDialogoAgregar,
+        AlertNuevoMantenedorTresAtributos.FinalizoCuadroDialogoAgregarTrestAtributos,
+        AlertNuevoMantenedorTipoProducto.FinalizoCuadroDialogoAgregar,
+        AlertNuevoMantendorComuna.FinalizoCuadroDialogoAgregar,
+        AlertMantenedorProductoNutriente.FinalizoCuadroDialogoProductoNutriente {
  private EditText etBuscar;
  private Button btnBuscar,btnBack;
  private TextView tvTitulo;
@@ -41,6 +46,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
  private AdaptaderTipoProducto adaptaderTipoProducto;
  private AdapterComuna adaptaderComuna;
  private AdapterProducto adapterProducto;
+ private AdapterProductoNutriente adapterProductoNutriente;
  private  String mantenedor;
 
     /**
@@ -129,6 +135,8 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
                     //llenar lsta de productos en actividad
                     new CargarBaseDeDatosProducto(this,SelccionMantenedor.Producto.getSeleccion());
 
+
+                    CargarBaseDeDatosMantenedorTresAtributos.limpiarFiltroSaborMarca();
                     //llenar lista de Marca
                     new CargarBaseDeDatosTIpoProducto(this,SelccionMantenedor.TipoProducto.getSeleccion());
 
@@ -240,6 +248,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
                     //Enviar a actividad para agregar Producto
                     case Producto:
                         startActivity(intent);
+
                         break;
 
                     //Abrir Alert dialogo para agregar Provincia
@@ -295,7 +304,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
         }else if (mantenedor.equals(SelccionMantenedor.Sabor.getSeleccion()) || mantenedor.equals(SelccionMantenedor.Marca.getSeleccion()) || mantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
            adapterMantenedorTresAtributos =new AdapterMantenedorTresAtributos(this,CargarBaseDeDatosMantenedorTresAtributos.getListaMantenedorTresAtributos(),mantenedor);
            lvLista.setAdapter(adapterMantenedorTresAtributos);
-       }else{
+       }else {
             adapterMantenedorDosAtributos =new AdapterMantenedorDosAtributos(this, CargarBaseDeDatosDosAtributos.getListaMantenedors(),mantenedor);
             lvLista.setAdapter(adapterMantenedorDosAtributos);
         }
@@ -353,4 +362,8 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
         adaptaderComuna.notifyDataSetChanged();
     }
 
+    @Override
+    public void ResultadoCuadroDialogoProductoNutriente(Boolean val) {
+
+    }
 }

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +15,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.esteban.brlifeadmin.Adapter.SpinAdapter;
+import com.example.esteban.brlifeadmin.CargarBaseDeDatosProductoNutriente;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
+import com.example.esteban.brlifeadmin.Clases.Mantenedor.ProductoNutriente;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
 import com.example.esteban.brlifeadmin.DialogKeyListener;
 import com.example.esteban.brlifeadmin.R;
@@ -22,6 +25,7 @@ import com.example.esteban.brlifeadmin.R;
 
 public class AlertMantenedorProductoNutriente  {
     SpinAdapter adapterNutriente;
+    public int idNutriente;
 
     public  interface  FinalizoCuadroDialogoProductoNutriente{
         void ResultadoCuadroDialogoProductoNutriente(Boolean val);
@@ -43,9 +47,8 @@ public class AlertMantenedorProductoNutriente  {
         dialogo.setOnKeyListener(dkl);
 
         Spinner spAlertProductoNutriente=dialogo.findViewById(R.id.spAlertProductoNutriente);
-        TextView tvAlertProductoNutriente=dialogo.findViewById(R.id.tvAlertProductoNutriente);
         TextView tvTitutloAlertProductoNutriente=dialogo.findViewById(R.id.tvTitutloAlertProductoNutriente);
-        EditText etAlertProductoNutriente=dialogo.findViewById(R.id.etAlertProductoNutriente);
+        final EditText etAlertProductoNutriente=dialogo.findViewById(R.id.etAlertProductoNutriente);
         Button btnCancelarAlertProductoNutriente=dialogo.findViewById(R.id.btnCancelarAlertProductoNutriente);
         Button btnAceptarAlertProductoNutriente=dialogo.findViewById(R.id.btnAceptarAlertProductoNutriente);
 
@@ -57,6 +60,31 @@ public class AlertMantenedorProductoNutriente  {
         spAlertProductoNutriente.setAdapter(adapterNutriente);
 
 
+        spAlertProductoNutriente.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                IdNutriente(CargarBaseDeDatosDosAtributos.getListaMantenedors().get(position).getIdTipoProducto());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        btnAceptarAlertProductoNutriente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Agregar nuevo registro a lista producto nutriente
+                CargarBaseDeDatosProductoNutriente.agregar(new ProductoNutriente(0,0,idNutriente,Float.parseFloat(etAlertProductoNutriente.getText().toString())));
+                //Comunicar cambio en lista
+                interfaz.ResultadoCuadroDialogoProductoNutriente(true);
+                dialogo.dismiss();
+            }
+
+        });
+
+
         //Cerrar AlertDialog
         btnCancelarAlertProductoNutriente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +93,10 @@ public class AlertMantenedorProductoNutriente  {
             }
         });
 
+    }
+
+    public void IdNutriente(int posicion){
+        this.idNutriente=posicion;
     }
 
 }

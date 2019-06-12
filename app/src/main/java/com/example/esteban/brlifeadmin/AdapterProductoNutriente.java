@@ -8,7 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.ProductoNutriente;
+import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
+import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorDosAtibutos;
 
 import java.util.ArrayList;
 
@@ -48,7 +51,15 @@ public class AdapterProductoNutriente extends BaseAdapter {
         TextView tvValorNutriente=convertView.findViewById(R.id.tvValorNutriente);
         Button btnEliminarProductoNutriente=convertView.findViewById(R.id.btnEliminarProductoNutriente);
 
+        //Buscar Nutriente con id ocupando metodo de busqueda
+        Mantenedor mantenedor= CargarBaseDeDatosDosAtributos.buscar(listaProductoNutriente.get(position).getIdNutriente());
 
+        //Setear valor de nutriente
+        tvValorNutriente.setText(String.valueOf(listaProductoNutriente.get(position).getValor()));
+
+
+
+        tvNombreNutriente.setText(mantenedor.getNombreTipoProducto());
         return convertView;
     }
 }

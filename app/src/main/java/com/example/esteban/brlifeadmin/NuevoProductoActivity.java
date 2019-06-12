@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -17,11 +18,9 @@ import com.example.esteban.brlifeadmin.Adapter.SpinAdapter;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertMantenedorProductoNutriente;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.MantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.TipoProducto;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
-import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
-import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTresAtributos;
+import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 import com.example.esteban.brlifeadmin.Enum.SeleccionTipoMedicion;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -35,17 +34,22 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
  private SpinAdapter adapterTipoMedicion;
  private ArrayAdapter<MantenedorTresAtributos> adapterMarca;
  private ArrayAdapter<MantenedorTresAtributos> adapterSabor;
+ private AdapterProductoNutriente adapterProductoNutriente;
  private ArrayList<MantenedorTresAtributos>listaFiltroSabor=new ArrayList<>();
-    private ArrayList<MantenedorTresAtributos>listaFiltroMarca=new ArrayList<>();
+ private ArrayList<MantenedorTresAtributos>listaFiltroMarca=new ArrayList<>();
     //private ArrayList<String>listaTipoMedicion=new ArrayList<>();
  private Button btnOpenBarCode,btnBack;
  private EditText etBarCode;
+ private ListView lvProductoNutriente;
+ private int nuevoIdProducto;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuevo_producto);
 
-        //Declaracion WIDGET
+
+
+      //Declaracion WIDGET
 
         spTipoProducto=(Spinner)findViewById(R.id.spTipoProducto);
         spTipoMedicion=(Spinner)findViewById(R.id.spTipoMedicion);
@@ -56,20 +60,18 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
         etBarCode=(EditText)findViewById(R.id.etBarCode);
         rbRegistroCodigoBarra=(RadioButton)findViewById(R.id.rbRegistroCodigoBarra);
         rbRegistroNormal=(RadioButton)findViewById(R.id.rbRegistroNormal);
+        lvProductoNutriente=(ListView)findViewById(R.id.lvProductoNutriente);
 
-        //Limpiar listas
-        listaFiltroMarca.clear();
-        listaFiltroSabor.clear();
+        //Setear adaptador a lista ProductoNutriente
+        adapterProductoNutriente=new AdapterProductoNutriente(this,CargarBaseDeDatosProductoNutriente.getListaProductoNutriente());
+        lvProductoNutriente.setAdapter(adapterProductoNutriente);
 
-//Cargar Spinner Tipo Medicion
-
-
-spTipoProducto.getSelectedItem();
-
-
-
+      //Metodo de carga de spinner con informacion
         CargarSpinner();
 
+
+
+        //boton flotante
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.nuevoNutriente);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,6 +184,7 @@ spTipoProducto.getSelectedItem();
 
 
 
+
     /**
      *
      */
@@ -224,6 +227,7 @@ spTipoProducto.getSelectedItem();
 
     @Override
     public void ResultadoCuadroDialogoProductoNutriente(Boolean val) {
-
+        Toast.makeText(this, "LLEGUE", Toast.LENGTH_SHORT).show();
+    adapterProductoNutriente.notifyDataSetChanged();
     }
 }
