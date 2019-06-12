@@ -14,13 +14,14 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.esteban.brlifeadmin.Adapter.AdapterProductoNutriente;
 import com.example.esteban.brlifeadmin.Adapter.SpinAdapter;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertMantenedorProductoNutriente;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.MantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.TipoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
+import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProductoNutriente;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
-import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 import com.example.esteban.brlifeadmin.Enum.SeleccionTipoMedicion;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -63,7 +64,8 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
         lvProductoNutriente=(ListView)findViewById(R.id.lvProductoNutriente);
 
         //Setear adaptador a lista ProductoNutriente
-        adapterProductoNutriente=new AdapterProductoNutriente(this,CargarBaseDeDatosProductoNutriente.getListaProductoNutriente());
+
+        adapterProductoNutriente=new AdapterProductoNutriente(this, CargarBaseDeDatosProductoNutriente.getListaProductoNutriente());
         lvProductoNutriente.setAdapter(adapterProductoNutriente);
 
       //Metodo de carga de spinner con informacion

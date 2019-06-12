@@ -12,14 +12,13 @@ import android.widget.Button;
 
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosComuna;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorComuna;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorDosAtibutos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTipoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.CrudActivity;
-import com.example.esteban.brlifeadmin.DialogKeyListener;
+import com.example.esteban.brlifeadmin.Clases.Mantenedor.DialogKeyListener;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 import com.example.esteban.brlifeadmin.R;
 

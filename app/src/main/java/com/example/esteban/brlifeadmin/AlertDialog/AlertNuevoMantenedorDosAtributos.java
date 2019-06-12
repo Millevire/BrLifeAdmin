@@ -7,19 +7,14 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.esteban.brlifeadmin.Adapter.AdaptaderTipoProducto;
-import com.example.esteban.brlifeadmin.Clases.Mantenedor.TipoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorDosAtibutos;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
-import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTipoProducto;
 import com.example.esteban.brlifeadmin.CrudActivity;
-import com.example.esteban.brlifeadmin.DialogKeyListener;
+import com.example.esteban.brlifeadmin.Clases.Mantenedor.DialogKeyListener;
 import com.example.esteban.brlifeadmin.R;
 
 public class AlertNuevoMantenedorDosAtributos {

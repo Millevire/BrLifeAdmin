@@ -18,7 +18,7 @@ import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAt
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTresAtributos;
-import com.example.esteban.brlifeadmin.DialogKeyListener;
+import com.example.esteban.brlifeadmin.Clases.Mantenedor.DialogKeyListener;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 import com.example.esteban.brlifeadmin.R;
 

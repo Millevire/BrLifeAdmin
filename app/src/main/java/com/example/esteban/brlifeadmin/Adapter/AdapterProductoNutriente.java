@@ -1,4 +1,4 @@
-package com.example.esteban.brlifeadmin;
+package com.example.esteban.brlifeadmin.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,7 @@ import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.ProductoNutriente;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorDosAtibutos;
+import com.example.esteban.brlifeadmin.R;
 
 import java.util.ArrayList;
 

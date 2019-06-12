@@ -2,24 +2,19 @@ package com.example.esteban.brlifeadmin.AlertDialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.QuickContactBadge;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.esteban.brlifeadmin.Adapter.SpinAdapter;
-import com.example.esteban.brlifeadmin.CargarBaseDeDatosProductoNutriente;
-import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
+import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProductoNutriente;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.ProductoNutriente;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
-import com.example.esteban.brlifeadmin.DialogKeyListener;
+import com.example.esteban.brlifeadmin.Clases.Mantenedor.DialogKeyListener;
 import com.example.esteban.brlifeadmin.R;
 
 

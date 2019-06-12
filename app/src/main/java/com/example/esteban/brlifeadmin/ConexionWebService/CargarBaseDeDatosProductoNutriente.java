@@ -1,4 +1,4 @@
-package com.example.esteban.brlifeadmin;
+package com.example.esteban.brlifeadmin.ConexionWebService;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -10,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.ProductoNutriente;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
+import com.example.esteban.brlifeadmin.R;
 
 
 import org.json.JSONObject;
@@ -30,7 +31,6 @@ public class CargarBaseDeDatosProductoNutriente implements Response.Listener<JSO
 
 
     /**
-     *
      * Constructor para agregar un nuevo registro producto nutriente
      * @param contexto
      */

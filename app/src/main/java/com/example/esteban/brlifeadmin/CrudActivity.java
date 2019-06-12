@@ -19,6 +19,7 @@ import com.example.esteban.brlifeadmin.Adapter.AdapterComuna;
 import com.example.esteban.brlifeadmin.Adapter.AdapterMantenedorDosAtributos;
 import com.example.esteban.brlifeadmin.Adapter.AdapterMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Adapter.AdapterProducto;
+import com.example.esteban.brlifeadmin.Adapter.AdapterProductoNutriente;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertMantenedorProductoNutriente;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantendorComuna;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorDosAtributos;
@@ -147,7 +148,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
 
                     //Cargar listas Sabor y tipo medicion para spinner de ActivityNuevoProducto con listas dedicadas
                     new CargarBaseDeDatosMantenedorTresAtributos(this,SelccionMantenedor.Sabor.getSeleccion());
-                    //CargarBaseDeDatosMantenedorTresAtributos.llenarListaSabor();
+
 
 
                     break;

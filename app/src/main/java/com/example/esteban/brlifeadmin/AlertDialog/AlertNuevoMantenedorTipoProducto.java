@@ -15,7 +15,7 @@ import com.example.esteban.brlifeadmin.Clases.Mantenedor.TipoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTipoProducto;
 import com.example.esteban.brlifeadmin.CrudActivity;
-import com.example.esteban.brlifeadmin.DialogKeyListener;
+import com.example.esteban.brlifeadmin.Clases.Mantenedor.DialogKeyListener;
 import com.example.esteban.brlifeadmin.R;
 
 public class AlertNuevoMantenedorTipoProducto {

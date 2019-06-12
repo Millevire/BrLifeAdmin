@@ -17,13 +17,11 @@ import com.example.esteban.brlifeadmin.Adapter.SpinAdapterTresAtributos;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Comuna;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.MantenedorTresAtributos;
-import com.example.esteban.brlifeadmin.Clases.Mantenedor.TipoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosComuna;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorComuna;
-import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTresAtributos;
-import com.example.esteban.brlifeadmin.DialogKeyListener;
+import com.example.esteban.brlifeadmin.Clases.Mantenedor.DialogKeyListener;
 import com.example.esteban.brlifeadmin.R;
 
 import java.util.ArrayList;
