@@ -132,8 +132,7 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
 
     public static ArrayList<MantenedorTresAtributos>filtroSabor(int idTipoProducto){
         listaFiltrSabor.clear();
-
-        for (MantenedorTresAtributos mantenedorTresAtributos: listaSabor){
+        for (MantenedorTresAtributos mantenedorTresAtributos: listaMantenedorTresAtributos){
 
             if(mantenedorTresAtributos.getFkMantenedorTresAtributos()==idTipoProducto){
                 listaFiltrSabor.add(mantenedorTresAtributos);
@@ -158,7 +157,6 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
 
     public static ArrayList<MantenedorTresAtributos>filtroMarca(int idTipoProducto){
         listaFiltroMarca.clear();
-
         for (MantenedorTresAtributos mantenedorTresAtributos: listaMarca){
 
             if(mantenedorTresAtributos.getFkMantenedorTresAtributos()==idTipoProducto){
@@ -170,10 +168,7 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
 
     }
 
-    public static void limpiarFiltroSaborMarca(){
-        listaSabor.clear();
-        listaMarca.clear();
-    }
+
 
     private void llenarBaseDeDatosTipoProducto(Context context, String mantenedor) {
         //progreso=new ProgressDialog(context);
@@ -206,9 +201,6 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
        // progreso.hide();
         listaMantenedorTresAtributos.clear();
 
-
-
-
         JSONArray json=response.optJSONArray(this.mantenedor);
         try {
             for (int i=0; i<json.length(); i++){
@@ -217,9 +209,7 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
 
 
                 mantenedorTresAtributos =new MantenedorTresAtributos();
-
                 jsonObject=json.getJSONObject(i);
-
                 mantenedorTresAtributos.setIdMantenedorTresAtributos(jsonObject.getInt("Id_"+ this.mantenedor));
                 SelccionMantenedor selccionMantenedor  = SelccionMantenedor.valueOf(mantenedor);
                 switch (selccionMantenedor){
