@@ -2,12 +2,16 @@ package com.example.esteban.brlifeadmin.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
+import com.example.esteban.brlifeadmin.R;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -57,6 +61,9 @@ public class SpinAdapter extends ArrayAdapter<Mantenedor> {
         label.setTextColor(Color.BLACK);
         // Then you can get the current item using the values array (Users array) and the current position
         // You can NOW reference each method you has created in your bean object (User class)
+        label.setTextSize(14);
+        //label.setTextLocale(Text.);
+        label.setGravity(Gravity.CENTER);
         label.setText(mantenedor.get(position).getNombreTipoProducto());
 
         // And finally return your dynamic (or custom) view for each spinner item
@@ -70,6 +77,9 @@ public class SpinAdapter extends ArrayAdapter<Mantenedor> {
                                 ViewGroup parent) {
         TextView label = (TextView) super.getDropDownView(position, convertView, parent);
         label.setTextColor(Color.BLACK);
+        label.setTextSize(14);
+        label.setGravity(Gravity.CENTER);
+        label.setHint("Regiones");
         label.setText(mantenedor.get(position).getNombreTipoProducto());
 
         return label;

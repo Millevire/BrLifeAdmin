@@ -254,7 +254,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/btnAgregarComida"
+                android:id="@+id/btnAgregarProducto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
