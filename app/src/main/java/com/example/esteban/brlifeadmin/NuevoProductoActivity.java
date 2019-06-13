@@ -236,7 +236,7 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
                 validacion = ValidarDatosFormulario(producto);
                 if (validacion){
                     if (accion.equals("agregar")) {
-                        new CrudProducto(0, producto.getCodigoBarra(), producto.getFkTipoProducto(), producto.getIdMarca(), producto.getIdSabor(), producto.getNombreProducto(), producto.getCantidadRacion(), producto.getTipoMedicion(), producto.isValidacion(), NuevoProductoActivity.this, "editar", SelccionMantenedor.Producto.getSeleccion());
+                        new CrudProducto(id, producto.getCodigoBarra(), producto.getFkTipoProducto(), producto.getIdMarca(), producto.getIdSabor(), producto.getNombreProducto(), producto.getCantidadRacion(), producto.getTipoMedicion(), producto.isValidacion(), NuevoProductoActivity.this, "editar", SelccionMantenedor.Producto.getSeleccion());
                     }
                     finish();
                 }

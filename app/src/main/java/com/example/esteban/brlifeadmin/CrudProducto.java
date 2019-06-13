@@ -82,7 +82,7 @@ public class CrudProducto  implements Response.Listener<JSONObject>,Response.Err
 
 
         String url="http://www.brotherwareoficial.com/WebServices/Mantenedor"+
-                mantenedor+".php?tipoconsulta=i" +
+                mantenedor+".php?tipoconsulta=a" +
                 "&idProducto="+idProducto+
                 "&CodigoBarra="+codigoBarra +
                 "&idTipoProducto="+fkTipoProducto +
