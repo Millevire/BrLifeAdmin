@@ -110,6 +110,7 @@
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/etnombreproducto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -119,6 +120,7 @@
                     android:textSize="14sp" />
 
                 <EditText
+                    android:id="@+id/etCantidadracion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -194,6 +196,7 @@
                 </LinearLayout>
 
              <Switch
+                 android:id="@+id/validado"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
                  android:layout_marginLeft="20dp"
@@ -249,7 +252,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:background="@color/grisdark"
+                            android:background="@color/gris"
                             android:elevation="3dp">
                          <LinearLayout
                              android:layout_width="wrap_content"

@@ -247,6 +247,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
                     case Producto:
                         //Cargar listas Sabor y tipo medicion para spinner de ActivityNuevoProducto con listas dedicadas
                         //CargarBaseDeDatosNuevoId.getNuevaid();
+                        intent.putExtra("accion","agregar");
                         startActivity(intent);
                         //CargarBaseDeDatosMantenedorTresAtributos.llenarListaSabor();
                         break;

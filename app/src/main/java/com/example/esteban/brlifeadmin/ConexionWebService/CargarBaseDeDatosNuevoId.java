@@ -80,8 +80,6 @@ public class CargarBaseDeDatosNuevoId implements Response.Listener<JSONObject>,R
 
     @Override
     public void onResponse(JSONObject response) {
-        Mantenedor mantenedor =null;
-
         progreso.hide();
 
         JSONArray json=response.optJSONArray("Id_Producto_Nuevo");

@@ -10,12 +10,16 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class CrudProducto  implements Response.Listener<JSONObject>,Response.ErrorListener{
     static RequestQueue request;
     static JsonObjectRequest jsonObjectRequest;
     static ProgressDialog progreso;
+    public static String tipoconsula;
+    public static int nuevaid;
 
     public CrudProducto(int idProducto, String codigoBarra, int fkTipoProducto, int idMarca, int idSabor, String nombreProducto, float cantidadRacion, int tipoMedicion, boolean validacion, Context context, String tipoconsulta, String mantenedor) {
         request= Volley.newRequestQueue(context);
@@ -23,7 +27,8 @@ public class CrudProducto  implements Response.Listener<JSONObject>,Response.Err
 
             //Enviar a actividad para agregar Producto
             case "nuevo":
-                agregarNuevoProducto(codigoBarra,fkTipoProducto,idMarca,idSabor,nombreProducto,cantidadRacion,tipoMedicion, validacion,context, mantenedor);
+                this.tipoconsula = tipoconsulta;
+                agregarNuevoProducto(context, mantenedor);
                 break;
                 //Abrir Alert dialogo para agregar Provincia
             case "editar":
@@ -32,12 +37,29 @@ public class CrudProducto  implements Response.Listener<JSONObject>,Response.Err
 
             //Abrir Alert dialogo para agregar Sabor
             case "eliminar":
-                eliminarProducto(idProducto,codigoBarra,context,mantenedor);
+                eliminarProducto(idProducto,context,mantenedor);
                 break;
         }
     }
 
-    private void agregarNuevoProducto(String codigoBarra, int fkTipoProducto, int idMarca, int idSabor, String nombreProducto, float cantidadRacion, int tipoMedicion, boolean validacion, Context context, String mantenedor) {
+    public CrudProducto(int idProducto, Context context, String tipoconsulta, String mantenedor) {
+        request= Volley.newRequestQueue(context);
+        this.tipoconsula = tipoconsulta;
+
+        switch (tipoconsulta){
+            //Enviar a actividad para agregar Producto
+            case "nuevo":
+                agregarNuevoProducto(context, mantenedor);
+                break;
+
+            //Abrir Alert dialogo para agregar Sabor
+            case "eliminar":
+                eliminarProducto(idProducto,context,mantenedor);
+                break;
+        }
+    }
+
+    private void agregarNuevoProducto(Context context, String mantenedor) {
 
         progreso=new ProgressDialog(context);
         progreso.setMessage("Cargando...");
@@ -45,15 +67,7 @@ public class CrudProducto  implements Response.Listener<JSONObject>,Response.Err
 
 
         String url="http://www.brotherwareoficial.com/WebServices/Mantenedor"+
-                mantenedor+".php?tipoconsulta=i" +
-                "&CodigoBarra="+codigoBarra +
-                "&idTipoProducto="+fkTipoProducto +
-                "&idMarca="+idMarca +
-                "&idSabor=1"+idSabor +
-                "&nombreProducto="+nombreProducto +
-                "&CantidadRacion="+cantidadRacion +
-                "&TipoMedicion="+tipoMedicion +
-                "&validacion="+validacion;
+                mantenedor+".php?tipoconsulta=n";
 
 
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
@@ -73,7 +87,7 @@ public class CrudProducto  implements Response.Listener<JSONObject>,Response.Err
                 "&CodigoBarra="+codigoBarra +
                 "&idTipoProducto="+fkTipoProducto +
                 "&idMarca="+idMarca +
-                "&idSabor=1"+idSabor +
+                "&idSabor="+idSabor +
                 "&nombreProducto="+nombreProducto +
                 "&CantidadRacion="+cantidadRacion +
                 "&TipoMedicion="+tipoMedicion +
@@ -85,7 +99,7 @@ public class CrudProducto  implements Response.Listener<JSONObject>,Response.Err
     }
 
 
-    private void eliminarProducto(int id, String codigoBarra, Context contexto,String mantenedor) {
+    private void eliminarProducto(int id, Context contexto,String mantenedor) {
         progreso=new ProgressDialog(contexto);
         progreso.setMessage("Cargando...");
         progreso.show();
@@ -93,13 +107,16 @@ public class CrudProducto  implements Response.Listener<JSONObject>,Response.Err
 
         String url="http://www.brotherwareoficial.com/WebServices/Mantenedor"+
                 mantenedor+".php?tipoconsulta=e&id"+mantenedor+"="
-                +String.valueOf(id)+"&CodigoBarra="+codigoBarra;
+                +String.valueOf(id);
         //url=url.replace(" ","%20");
 
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
         request.add(jsonObjectRequest);
     }
 
+    public static int getNuevaid() {
+        return nuevaid;
+    }
 
     @Override
     public void onErrorResponse(VolleyError error) {
@@ -108,6 +125,21 @@ public class CrudProducto  implements Response.Listener<JSONObject>,Response.Err
 
     @Override
     public void onResponse(JSONObject response) {
+        if (tipoconsula.equals("nuevo")){
+            progreso.hide();
 
+            JSONArray json=response.optJSONArray("Id_Producto_Nuevo");
+            try {
+                for (int i=0; i<json.length(); i++){
+                    JSONObject jsonObject=null;
+                    jsonObject=json.getJSONObject(i);
+                    this.nuevaid = jsonObject.getInt("nuevoid");
+                    //Toast.makeText(contexto, "" + nuevaid, Toast.LENGTH_SHORT).show();
+                }
+
+            }catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
