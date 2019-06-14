@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -75,17 +76,17 @@ public class CrudMantenedorTresAtributos implements Response.Listener<JSONObject
         progreso=new ProgressDialog(contexto);
         progreso.setMessage("Cargando...");
         progreso.show();
-String url;
-if (mantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
+        String url;
+        if (mantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
 
-  url="http://www.brotherwareoficial.com/WebServices/Mantenedor"+mantenedor+".php?tipoconsulta=a&id"+mantenedor+"="+id_mantenedor+"&nombre"+mantenedor+"="
+            url="http://www.brotherwareoficial.com/WebServices/Mantenedor"+mantenedor+".php?tipoconsulta=a&id"+mantenedor+"="+id_mantenedor+"&nombre"+mantenedor+"="
             +nombre+"&idRegion="+fk_mantenedor;
-}else{
-       url="http://www.brotherwareoficial.com/WebServices/Mantenedor"+mantenedor+".php?tipoconsulta=a&id"+mantenedor+"="+id_mantenedor+"&nombre"+mantenedor+"="
-                +nombre+"&idTipoProducto="+fk_mantenedor;}
-
-
+        }else{
+            url="http://www.brotherwareoficial.com/WebServices/Mantenedor"+mantenedor+".php?tipoconsulta=a&id"+mantenedor+"="+id_mantenedor+"&nombre"+mantenedor+"="
+                +nombre+"&idTipoProducto="+fk_mantenedor;
+        }
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         request.add(jsonObjectRequest);
 
     }
@@ -109,6 +110,7 @@ if (mantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
 
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
         request.add(jsonObjectRequest);
+
         CargarBaseDeDatosMantenedorTresAtributos.eliminar(id);
     }
     @Override

@@ -80,6 +80,7 @@ public class CrudProducto  implements Response.Listener<JSONObject>,Response.Err
         progreso.setMessage("Cargando...");
         progreso.show();
 
+        int val = (validacion) ? 1 :0;
 
         String url="http://www.brotherwareoficial.com/WebServices/Mantenedor"+
                 mantenedor+".php?tipoconsulta=a" +
@@ -91,7 +92,7 @@ public class CrudProducto  implements Response.Listener<JSONObject>,Response.Err
                 "&nombreProducto="+nombreProducto +
                 "&CantidadRacion="+cantidadRacion +
                 "&TipoMedicion="+tipoMedicion +
-                "&validacion="+validacion;
+                "&validacion="+val;
 
 
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);

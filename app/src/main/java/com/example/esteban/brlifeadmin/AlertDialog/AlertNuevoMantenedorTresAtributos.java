@@ -106,11 +106,10 @@ public class AlertNuevoMantenedorTresAtributos {
             etAlertNuevoMantenedorTresAtributos.setText(mantenedorTresAtributos.getNombreMantenedorTresAtributos());
 
             if (tipoMantenedor.equals(SelccionMantenedor.Marca.getSeleccion())|| tipoMantenedor.equals(SelccionMantenedor.Sabor.getSeleccion())){
-            spAlertMantenedorTresAtributos.setVisibility(View.INVISIBLE);
-            tvTipoMantenedorSpinner.setVisibility(View.INVISIBLE);
+                spAlertMantenedorTresAtributos.setVisibility(View.INVISIBLE);
+                tvTipoMantenedorSpinner.setVisibility(View.INVISIBLE);
             }else
-
-            btnAceptarlarAlertNuevaMantenedorTresAtributos.setText("actualizar");
+                btnAceptarlarAlertNuevaMantenedorTresAtributos.setText("actualizar");
         }
 
 
