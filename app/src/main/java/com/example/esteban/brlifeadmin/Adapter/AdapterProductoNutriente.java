@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.ProductoNutriente;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
+import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProductoNutriente;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorDosAtibutos;
 import com.example.esteban.brlifeadmin.R;
 
@@ -41,7 +42,7 @@ public class AdapterProductoNutriente extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView==null){
             LayoutInflater layoutInflater=(LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
             convertView = View.inflate(context, R.layout.adapter_producto_nutriente,null);
@@ -58,6 +59,15 @@ public class AdapterProductoNutriente extends BaseAdapter {
         //Setear valor de nutriente
         tvValorNutriente.setText(String.valueOf(listaProductoNutriente.get(position).getValor()));
 
+
+        //Boton eliminar registro de lista producto nutriente mediante id
+        btnEliminarProductoNutriente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CargarBaseDeDatosProductoNutriente.eliminar(listaProductoNutriente.get(position).getIdProductoNutriente());
+                notifyDataSetChanged();
+            }
+        });
 
 
         tvNombreNutriente.setText(mantenedor.getNombreTipoProducto());

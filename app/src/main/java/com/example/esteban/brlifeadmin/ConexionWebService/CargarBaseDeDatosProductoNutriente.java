@@ -79,8 +79,28 @@ public class CargarBaseDeDatosProductoNutriente implements Response.Listener<JSO
         return listaProductoNutriente;
     }
 
+
+    /**
+     *
+     * agregar un nuevo Producto nutriente
+     * @param productoNutriente objeto a ingresar a lsta
+     */
     public static void agregar(ProductoNutriente productoNutriente){
         listaProductoNutriente.add(productoNutriente);
+    }
+
+
+    /**
+     *
+     * metodo para eliminar un objeto de lista mediante id de objeto
+     * @param idProductoNutriente
+     */
+    public static void eliminar(int idProductoNutriente){
+        for(ProductoNutriente productoNutriente: listaProductoNutriente){
+            if (productoNutriente.getIdProductoNutriente()==idProductoNutriente){
+                listaProductoNutriente.remove(productoNutriente);
+            }
+        }
     }
 
     @Override

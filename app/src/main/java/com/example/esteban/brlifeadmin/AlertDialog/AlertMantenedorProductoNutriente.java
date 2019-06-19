@@ -49,7 +49,7 @@ public class AlertMantenedorProductoNutriente  {
         Button btnCancelarAlertProductoNutriente=dialogo.findViewById(R.id.btnCancelarAlertProductoNutriente);
         Button btnAceptarAlertProductoNutriente=dialogo.findViewById(R.id.btnAceptarAlertProductoNutriente);
         tvTitutloAlertProductoNutriente.setText("Nuevo Nutriente ");
-        etAlertProductoNutriente.setHint("Valor");
+
 
         //Cargar Lista Nutrientes a Spinner
         adapterNutriente=new SpinAdapter(contexto,android.R.layout.simple_list_item_1, CargarBaseDeDatosDosAtributos.getListaMantenedors());
