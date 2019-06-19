@@ -82,22 +82,23 @@ public class AdapterProducto extends BaseAdapter {
             case Cereal:
                 ivImagen.setImageResource(R.drawable.cereal);
                 break;
-            case Legrumbres:
+            case Legrumbre:
                 ivImagen.setImageResource(R.drawable.legumbre);
                 break;
-            case Lacteos:
+            case Lacteo:
                 ivImagen.setImageResource(R.drawable.lacteo);
                 break;
-            case Bebidas:
+            case Bebida:
                 ivImagen.setImageResource(R.drawable.bebida);
                 break;
-            case Frutas:
+            case Fruta:
                 ivImagen.setImageResource(R.drawable.fruta);
                 break;
             case Galleta:
                 ivImagen.setImageResource(R.drawable.galleta);
                 break;
-
+            case Fritura:
+                ivImagen.setImageResource(R.drawable.frituras);
         }
 
 

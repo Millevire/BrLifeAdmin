@@ -126,6 +126,7 @@ public class CargarBaseDeDatosProducto implements Response.Listener<JSONObject>,
                 producto.setNombreProducto(jsonObject.getString("Nombre"+ this.mantenedor));
                 producto.setCantidadRacion((float) jsonObject.getDouble("CantidadRacion"));
                 producto.setTipoMedicion(jsonObject.getInt("TipoMedicion"));
+                validacion = jsonObject.getInt("Validacion");
 
                 if (validacion == 0){
                     producto.setValidacion(false);

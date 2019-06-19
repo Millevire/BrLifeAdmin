@@ -2,6 +2,8 @@ package com.example.esteban.brlifeadmin.AlertDialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.renderscript.ScriptGroup;
+import android.text.InputType;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -43,10 +45,9 @@ public class AlertMantenedorProductoNutriente  {
 
         Spinner spAlertProductoNutriente=dialogo.findViewById(R.id.spAlertProductoNutriente);
         TextView tvTitutloAlertProductoNutriente=dialogo.findViewById(R.id.tvTitutloAlertProductoNutriente);
-        final EditText etAlertProductoNutriente=dialogo.findViewById(R.id.etAlertProductoNutriente);
+        final EditText etAlertProductoNutriente=dialogo.findViewById(R.id.etAlertProductoNutrienteValor);
         Button btnCancelarAlertProductoNutriente=dialogo.findViewById(R.id.btnCancelarAlertProductoNutriente);
         Button btnAceptarAlertProductoNutriente=dialogo.findViewById(R.id.btnAceptarAlertProductoNutriente);
-
         tvTitutloAlertProductoNutriente.setText("Nuevo Nutriente ");
         etAlertProductoNutriente.setHint("Valor");
 
@@ -71,7 +72,8 @@ public class AlertMantenedorProductoNutriente  {
             @Override
             public void onClick(View v) {
                 //Agregar nuevo registro a lista producto nutriente
-                CargarBaseDeDatosProductoNutriente.agregar(new ProductoNutriente(0,0,idNutriente,Float.parseFloat(etAlertProductoNutriente.getText().toString())));
+                //Se agregar con accion  i en el caso de insertar un nutriente al producto
+                CargarBaseDeDatosProductoNutriente.agregar(new ProductoNutriente(0,0,idNutriente,Float.parseFloat(etAlertProductoNutriente.getText().toString()),"i"));
                 //Comunicar cambio en lista
                 interfaz.ResultadoCuadroDialogoProductoNutriente(true);
                 dialogo.dismiss();

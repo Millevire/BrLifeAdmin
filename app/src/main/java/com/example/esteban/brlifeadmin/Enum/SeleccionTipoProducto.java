@@ -7,11 +7,12 @@ package com.example.esteban.brlifeadmin.Enum;
          Pescado("Pescado"),
          Carne("Carne"),
          Cereal("Cereal"),
-         Legrumbres("Legumbres"),
-         Lacteos("Lacteos"),
-         Bebidas("Bebidas"),
-         Frutas("Frutas"),
-         Galleta("Galleta")
+         Legrumbre("Legumbre"),
+         Lacteo("Lacteo"),
+         Bebida("Bebida"),
+         Fruta("Fruta"),
+         Galleta("Galleta"),
+         Fritura("Fritura")
          ;
 
      private String seleccion;

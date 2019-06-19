@@ -5,12 +5,14 @@ public class ProductoNutriente {
     private int idProducto;
     private int idNutriente;
     private float valor;
+    private String accion;
 
-    public ProductoNutriente(int idProductoNutriente, int idProducto, int idNutriente, float valor) {
+    public ProductoNutriente(int idProductoNutriente, int idProducto, int idNutriente, float valor, String accion) {
         this.idProductoNutriente = idProductoNutriente;
         this.idProducto = idProducto;
         this.idNutriente = idNutriente;
         this.valor = valor;
+        this.accion = accion;
     }
 
     public int getIdProductoNutriente() {
@@ -43,5 +45,13 @@ public class ProductoNutriente {
 
     public void setValor(float valor) {
         this.valor = valor;
+    }
+
+    public String getAccion() {
+        return accion;
+    }
+
+    public void setAccion(String accion) {
+        this.accion = accion;
     }
 }

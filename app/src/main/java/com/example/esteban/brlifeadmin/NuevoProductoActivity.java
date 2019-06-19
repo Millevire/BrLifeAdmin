@@ -53,7 +53,8 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
  private EditText etBarCode, etCantidadracion, etnombreproducto;
  private Switch validado;
  private int id;
- private String accion;
+ private Producto producto;
+ private String accion, nombretipoproducto;
 
 
  private int idTipoproducto, idmarca, idsabor, idmedicion;
@@ -88,7 +89,10 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
         //Para insertar el id y tenerlo al momento de agregar o cancelar
         if (accion.equals("agregar")) {
             new CrudProducto(0, NuevoProductoActivity.this, "nuevo", SelccionMantenedor.Producto.getSeleccion());
+            btnAgregarProducto.setText("Agregar");
         }
+
+
         //Cargar lista con productonutriente
         adapterProductoNutriente=new AdapterProductoNutriente(this, CargarBaseDeDatosProductoNutriente.getListaProductoNutriente());
         lvProductoNutriente.setAdapter(adapterProductoNutriente);
@@ -121,17 +125,32 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
                listaFiltroSabor.clear();
                //obtener id de tipo producto seleccionado
                idTipoproducto=CargarBaseDeDatosTIpoProducto.getListaTipoProducto().get(position).getIdTipoProducto();
-
+               nombretipoproducto = CargarBaseDeDatosTIpoProducto.getListaTipoProducto().get(position).getNombreTipoProducto();
                //Filtrar
                listaFiltroSabor = CargarBaseDeDatosMantenedorTresAtributos.filtroSabor(idTipoproducto);
                adapterSabor = new SpinAdapterTresAtributos(NuevoProductoActivity.this,android.R.layout.simple_list_item_1,listaFiltroSabor);
                spSabor.setAdapter(adapterSabor);
+               if (adapterSabor != null && producto != null){
+                   if (producto.getFkTipoProducto() == idTipoproducto) {
+                       if (accion.equals("editar")) {
+                           int posi = (int) adapterSabor.getItemId(producto.getIdSabor());
+                           spSabor.setSelection(posi);
+                       }
+                   }
+               }
 
                //llenar spinner marca
                listaFiltroMarca=CargarBaseDeDatosMantenedorTresAtributos.filtroMarca(idTipoproducto);
                adapterMarca=new SpinAdapterTresAtributos(NuevoProductoActivity.this,android.R.layout.simple_list_item_1,listaFiltroMarca);
                spMarca.setAdapter(adapterMarca);
-
+               if (adapterMarca != null && producto != null){
+                   if (producto.getFkTipoProducto() == idTipoproducto) {
+                       if (accion.equals("editar")) {
+                           int posi = (int) adapterMarca.getItemId(producto.getIdMarca());
+                           spMarca.setSelection(posi);
+                       }
+                   }
+               }
            }
            @Override
            public void onNothingSelected(AdapterView<?> parent) {
@@ -153,8 +172,8 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
         spMarca.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int pos = (int) adapterMarca.getItemId(position);
-                idmarca = listaFiltroMarca.get(pos).getIdMantenedorTresAtributos();
+                //int pos = (int) adapterMarca.getItemId(position);
+                idmarca = listaFiltroMarca.get(position).getIdMantenedorTresAtributos();
             }
 
             @Override
@@ -225,24 +244,41 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
             @Override
             public void onClick(View v) {
                 //Se obtiene el id para actualizar y agregarlo con todos los datos a tabla
-                id = CrudProducto.getNuevaid();
                 boolean validacion = false;
                 if (id > 0){
                     Toast.makeText(NuevoProductoActivity.this, "" + id, Toast.LENGTH_SHORT).show();
                 }
 
                 Producto producto = ObtenerDatosFormulario();
-                producto.setIdProducto(id);
                 validacion = ValidarDatosFormulario(producto);
                 if (validacion){
                     if (accion.equals("agregar")) {
+                        id = CrudProducto.getNuevaid();
+                        producto.setIdProducto(id);
+
+                        CargarBaseDeDatosProducto.agregar(producto);
                         new CrudProducto(id, producto.getCodigoBarra(), producto.getFkTipoProducto(), producto.getIdMarca(), producto.getIdSabor(), producto.getNombreProducto(), producto.getCantidadRacion(), producto.getTipoMedicion(), producto.isValidacion(), NuevoProductoActivity.this, "editar", SelccionMantenedor.Producto.getSeleccion());
+                    }else if(accion.equals("editar")){
+                        producto.setIdProducto(id);
+                        CargarBaseDeDatosProducto.editar(producto.getIdProducto(), producto.getFkTipoProducto(), producto.getIdMarca(), producto.getIdSabor(), producto.getNombreProducto(),producto.getCantidadRacion(), producto.getTipoMedicion(), producto.isValidacion());
+                        new CrudProducto(producto.getIdProducto(), producto.getCodigoBarra(), producto.getFkTipoProducto(), producto.getIdMarca(), producto.getIdSabor(), producto.getNombreProducto(), producto.getCantidadRacion(), producto.getTipoMedicion(), producto.isValidacion(), NuevoProductoActivity.this, "editar", SelccionMantenedor.Producto.getSeleccion());
                     }
                     finish();
                 }
 
             }
         });
+
+        //Metodo para pasar datos a formulario
+        if (accion.equals("editar")){
+            producto = (Producto) getIntent().getExtras().getSerializable("Producto");
+            id = producto.getIdProducto();
+            if (producto != null){
+                cargarDatosaFormulario(producto);
+                Toast.makeText(this, "Se logro", Toast.LENGTH_SHORT).show();
+            }
+            btnAgregarProducto.setText("Editar");
+        }
     }
 
 
@@ -280,6 +316,7 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
         Producto producto = new Producto();
         try{
             producto.setCodigoBarra(etBarCode.getText().toString());
+
         }catch (Exception e){
             producto.setCodigoBarra("error");
         }
@@ -287,6 +324,12 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
             producto.setFkTipoProducto(idTipoproducto);
         }catch (Exception e){
             producto.setFkTipoProducto(0);
+        }
+        try{
+            producto.setNombreTipoProducto(nombretipoproducto);
+        }catch (Exception ex){
+            producto.setNombreTipoProducto("" +
+                    "");
         }
         try {
             producto.setIdMarca(idmarca);
@@ -346,6 +389,68 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
         }
 
         return true;
+    }
+
+    public void cargarDatosaFormulario(Producto producto){
+        try{
+            if (producto.getIdProducto() == Long.parseLong(producto.getCodigoBarra())){
+                rbRegistroNormal.setChecked(true);
+                rbRegistroCodigoBarra.setChecked(false);
+                etBarCode.setEnabled(false);
+                etBarCode.setText("0");
+            }else{
+                rbRegistroNormal.setChecked(false);
+                rbRegistroCodigoBarra.setChecked(true);
+                etBarCode.setText(producto.getCodigoBarra());
+            }
+            //producto.setCodigoBarra(etBarCode.getText().toString());
+        }catch (Exception e){
+            producto.setCodigoBarra("error");
+        }
+        try {
+            ///producto.setFkTipoProducto(idTipoproducto);
+            int posi = (int) adapterTipoProducto.getItemId(producto.getFkTipoProducto());
+            spTipoProducto.setSelection(posi);
+        }catch (Exception e){
+            producto.setFkTipoProducto(0);
+        }
+        try {
+
+            //producto.setIdMarca(idmarca);
+        }catch (Exception e){
+            producto.setIdMarca(0);
+        }
+        try {
+            //producto.setIdSabor(idsabor);
+
+        }catch (Exception e){
+            producto.setIdSabor(0);
+        }
+        try {
+            //producto.setNombreProducto(etnombreproducto.getText().toString());
+            etnombreproducto.setText(producto.getNombreProducto());
+        }catch (Exception e){
+            producto.setNombreProducto("");
+        }
+        try {
+            //producto.setCantidadRacion(Float.parseFloat(etCantidadracion.getText().toString()));
+            etCantidadracion.setText(producto.getCantidadRacion() + "");
+        }catch (Exception e){
+            producto.setCantidadRacion(0);
+        }
+        try {
+            //producto.setTipoMedicion(idmedicion);
+            int posi = (int) adapterTipoMedicion.getItemId(producto.getTipoMedicion());
+            spTipoMedicion.setSelection(posi);
+        }catch (Exception e){
+            spTipoMedicion.setSelection(0);
+        }
+        try {
+            //producto.setValidacion(validado.isChecked());
+            validado.setChecked(producto.isValidacion());
+        }catch (Exception e){
+            producto.setValidacion(false);
+        }
     }
 
     /**

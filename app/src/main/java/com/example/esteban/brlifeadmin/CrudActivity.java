@@ -23,6 +23,7 @@ import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantendorComuna;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorDosAtributos;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorTipoProducto;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorTresAtributos;
+import com.example.esteban.brlifeadmin.Clases.Mantenedor.Producto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosComuna;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
@@ -30,6 +31,8 @@ import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosNuevo
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
+
+import java.io.Serializable;
 
 public class CrudActivity extends AppCompatActivity implements  AlertNuevoMantenedorDosAtributos.FinalizoCuadroDialogoAgregar,AlertNuevoMantenedorTresAtributos.FinalizoCuadroDialogoAgregarTrestAtributos, AlertNuevoMantenedorTipoProducto.FinalizoCuadroDialogoAgregar, AlertNuevoMantendorComuna.FinalizoCuadroDialogoAgregar {
  private EditText etBuscar;
@@ -223,6 +226,16 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
                 Toast.makeText(CrudActivity.this, ""+position, Toast.LENGTH_SHORT).show();
             }
         });
+        lvLista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                intent.putExtra("accion","editar");
+                Producto producto = CargarBaseDeDatosProducto.listaProducto.get(position);
+                intent.putExtra("Producto", (Serializable) producto);
+                startActivity(intent);
+                return false;
+            }
+        });
 
     btnBack.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -294,8 +307,8 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
 
        if (mantenedor.equals(SelccionMantenedor.Producto.getSeleccion())) {
            adapterProducto = new AdapterProducto(this, CargarBaseDeDatosProducto.getListaProducto(), mantenedor);
-
            lvLista.setAdapter(adapterProducto);
+
        }else if (mantenedor.equals(SelccionMantenedor.TipoProducto.getSeleccion())){
            adaptaderTipoProducto =new AdaptaderTipoProducto(this, CargarBaseDeDatosTIpoProducto.getListaTipoProducto(),mantenedor);
            lvLista.setAdapter(adaptaderTipoProducto);

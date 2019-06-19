@@ -126,20 +126,21 @@ public class CrudProducto  implements Response.Listener<JSONObject>,Response.Err
 
     @Override
     public void onResponse(JSONObject response) {
-        if (tipoconsula.equals("nuevo")){
-            progreso.hide();
+        if (tipoconsula.isEmpty() == false) {
+            if (tipoconsula.equals("nuevo") && nuevaid == 0) {
+                progreso.hide();
+                JSONArray json = response.optJSONArray("Id_Producto_Nuevo");
+                try {
+                    for (int i = 0; i < json.length(); i++) {
+                        JSONObject jsonObject = null;
+                        jsonObject = json.getJSONObject(i);
+                        this.nuevaid = jsonObject.getInt("nuevoid");
+                        //Toast.makeText(contexto, "" + nuevaid, Toast.LENGTH_SHORT).show();
+                    }
 
-            JSONArray json=response.optJSONArray("Id_Producto_Nuevo");
-            try {
-                for (int i=0; i<json.length(); i++){
-                    JSONObject jsonObject=null;
-                    jsonObject=json.getJSONObject(i);
-                    this.nuevaid = jsonObject.getInt("nuevoid");
-                    //Toast.makeText(contexto, "" + nuevaid, Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-
-            }catch (JSONException e) {
-                e.printStackTrace();
             }
         }
     }

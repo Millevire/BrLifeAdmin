@@ -1,6 +1,8 @@
 package com.example.esteban.brlifeadmin.Clases.Mantenedor;
 
-public class Producto {
+import java.io.Serializable;
+
+public class Producto implements Serializable {
     private int idProducto;
     private String codigoBarra;
     private int fkTipoProducto;
