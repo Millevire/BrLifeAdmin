@@ -126,7 +126,7 @@ public class CrudProducto  implements Response.Listener<JSONObject>,Response.Err
 
     @Override
     public void onResponse(JSONObject response) {
-        if (tipoconsula.isEmpty() == false) {
+        if (tipoconsula != null) {
             if (tipoconsula.equals("nuevo") && nuevaid == 0) {
                 progreso.hide();
                 JSONArray json = response.optJSONArray("Id_Producto_Nuevo");

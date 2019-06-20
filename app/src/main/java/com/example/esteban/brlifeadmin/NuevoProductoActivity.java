@@ -30,6 +30,7 @@ import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosNuevo
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProductoNutriente;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
+import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorProductoNutriente;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 import com.example.esteban.brlifeadmin.Enum.SeleccionTipoMedicion;
@@ -255,12 +256,13 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
                     if (accion.equals("agregar")) {
                         id = CrudProducto.getNuevaid();
                         producto.setIdProducto(id);
-
+                        new CrudMantenedorProductoNutriente(NuevoProductoActivity.this, id, "ProductoNutriente");
                         CargarBaseDeDatosProducto.agregar(producto);
                         new CrudProducto(id, producto.getCodigoBarra(), producto.getFkTipoProducto(), producto.getIdMarca(), producto.getIdSabor(), producto.getNombreProducto(), producto.getCantidadRacion(), producto.getTipoMedicion(), producto.isValidacion(), NuevoProductoActivity.this, "editar", SelccionMantenedor.Producto.getSeleccion());
                     }else if(accion.equals("editar")){
                         producto.setIdProducto(id);
                         CargarBaseDeDatosProducto.editar(producto.getIdProducto(), producto.getFkTipoProducto(), producto.getIdMarca(), producto.getIdSabor(), producto.getNombreProducto(),producto.getCantidadRacion(), producto.getTipoMedicion(), producto.isValidacion());
+                        new CrudMantenedorProductoNutriente(NuevoProductoActivity.this, id, "ProductoNutriente");
                         new CrudProducto(producto.getIdProducto(), producto.getCodigoBarra(), producto.getFkTipoProducto(), producto.getIdMarca(), producto.getIdSabor(), producto.getNombreProducto(), producto.getCantidadRacion(), producto.getTipoMedicion(), producto.isValidacion(), NuevoProductoActivity.this, "editar", SelccionMantenedor.Producto.getSeleccion());
                     }
                     finish();
@@ -276,6 +278,8 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
             if (producto != null){
                 cargarDatosaFormulario(producto);
                 Toast.makeText(this, "Se logro", Toast.LENGTH_SHORT).show();
+                adapterProductoNutriente = new AdapterProductoNutriente(this,CargarBaseDeDatosProductoNutriente.getListaProductoNutriente());
+                lvProductoNutriente.setAdapter(adapterProductoNutriente);
             }
             btnAgregarProducto.setText("Editar");
         }

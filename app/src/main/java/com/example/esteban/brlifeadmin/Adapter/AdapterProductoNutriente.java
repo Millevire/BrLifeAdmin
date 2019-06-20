@@ -64,7 +64,7 @@ public class AdapterProductoNutriente extends BaseAdapter {
         btnEliminarProductoNutriente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CargarBaseDeDatosProductoNutriente.eliminar(listaProductoNutriente.get(position).getIdProductoNutriente());
+                CargarBaseDeDatosProductoNutriente.eliminar(listaProductoNutriente.get(position).getIdNutriente());
                 notifyDataSetChanged();
             }
         });

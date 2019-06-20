@@ -29,6 +29,7 @@ import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAt
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosNuevoId;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProducto;
+import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProductoNutriente;
 import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 
@@ -223,7 +224,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
         lvLista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(CrudActivity.this, ""+position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(CrudActivity.this, ""+position, Toast.LENGTH_SHORT).show();
             }
         });
         lvLista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -231,6 +232,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 intent.putExtra("accion","editar");
                 Producto producto = CargarBaseDeDatosProducto.listaProducto.get(position);
+                new CargarBaseDeDatosProductoNutriente(CrudActivity.this,producto.getIdProducto(), SelccionMantenedor.ProductoNutriente.getSeleccion());
                 intent.putExtra("Producto", (Serializable) producto);
                 startActivity(intent);
                 return false;
