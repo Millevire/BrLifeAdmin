@@ -17,16 +17,20 @@ import com.example.esteban.brlifeadmin.Clases.Mantenedor.TipoProducto;
 import com.example.esteban.brlifeadmin.R;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class AdaptaderTipoProducto extends BaseAdapter implements PopupMenu.OnMenuItemClickListener,AlertDelete.FinalizoCuadroDialogo,AlertNuevoMantenedorDosAtributos.FinalizoCuadroDialogoAgregar, AlertNuevoMantenedorTipoProducto.FinalizoCuadroDialogoAgregar {
 
     private Context context;
     private ArrayList<TipoProducto> listaTipoProductos =new ArrayList<>();
+    private ArrayList<TipoProducto>listaAux=new ArrayList<>();
     private String tipoMantenedor;
+
 
     public AdaptaderTipoProducto(Context context, ArrayList<TipoProducto> listaTipoProductos, String tipoMantenedor) {
         this.context = context;
         this.listaTipoProductos = listaTipoProductos;
+        this.listaAux.addAll(listaTipoProductos);
         this.tipoMantenedor = tipoMantenedor;
     }
 
@@ -109,6 +113,27 @@ public class AdaptaderTipoProducto extends BaseAdapter implements PopupMenu.OnMe
         return convertView;
     }
 
+    public void Filtro(String filtro){
+        filtro=filtro.toLowerCase(Locale.getDefault());
+        listaTipoProductos.clear();
+        if(filtro.length()==0){
+            listaTipoProductos.addAll(listaAux);
+
+        }else{
+            for (TipoProducto tipoProducto:listaAux){
+                if (tipoProducto.getNombreTipoProducto().toLowerCase(Locale.getDefault()).contains(filtro))
+                {
+                    listaTipoProductos.add(tipoProducto);
+
+                }
+
+
+            }
+
+        }
+        notifyDataSetChanged();
+
+    }
 
 
     @Override

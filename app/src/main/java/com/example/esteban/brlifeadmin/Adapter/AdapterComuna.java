@@ -22,15 +22,18 @@ import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedo
 import com.example.esteban.brlifeadmin.R;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class AdapterComuna extends BaseAdapter implements PopupMenu.OnMenuItemClickListener, AlertDelete.FinalizoCuadroDialogo, AlertNuevoMantenedorDosAtributos.FinalizoCuadroDialogoAgregar, AlertNuevoMantenedorTipoProducto.FinalizoCuadroDialogoAgregar, AlertNuevoMantendorComuna.FinalizoCuadroDialogoAgregar {
     private Context context;
     private static ArrayList<Comuna> listaComuna =new ArrayList<>();
+    private ArrayList<Comuna>listaAux=new ArrayList<>();
     private String tipoMantenedor;
 
     public AdapterComuna(Context context, ArrayList<Comuna> listaComuna, String tipoMantenedor) {
         this.context = context;
         this.listaComuna = listaComuna;
+        this.listaAux.addAll(listaComuna);
         this.tipoMantenedor = tipoMantenedor;
     }
 
@@ -111,6 +114,27 @@ public class AdapterComuna extends BaseAdapter implements PopupMenu.OnMenuItemCl
             }
         });
         return convertView;
+    }
+    public void Filtro(String filtro){
+        filtro=filtro.toLowerCase(Locale.getDefault());
+        listaComuna.clear();
+        if(filtro.length()==0){
+            listaComuna.addAll(listaAux);
+
+        }else{
+            for (Comuna comuna:listaAux){
+                if (comuna.getNombreComuna().toLowerCase(Locale.getDefault()).contains(filtro))
+                {
+                    listaComuna.add(comuna);
+
+                }
+
+
+            }
+
+        }
+        notifyDataSetChanged();
+
     }
 
     @Override

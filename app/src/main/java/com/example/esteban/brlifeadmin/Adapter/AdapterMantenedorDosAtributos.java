@@ -16,35 +16,34 @@ import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
 import com.example.esteban.brlifeadmin.R;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class AdapterMantenedorDosAtributos extends BaseAdapter implements PopupMenu.OnMenuItemClickListener,AlertDelete.FinalizoCuadroDialogo,AlertNuevoMantenedorDosAtributos.FinalizoCuadroDialogoAgregar {
 
     private Context context;
-    private ArrayList<Mantenedor> mantenedor =new ArrayList<>();
+    private ArrayList<Mantenedor> listaMantenedor =new ArrayList<>();
+    private ArrayList<Mantenedor>listaAux=new ArrayList<>();
+
     private String tipoMantenedor;
 
 
-    public AdapterMantenedorDosAtributos(Context context, ArrayList<Mantenedor> mantenedor, String tipoMantenedor){
+    public AdapterMantenedorDosAtributos(Context context, ArrayList<Mantenedor> listaMantenedor, String tipoMantenedor){
         this.context = context;
-        this.mantenedor = mantenedor;
+        this.listaMantenedor = listaMantenedor;
+        this.listaAux.addAll(listaMantenedor);
         this.tipoMantenedor=tipoMantenedor;
     }
 
-    public void actualizarLista(ArrayList <Mantenedor> lista){
-        mantenedor.clear();
-        mantenedor.addAll(lista);
-        this.notifyDataSetChanged();
 
-    }
 
     @Override
     public int getCount() {
-        return mantenedor.size();
+        return listaMantenedor.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mantenedor.get(position);
+        return listaMantenedor.get(position);
     }
 
     @Override
@@ -66,7 +65,7 @@ public class AdapterMantenedorDosAtributos extends BaseAdapter implements PopupM
         TextView tvNombreTipoProducto=(TextView)convertView.findViewById(R.id.tvNombreTipoProducto);
         Button btnMoresTipoProducto=(Button)convertView.findViewById(R.id.btnMoreTipoProducto);
 
-        tvNombreTipoProducto.setText(mantenedor.get(position).getNombreTipoProducto().toString());
+        tvNombreTipoProducto.setText(listaMantenedor.get(position).getNombreTipoProducto().toString());
 
 
         btnMoresTipoProducto.setOnClickListener(new View.OnClickListener() {
@@ -82,13 +81,13 @@ public class AdapterMantenedorDosAtributos extends BaseAdapter implements PopupM
 
                     switch (item.getItemId()){
                         case R.id.itemEdit:
-                        new AlertNuevoMantenedorDosAtributos(context,AdapterMantenedorDosAtributos.this,true, mantenedor.get(position),tipoMantenedor);
+                        new AlertNuevoMantenedorDosAtributos(context,AdapterMantenedorDosAtributos.this,true, listaMantenedor.get(position),tipoMantenedor);
                             //new CargarBaseDeDatosDosAtributos(context);
 
                             return true;
 
                         case R.id.itemDelete:
-                            int id= mantenedor.get(position).getIdTipoProducto();
+                            int id= listaMantenedor.get(position).getIdTipoProducto();
 
                          new AlertDelete(context,id,AdapterMantenedorDosAtributos.this,tipoMantenedor);
                             //new CargarBaseDeDatosDosAtributos(context);
@@ -111,11 +110,34 @@ public class AdapterMantenedorDosAtributos extends BaseAdapter implements PopupM
 
 
 
+
     @Override
     public boolean onMenuItemClick(MenuItem item) {
 
 
         return false;
+    }
+
+    public void Filtro(String filtro){
+        filtro=filtro.toLowerCase(Locale.getDefault());
+        listaMantenedor.clear();
+        if(filtro.length()==0){
+            listaMantenedor.addAll(listaAux);
+
+        }else{
+            for (Mantenedor mantenedor:listaAux){
+                if (mantenedor.getNombreTipoProducto().toLowerCase(Locale.getDefault()).contains(filtro))
+                {
+                    listaMantenedor.add(mantenedor);
+
+                }
+
+
+            }
+
+        }
+        notifyDataSetChanged();
+
     }
 
 

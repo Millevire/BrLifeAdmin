@@ -14,15 +14,26 @@ import com.example.esteban.brlifeadmin.R;
 import com.example.esteban.brlifeadmin.Enum.SeleccionTipoProducto;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class AdapterProducto extends BaseAdapter {
     private Context context;
     private ArrayList<Producto> listaProducto =new ArrayList<>();
+    private ArrayList<Producto>listaAux=new ArrayList<>();
+
+    //Variables id
+    int idSabor;
+    int idMarca;
+    String nombreMarca;
+    String nombreSabor;
+
+
     private String tipoMantenedor;
 
     public AdapterProducto(Context context, ArrayList<Producto> listaProducto, String tipoMantenedor){
         this.context=context;
         this.listaProducto=listaProducto;
+        this.listaAux.addAll(listaProducto);
         this.tipoMantenedor=tipoMantenedor;
     }
     @Override
@@ -124,5 +135,33 @@ public class AdapterProducto extends BaseAdapter {
 
 
         return convertView;
+    }
+
+    public void Filtro(String filtro){
+        filtro=filtro.toLowerCase(Locale.getDefault());
+        listaProducto.clear();
+        if(filtro.length()==0){
+            listaProducto.addAll(listaAux);
+
+        }else{
+            for (Producto producto:listaAux){
+                if (producto.getNombreProducto().toLowerCase(Locale.getDefault()).contains(filtro))
+                {
+                    listaProducto.add(producto);
+
+                }else if(nombreMarca.toLowerCase(Locale.getDefault()).contains(filtro)){
+                    listaProducto.add(producto);
+
+                }else if(nombreSabor.toLowerCase(Locale.getDefault()).contains(filtro)){
+                    listaProducto.add(producto);
+
+                }
+
+
+            }
+
+        }
+        notifyDataSetChanged();
+
     }
 }

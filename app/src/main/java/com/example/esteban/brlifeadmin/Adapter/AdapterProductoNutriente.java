@@ -15,14 +15,19 @@ import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedo
 import com.example.esteban.brlifeadmin.R;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class AdapterProductoNutriente extends BaseAdapter {
     private Context context;
     private ArrayList<ProductoNutriente> listaProductoNutriente=new ArrayList<>();
+    private ArrayList<ProductoNutriente> listaAux=new ArrayList<>();
+
+    public String nombreNutriente;
 
     public AdapterProductoNutriente(Context context,ArrayList<ProductoNutriente> listaProductoNutriente){
         this.context=context;
         this.listaProductoNutriente=listaProductoNutriente;
+        this.listaAux.addAll(listaProductoNutriente);
     }
 
     @Override
@@ -52,8 +57,10 @@ public class AdapterProductoNutriente extends BaseAdapter {
         TextView tvValorNutriente=convertView.findViewById(R.id.tvValorNutriente);
         Button btnEliminarProductoNutriente=convertView.findViewById(R.id.btnEliminarProductoNutriente);
 
-        //Buscar Nutriente con id ocupando metodo de busqueda
         Mantenedor mantenedor= CargarMantenedorDosAtributosHttpConecction.buscar(listaProductoNutriente.get(position).getIdNutriente());
+
+        //Buscar Nutriente con id ocupando metodo de busqueda
+       nombreNutriente=mantenedor.getNombreTipoProducto();
 
         //Setear valor de nutriente
         tvValorNutriente.setText(String.valueOf(listaProductoNutriente.get(position).getValor()));
@@ -71,5 +78,27 @@ public class AdapterProductoNutriente extends BaseAdapter {
 
         tvNombreNutriente.setText(mantenedor.getNombreTipoProducto());
         return convertView;
+    }
+    //filtro
+    public void Filtro(String filtro){
+        filtro=filtro.toLowerCase(Locale.getDefault());
+        listaProductoNutriente.clear();
+        if(filtro.length()==0){
+            listaProductoNutriente.addAll(listaAux);
+
+        }else{
+            for (ProductoNutriente productoNutriente:listaAux){
+                if (nombreNutriente.toLowerCase(Locale.getDefault()).contains(filtro))
+                {
+                    listaProductoNutriente.add(productoNutriente);
+
+                }
+
+
+            }
+
+        }
+        notifyDataSetChanged();
+
     }
 }

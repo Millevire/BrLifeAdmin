@@ -22,10 +22,12 @@ import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 import com.example.esteban.brlifeadmin.R;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class AdapterMantenedorTresAtributos extends BaseAdapter implements AlertDelete.FinalizoCuadroDialogo, PopupMenu.OnMenuItemClickListener,AlertNuevoMantenedorTresAtributos.FinalizoCuadroDialogoAgregarTrestAtributos {
     private Context context;
     private ArrayList<MantenedorTresAtributos> listaMantenedorTresAtributos =new ArrayList<>();
+    private ArrayList<MantenedorTresAtributos>listaAux=new ArrayList<>();
     private String tipoMantenedor;
 
 
@@ -34,6 +36,7 @@ public class AdapterMantenedorTresAtributos extends BaseAdapter implements Alert
     public AdapterMantenedorTresAtributos(Context context, ArrayList<MantenedorTresAtributos> listaMantenedorTresAtributos, String tipoMantenedor){
         this.context = context;
         this.listaMantenedorTresAtributos=listaMantenedorTresAtributos;
+        this.listaAux.addAll(listaMantenedorTresAtributos);
         this.tipoMantenedor=tipoMantenedor;
     }
 
@@ -142,6 +145,28 @@ public class AdapterMantenedorTresAtributos extends BaseAdapter implements Alert
         });
 
         return convertView;
+    }
+
+    public void Filtro(String filtro){
+        filtro=filtro.toLowerCase(Locale.getDefault());
+        listaMantenedorTresAtributos.clear();
+        if(filtro.length()==0){
+            listaMantenedorTresAtributos.addAll(listaAux);
+
+        }else{
+            for (MantenedorTresAtributos mantenedorTresAtributos:listaAux){
+                if (mantenedorTresAtributos.getNombreMantenedorTresAtributos().toLowerCase(Locale.getDefault()).contains(filtro))
+                {
+                    listaMantenedorTresAtributos.add(mantenedorTresAtributos);
+
+                }
+
+
+            }
+
+        }
+        notifyDataSetChanged();
+
     }
     @Override
     public boolean onMenuItemClick(MenuItem item) {

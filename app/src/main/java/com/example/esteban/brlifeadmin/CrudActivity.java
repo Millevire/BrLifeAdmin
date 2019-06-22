@@ -117,6 +117,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
 
                     break;
                 case Rol:
+
                     tvTitulo.setText(SelccionMantenedor.Rol.getSeleccion().toString());
 
                     break;
