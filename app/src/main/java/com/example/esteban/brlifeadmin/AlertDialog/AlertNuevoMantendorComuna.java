@@ -17,11 +17,11 @@ import com.example.esteban.brlifeadmin.Adapter.SpinAdapterTresAtributos;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Comuna;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.MantenedorTresAtributos;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosComuna;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorComuna;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.DialogKeyListener;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantendorComunaHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorDosAtributosHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorTresAtributosHttpConecction;
 import com.example.esteban.brlifeadmin.R;
 
 import java.util.ArrayList;
@@ -69,8 +69,8 @@ public class AlertNuevoMantendorComuna {
 
         tvTipoMantenedorSpinnerRegion.setText("Region:");
         tvTipoMantenedorSpinnerProvincia.setText("Provincia:");
-        adapterRegion=new SpinAdapter(contexto,android.R.layout.simple_list_item_1, CargarBaseDeDatosDosAtributos.getListaMantenedors());
-        adapterProvincia =new SpinAdapterTresAtributos(contexto,android.R.layout.simple_list_item_1, CargarBaseDeDatosMantenedorTresAtributos.getListaMantenedorTresAtributos());
+        adapterRegion=new SpinAdapter(contexto,android.R.layout.simple_list_item_1, CargarMantenedorDosAtributosHttpConecction.getListaMantenedors());
+        adapterProvincia =new SpinAdapterTresAtributos(contexto,android.R.layout.simple_list_item_1, CargarMantenedorTresAtributosHttpConecction.getListaMantenedorTresAtributos());
         spAlertMantenedorProvincia.setAdapter(adapterProvincia);
         spAlertMantenedorRegion.setAdapter(adapterRegion);
         tvTituloAlertNuevoMantenedorComuna.setText("Nueva Comuna:");
@@ -84,8 +84,8 @@ public class AlertNuevoMantendorComuna {
                 listaFiltroProvincia.clear();
                 posicionregion(position);
                 //Filtrar
-                int idregion = CargarBaseDeDatosDosAtributos.getListaMantenedors().get(posicionregion).getIdTipoProducto();
-                listaFiltroProvincia = CargarBaseDeDatosMantenedorTresAtributos.filtro(idregion);
+                int idregion = CargarMantenedorDosAtributosHttpConecction.getListaMantenedors().get(posicionregion).getIdTipoProducto();
+                listaFiltroProvincia = CargarMantenedorTresAtributosHttpConecction.filtro(idregion);
                 adapterProvincia = new SpinAdapterTresAtributos(contexto,android.R.layout.simple_list_item_1,listaFiltroProvincia);
                 spAlertMantenedorProvincia.setAdapter(adapterProvincia);
 
@@ -142,16 +142,16 @@ public class AlertNuevoMantendorComuna {
                     if (tipo==true){
                         new CrudMantenedorComuna(
                                 comuna.getIdComuna(),
-                                CargarBaseDeDatosMantenedorTresAtributos.getListaMantenedorTresAtributos().get(posicionprovincia).getIdMantenedorTresAtributos(),
-                                CargarBaseDeDatosDosAtributos.getListaMantenedors().get(posicionregion).getIdTipoProducto(),
+                                CargarMantenedorTresAtributosHttpConecction.getListaMantenedorTresAtributos().get(posicionprovincia).getIdMantenedorTresAtributos(),
+                                CargarMantenedorDosAtributosHttpConecction.getListaMantenedors().get(posicionregion).getIdTipoProducto(),
                                 etAlertNuevoMantenedorTresAtributos.getText().toString(),
                                 contexto,"editar",
                                 mantenedor);
                         //new CargarBaseDeDatosDosAtributos(contexto);
-                        CargarBaseDeDatosComuna.editar(comuna.getIdComuna(),
+                        CargarMantendorComunaHttpConecction.editar(comuna.getIdComuna(),
                                 etAlertNuevoMantenedorTresAtributos.getText().toString(),
-                                CargarBaseDeDatosDosAtributos.getListaMantenedors().get(posicionregion).getIdTipoProducto(),
-                                CargarBaseDeDatosMantenedorTresAtributos.getListaMantenedorTresAtributos().get(posicionprovincia).getIdMantenedorTresAtributos()
+                                CargarMantenedorDosAtributosHttpConecction.getListaMantenedors().get(posicionregion).getIdTipoProducto(),
+                                CargarMantenedorTresAtributosHttpConecction.getListaMantenedorTresAtributos().get(posicionprovincia).getIdMantenedorTresAtributos()
                                 );
                         actividad.ResultadoCuadroDialogoAgregarComuna(true);
                         dialogo.dismiss();
@@ -160,18 +160,18 @@ public class AlertNuevoMantendorComuna {
 
                         // interfaz.ResultadoCuadroDialogoAgregar(etAlertNuevoTipoProoducto.getText().toString());
                         new CrudMantenedorComuna(0,
-                                CargarBaseDeDatosMantenedorTresAtributos.getListaMantenedorTresAtributos().get(posicionprovincia).getIdMantenedorTresAtributos(),
-                                CargarBaseDeDatosDosAtributos.getListaMantenedors().get(posicionregion).getIdTipoProducto(),
+                                CargarMantenedorTresAtributosHttpConecction.getListaMantenedorTresAtributos().get(posicionprovincia).getIdMantenedorTresAtributos(),
+                                CargarMantenedorDosAtributosHttpConecction.getListaMantenedors().get(posicionregion).getIdTipoProducto(),
                                 etAlertNuevoMantenedorTresAtributos.getText().toString(),
                                 contexto,"nuevo",
                                 mantenedor);
 
                         // new CargarBaseDeDatosDosAtributos(contexto);
 
-                        CargarBaseDeDatosComuna.agregar(new Comuna(0,
+                        CargarMantendorComunaHttpConecction.agregar(new Comuna(0,
                                 etAlertNuevoMantenedorTresAtributos.getText().toString(),
-                                CargarBaseDeDatosMantenedorTresAtributos.getListaMantenedorTresAtributos().get(posicionprovincia).getIdMantenedorTresAtributos(),
-                                CargarBaseDeDatosDosAtributos.getListaMantenedors().get(posicionregion).getIdTipoProducto()));
+                                CargarMantenedorTresAtributosHttpConecction.getListaMantenedorTresAtributos().get(posicionprovincia).getIdMantenedorTresAtributos(),
+                                CargarMantenedorDosAtributosHttpConecction.getListaMantenedors().get(posicionregion).getIdTipoProducto()));
                         actividad.ResultadoCuadroDialogoAgregarComuna(true);
                         dialogo.dismiss();
                         //contexto.startActivity(intent);

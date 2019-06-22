@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorTipoProductoHttpConecction;
 
 import org.json.JSONObject;
 
@@ -100,7 +101,7 @@ public class CrudMantenedorTipoProducto implements Response.Listener<JSONObject>
 
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
         request.add(jsonObjectRequest);
-        CargarBaseDeDatosDosAtributos.eliminar(id);
+        CargarMantenedorTipoProductoHttpConecction.eliminar(id);
     }
 
     @Override

@@ -12,8 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.TipoProducto;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTipoProducto;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorTipoProductoHttpConecction;
 import com.example.esteban.brlifeadmin.CrudActivity;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.DialogKeyListener;
 import com.example.esteban.brlifeadmin.R;
@@ -86,7 +86,7 @@ public class AlertNuevoMantenedorTipoProducto {
                         //new CargarBaseDeDatosDosAtributos(contexto);
                         interfaz.ResultadoCuadroDialogoAgregarTipoProducto(true);
                         //Se pasan todos los parametros al momento de editar para actualizarlo en la lista estatica y verse reflejada en la vista
-                        CargarBaseDeDatosTIpoProducto.editar(tipoProducto.getIdTipoProducto(),etAlertTipoProducto.getText().toString(), switchsabor.isChecked(), switchmarca.isChecked());
+                        CargarMantenedorTipoProductoHttpConecction.editar(tipoProducto.getIdTipoProducto(),etAlertTipoProducto.getText().toString(), switchsabor.isChecked(), switchmarca.isChecked());
                         dialogo.dismiss();
                         // contexto.startActivity(intent);
                     }else {
@@ -95,7 +95,7 @@ public class AlertNuevoMantenedorTipoProducto {
                         // new CargarBaseDeDatosDosAtributos(contexto);
                         actividad.ResultadoCuadroDialogoAgregarTipoProducto(true);
 
-                        CargarBaseDeDatosTIpoProducto.agregar(new TipoProducto(etAlertTipoProducto.getText().toString(), switchsabor.isChecked(), switchmarca.isChecked()));
+                        CargarMantenedorTipoProductoHttpConecction.agregar(new TipoProducto(etAlertTipoProducto.getText().toString(), switchsabor.isChecked(), switchmarca.isChecked()));
 
                         dialogo.dismiss();
                         //contexto.startActivity(intent);

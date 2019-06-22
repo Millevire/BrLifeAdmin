@@ -1,7 +1,6 @@
 package com.example.esteban.brlifeadmin.Adapter;
 
 import android.content.Context;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,13 +16,10 @@ import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorTresAtrib
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.MantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.TipoProducto;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorDosAtributosHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorTipoProductoHttpConecction;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 import com.example.esteban.brlifeadmin.R;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -87,14 +83,14 @@ public class AdapterMantenedorTresAtributos extends BaseAdapter implements Alert
         if (tipoMantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
             //buscar objeto de mantenedor de dos atributos para traer nombre de fk y setear en vista de adapter
             //Creamos un objeto de mantenedor de dos atributos
-            Mantenedor mantenedorDosAtributos= CargarBaseDeDatosDosAtributos.buscar(listaMantenedorTresAtributos.get(position).getFkMantenedorTresAtributos());
+            Mantenedor mantenedorDosAtributos= CargarMantenedorDosAtributosHttpConecction.buscar(listaMantenedorTresAtributos.get(position).getFkMantenedorTresAtributos());
 
             if (mantenedorDosAtributos !=null){
                 tvTipoProducto_Region.setText(mantenedorDosAtributos.getNombreTipoProducto());
             }
         }else{
 
-            TipoProducto tipoProducto= CargarBaseDeDatosTIpoProducto.buscar(listaMantenedorTresAtributos.get(position).getFkMantenedorTresAtributos());
+            TipoProducto tipoProducto= CargarMantenedorTipoProductoHttpConecction.buscar(listaMantenedorTresAtributos.get(position).getFkMantenedorTresAtributos());
            if (tipoProducto!=null) {
                tvTipoProducto_Region.setText(tipoProducto.getNombreTipoProducto());
            }

@@ -10,9 +10,8 @@ import android.widget.TextView;
 
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.ProductoNutriente;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProductoNutriente;
-import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorDosAtibutos;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorDosAtributosHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorProductoNutrienteHttpConecction;
 import com.example.esteban.brlifeadmin.R;
 
 import java.util.ArrayList;
@@ -54,7 +53,7 @@ public class AdapterProductoNutriente extends BaseAdapter {
         Button btnEliminarProductoNutriente=convertView.findViewById(R.id.btnEliminarProductoNutriente);
 
         //Buscar Nutriente con id ocupando metodo de busqueda
-        Mantenedor mantenedor= CargarBaseDeDatosDosAtributos.buscar(listaProductoNutriente.get(position).getIdNutriente());
+        Mantenedor mantenedor= CargarMantenedorDosAtributosHttpConecction.buscar(listaProductoNutriente.get(position).getIdNutriente());
 
         //Setear valor de nutriente
         tvValorNutriente.setText(String.valueOf(listaProductoNutriente.get(position).getValor()));
@@ -64,7 +63,7 @@ public class AdapterProductoNutriente extends BaseAdapter {
         btnEliminarProductoNutriente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CargarBaseDeDatosProductoNutriente.eliminar(listaProductoNutriente.get(position).getIdNutriente());
+                CargarMantenedorProductoNutrienteHttpConecction.eliminar(listaProductoNutriente.get(position).getIdNutriente());
                 notifyDataSetChanged();
             }
         });

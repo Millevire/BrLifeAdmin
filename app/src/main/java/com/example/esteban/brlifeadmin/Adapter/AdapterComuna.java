@@ -17,8 +17,8 @@ import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorTipoProdu
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Comuna;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.MantenedorTresAtributos;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorDosAtributosHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorTresAtributosHttpConecction;
 import com.example.esteban.brlifeadmin.R;
 
 import java.util.ArrayList;
@@ -67,8 +67,8 @@ public class AdapterComuna extends BaseAdapter implements PopupMenu.OnMenuItemCl
         tvNombreMantenedorComuna.setText(listaComuna.get(position).getNombreComuna());
 
         //Para Obtener el nombre de la region
-        Mantenedor mantenedorRegion = CargarBaseDeDatosDosAtributos.buscar(listaComuna.get(position).getIdRegion());
-        MantenedorTresAtributos mantenedorProvincia = CargarBaseDeDatosMantenedorTresAtributos.buscar(listaComuna.get(position).getIdProvincia());
+        Mantenedor mantenedorRegion = CargarMantenedorDosAtributosHttpConecction.buscar(listaComuna.get(position).getIdRegion());
+        MantenedorTresAtributos mantenedorProvincia = CargarMantenedorTresAtributosHttpConecction.buscar(listaComuna.get(position).getIdProvincia());
 
         if (mantenedorRegion != null && mantenedorProvincia != null){
             tvTipoProducto_Provincia.setText("Provincia: " + mantenedorProvincia.getNombreMantenedorTresAtributos());

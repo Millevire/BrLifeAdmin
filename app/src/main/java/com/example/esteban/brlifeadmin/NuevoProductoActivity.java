@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -22,16 +21,11 @@ import com.example.esteban.brlifeadmin.Adapter.SpinAdapterTresAtributos;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertMantenedorProductoNutriente;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.MantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Producto;
-import com.example.esteban.brlifeadmin.Clases.Mantenedor.TipoProducto;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
-import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosNuevoId;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProducto;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProductoNutriente;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorProductoNutriente;
-import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTresAtributos;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorProductoHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorProductoNutrienteHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorTipoProductoHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorTresAtributosHttpConecction;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 import com.example.esteban.brlifeadmin.Enum.SeleccionTipoMedicion;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -59,6 +53,21 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
 
 
  private int idTipoproducto, idmarca, idsabor, idmedicion;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        //Se obtiene el id del crud producto para eliminar en caso de cancelar el ingreso del producto
+        if (accion.equals("agregar")) {
+            id = CrudProducto.getNuevaid();
+            new CrudProducto(id,NuevoProductoActivity.this,"eliminar",SelccionMantenedor.Producto.getSeleccion());
+        }
+        CargarMantenedorProductoNutrienteHttpConecction.limpiarlista();
+        adapterProductoNutriente.notifyDataSetChanged();
+        finish();
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +104,7 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
 
 
         //Cargar lista con productonutriente
-        adapterProductoNutriente=new AdapterProductoNutriente(this, CargarBaseDeDatosProductoNutriente.getListaProductoNutriente());
+        adapterProductoNutriente=new AdapterProductoNutriente(this, CargarMantenedorProductoNutrienteHttpConecction.getListaProductoNutriente());
         lvProductoNutriente.setAdapter(adapterProductoNutriente);
 
 
@@ -125,10 +134,10 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
                listaFiltroMarca.clear();
                listaFiltroSabor.clear();
                //obtener id de tipo producto seleccionado
-               idTipoproducto=CargarBaseDeDatosTIpoProducto.getListaTipoProducto().get(position).getIdTipoProducto();
-               nombretipoproducto = CargarBaseDeDatosTIpoProducto.getListaTipoProducto().get(position).getNombreTipoProducto();
+               idTipoproducto=CargarMantenedorTipoProductoHttpConecction.getListaTipoProducto().get(position).getIdTipoProducto();
+               nombretipoproducto = CargarMantenedorTipoProductoHttpConecction.getListaTipoProducto().get(position).getNombreTipoProducto();
                //Filtrar
-               listaFiltroSabor = CargarBaseDeDatosMantenedorTresAtributos.filtroSabor(idTipoproducto);
+               listaFiltroSabor = CargarMantenedorTresAtributosHttpConecction.filtroSabor(idTipoproducto);
                adapterSabor = new SpinAdapterTresAtributos(NuevoProductoActivity.this,android.R.layout.simple_list_item_1,listaFiltroSabor);
                spSabor.setAdapter(adapterSabor);
                if (adapterSabor != null && producto != null){
@@ -141,7 +150,7 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
                }
 
                //llenar spinner marca
-               listaFiltroMarca=CargarBaseDeDatosMantenedorTresAtributos.filtroMarca(idTipoproducto);
+               listaFiltroMarca=CargarMantenedorTresAtributosHttpConecction.filtroMarca(idTipoproducto);
                adapterMarca=new SpinAdapterTresAtributos(NuevoProductoActivity.this,android.R.layout.simple_list_item_1,listaFiltroMarca);
                spMarca.setAdapter(adapterMarca);
                if (adapterMarca != null && producto != null){
@@ -236,9 +245,12 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
                     id = CrudProducto.getNuevaid();
                     new CrudProducto(id,NuevoProductoActivity.this,"eliminar",SelccionMantenedor.Producto.getSeleccion());
                 }
+                CargarMantenedorProductoNutrienteHttpConecction.limpiarlista();
+                adapterProductoNutriente.notifyDataSetChanged();
                 finish();
             }
         });
+
 
 
         btnAgregarProducto.setOnClickListener(new View.OnClickListener() {
@@ -257,13 +269,17 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
                         id = CrudProducto.getNuevaid();
                         producto.setIdProducto(id);
                         new CrudMantenedorProductoNutriente(NuevoProductoActivity.this, id, "ProductoNutriente");
-                        CargarBaseDeDatosProducto.agregar(producto);
+                        CargarMantenedorProductoHttpConecction.agregar(producto);
                         new CrudProducto(id, producto.getCodigoBarra(), producto.getFkTipoProducto(), producto.getIdMarca(), producto.getIdSabor(), producto.getNombreProducto(), producto.getCantidadRacion(), producto.getTipoMedicion(), producto.isValidacion(), NuevoProductoActivity.this, "editar", SelccionMantenedor.Producto.getSeleccion());
+                        //CargarBaseDeDatosProductoNutriente.limpiarlista();
+                        adapterProductoNutriente.notifyDataSetChanged();
                     }else if(accion.equals("editar")){
                         producto.setIdProducto(id);
-                        CargarBaseDeDatosProducto.editar(producto.getIdProducto(), producto.getFkTipoProducto(), producto.getIdMarca(), producto.getIdSabor(), producto.getNombreProducto(),producto.getCantidadRacion(), producto.getTipoMedicion(), producto.isValidacion());
+                        CargarMantenedorProductoHttpConecction.editar(producto.getIdProducto(), producto.getFkTipoProducto(), producto.getIdMarca(), producto.getIdSabor(), producto.getNombreProducto(),producto.getCantidadRacion(), producto.getTipoMedicion(), producto.isValidacion());
                         new CrudMantenedorProductoNutriente(NuevoProductoActivity.this, id, "ProductoNutriente");
                         new CrudProducto(producto.getIdProducto(), producto.getCodigoBarra(), producto.getFkTipoProducto(), producto.getIdMarca(), producto.getIdSabor(), producto.getNombreProducto(), producto.getCantidadRacion(), producto.getTipoMedicion(), producto.isValidacion(), NuevoProductoActivity.this, "editar", SelccionMantenedor.Producto.getSeleccion());
+                        //CargarBaseDeDatosProductoNutriente.limpiarlista();
+                        adapterProductoNutriente.notifyDataSetChanged();
                     }
                     finish();
                 }
@@ -278,7 +294,7 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
             if (producto != null){
                 cargarDatosaFormulario(producto);
                 Toast.makeText(this, "Se logro", Toast.LENGTH_SHORT).show();
-                adapterProductoNutriente = new AdapterProductoNutriente(this,CargarBaseDeDatosProductoNutriente.getListaProductoNutriente());
+                adapterProductoNutriente = new AdapterProductoNutriente(this, CargarMantenedorProductoNutrienteHttpConecction.getListaProductoNutriente());
                 lvProductoNutriente.setAdapter(adapterProductoNutriente);
             }
             btnAgregarProducto.setText("Editar");
@@ -289,7 +305,7 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
 
     public void CargarSpinner(){
         //llenar spinner tipoProducto
-        adapterTipoProducto= new SpinAdapterTipoProducto(this,android.R.layout.simple_list_item_1, CargarBaseDeDatosTIpoProducto.getListaTipoProducto());
+        adapterTipoProducto= new SpinAdapterTipoProducto(this,android.R.layout.simple_list_item_1, CargarMantenedorTipoProductoHttpConecction.getListaTipoProducto());
         spTipoProducto.setAdapter(adapterTipoProducto);
 
 

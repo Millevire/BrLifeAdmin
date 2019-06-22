@@ -2,8 +2,6 @@ package com.example.esteban.brlifeadmin.AlertDialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.renderscript.ScriptGroup;
-import android.text.InputType;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -13,10 +11,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.esteban.brlifeadmin.Adapter.SpinAdapter;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProductoNutriente;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.ProductoNutriente;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.DialogKeyListener;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorDosAtributosHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorProductoNutrienteHttpConecction;
 import com.example.esteban.brlifeadmin.R;
 
 
@@ -52,14 +50,14 @@ public class AlertMantenedorProductoNutriente  {
 
 
         //Cargar Lista Nutrientes a Spinner
-        adapterNutriente=new SpinAdapter(contexto,android.R.layout.simple_list_item_1, CargarBaseDeDatosDosAtributos.getListaMantenedors());
+        adapterNutriente=new SpinAdapter(contexto,android.R.layout.simple_list_item_1, CargarMantenedorDosAtributosHttpConecction.getListaMantenedors());
         spAlertProductoNutriente.setAdapter(adapterNutriente);
 
 
         spAlertProductoNutriente.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                IdNutriente(CargarBaseDeDatosDosAtributos.getListaMantenedors().get(position).getIdTipoProducto());
+                IdNutriente(CargarMantenedorDosAtributosHttpConecction.getListaMantenedors().get(position).getIdTipoProducto());
             }
 
             @Override
@@ -73,7 +71,7 @@ public class AlertMantenedorProductoNutriente  {
             public void onClick(View v) {
                 //Agregar nuevo registro a lista producto nutriente
                 //Se agregar con accion  i en el caso de insertar un nutriente al producto
-                CargarBaseDeDatosProductoNutriente.agregar(new ProductoNutriente(0,0,idNutriente,Float.parseFloat(etAlertProductoNutriente.getText().toString()),"i"));
+                CargarMantenedorProductoNutrienteHttpConecction.agregar(new ProductoNutriente(0,0,idNutriente,Float.parseFloat(etAlertProductoNutriente.getText().toString()),"i"));
                 //Comunicar cambio en lista
                 interfaz.ResultadoCuadroDialogoProductoNutriente(true);
                 dialogo.dismiss();

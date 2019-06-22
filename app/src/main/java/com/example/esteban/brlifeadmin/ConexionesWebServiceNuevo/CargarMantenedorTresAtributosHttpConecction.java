@@ -1,16 +1,7 @@
-package com.example.esteban.brlifeadmin.ConexionWebService;
+package com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.util.Log;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.MantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
@@ -20,11 +11,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
-public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listener<JSONObject>,Response.ErrorListener {
-
-    //lista general para mantenedores de tes atributos
+public class CargarMantenedorTresAtributosHttpConecction {
     public static ArrayList<MantenedorTresAtributos> listaMantenedorTresAtributos =new ArrayList<>();
 
     //lista especifica de Sabor para usos como llenar mas de un spinner en una actividad. la lista sigue siendo de tres atributos
@@ -39,24 +34,7 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
     public static ArrayList<MantenedorTresAtributos>listaFiltroMarca=new ArrayList<>();
     public static ArrayList<MantenedorTresAtributos>listaFiltrSabor=new ArrayList<>();
 
-
-    static RequestQueue request;
-    static JsonObjectRequest jsonObjectRequest;
-    static ProgressDialog progreso;
-    public Context contexto;
-    public String mantenedor;
-
-
-    public CargarBaseDeDatosMantenedorTresAtributos(Context context, String tipoMantenedor){
-        mantenedor=tipoMantenedor;
-        contexto=context;
-        request= Volley.newRequestQueue(context);
-        llenarBaseDeDatosTipoProducto(context,mantenedor);
-
-    }
-
-
-  public static String buscarMarca(int idMarca){
+    public static String buscarMarca(int idMarca){
         for (MantenedorTresAtributos mantenedorTresAtributos: listaMarca){
             if (mantenedorTresAtributos.getIdMantenedorTresAtributos()==idMarca){
                 return mantenedorTresAtributos.getNombreMantenedorTresAtributos();
@@ -65,7 +43,7 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
         }
         return "";
 
-  }
+    }
 
     public static String buscaSabor(int idMarca){
         for (MantenedorTresAtributos mantenedorTresAtributos: listaSabor){
@@ -119,7 +97,7 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
 
     public static void agregar(MantenedorTresAtributos mantenedorTresAtributos){
 
-       listaMantenedorTresAtributos.add(mantenedorTresAtributos);
+        listaMantenedorTresAtributos.add(mantenedorTresAtributos);
     }
 
     public static ArrayList<MantenedorTresAtributos> getListaMantenedorTresAtributos() {
@@ -169,82 +147,78 @@ public class CargarBaseDeDatosMantenedorTresAtributos implements Response.Listen
         listaMarca.clear();
     }
 
+    public static ArrayList<MantenedorTresAtributos> buscarMantenedorTresAtributos(Context context, String mantenedo) throws IOException, JSONException {
+        MantenedorTresAtributos mantenedorTresAtributos = null;
 
-
-    private void llenarBaseDeDatosTipoProducto(Context context, String mantenedor) {
-        //progreso=new ProgressDialog(context);
-       // progreso.setMessage(context.getString(R.string.mensajeBarraProgresoCargando));
-        //progreso.show();
-
-
-        String url=context.getString(R.string.URLwebServicePart1)+mantenedor+context.getString(R.string.URLwebServicePart2);
-
-        //String url="http://www.brotherwareoficial.com/WebServices/MantenedorTipoProducto.php?tipoconsulta=s";
-        url=url.replace(" ","%20");
-
-        jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
-        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        request.add(jsonObjectRequest);
-    }
-
-
-
-
-    @Override
-    public void onErrorResponse(VolleyError error) {
-        Log.d(contexto.getString(R.string.ERROR),error.toString());
-       // progreso.hide();
-    }
-
-    @Override
-    public void onResponse(JSONObject response) {
-        MantenedorTresAtributos mantenedorTresAtributos =null;
-
-       // progreso.hide();
+        // progreso.hide();
         listaMantenedorTresAtributos.clear();
-
-        JSONArray json=response.optJSONArray(this.mantenedor);
+        URL url = new URL(context.getString(R.string.URLwebServicePart1)
+                + mantenedo
+                + context.getString(R.string.URLwebServicePart2));
+        HttpURLConnection conexion = null;
         try {
-            for (int i=0; i<json.length(); i++){
-                JSONObject jsonObject=null;
+            conexion = (HttpURLConnection) url.openConnection();
+            conexion.setConnectTimeout(20000);
+            conexion.setReadTimeout(20000);
+            conexion.setUseCaches(false);
+            if (conexion.getResponseCode() == 200) {
+                InputStream responseBody = conexion.getInputStream();
+                InputStreamReader isr = new InputStreamReader(responseBody, "UTF-8");
+                BufferedReader br = new BufferedReader(isr);
+                String linea;
+                StringBuilder responseSTR = new StringBuilder();
+                while ((linea = br.readLine()) != null)
+                    responseSTR.append(linea);
 
+                JSONObject response = new JSONObject(responseSTR.toString());
 
+                JSONArray json = response.optJSONArray(mantenedo);
 
-                mantenedorTresAtributos =new MantenedorTresAtributos();
-                jsonObject=json.getJSONObject(i);
-                mantenedorTresAtributos.setIdMantenedorTresAtributos(jsonObject.getInt("Id_"+ this.mantenedor));
-                SelccionMantenedor selccionMantenedor  = SelccionMantenedor.valueOf(mantenedor);
-                switch (selccionMantenedor){
-                    case Sabor:
-                        mantenedorTresAtributos.setFkMantenedorTresAtributos(jsonObject.getInt("Id_TipoProducto"));
-                        break;
-                    case Marca:
-                        mantenedorTresAtributos.setFkMantenedorTresAtributos(jsonObject.getInt("Id_TipoProducto"));
-                        break;
-                    case Provincia:
-                        mantenedorTresAtributos.setFkMantenedorTresAtributos(jsonObject.getInt("Id_Region"));
-                        break;
-                    default:break;
+                try {
+                    for (int i = 0; i < json.length(); i++) {
+                        JSONObject jsonObject = null;
 
+                        mantenedorTresAtributos = new MantenedorTresAtributos();
+                        jsonObject = json.getJSONObject(i);
+                        mantenedorTresAtributos.setIdMantenedorTresAtributos(jsonObject.getInt("Id_" + mantenedo));
+                        SelccionMantenedor selccionMantenedor = SelccionMantenedor.valueOf(mantenedo);
+                        switch (selccionMantenedor) {
+                            case Sabor:
+                                mantenedorTresAtributos.setFkMantenedorTresAtributos(jsonObject.getInt("Id_TipoProducto"));
+                                break;
+                            case Marca:
+                                mantenedorTresAtributos.setFkMantenedorTresAtributos(jsonObject.getInt("Id_TipoProducto"));
+                                break;
+                            case Provincia:
+                                mantenedorTresAtributos.setFkMantenedorTresAtributos(jsonObject.getInt("Id_Region"));
+                                break;
+                            default:
+                                break;
+                        }
 
+                        mantenedorTresAtributos.setNombreMantenedorTresAtributos(jsonObject.getString("Nombre_" + mantenedo));
+
+                        switch (selccionMantenedor) {
+                            case Sabor:
+                                listaSabor.add(mantenedorTresAtributos);
+                                break;
+                            case Marca:
+                                listaMarca.add(mantenedorTresAtributos);
+                                break;
+                        }
+                        listaMantenedorTresAtributos.add(mantenedorTresAtributos);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-
-                //mantenedor.setIdTipoProducto(Integer.parseInt(jsonObject.toString()));
-                mantenedorTresAtributos.setNombreMantenedorTresAtributos(jsonObject.getString("Nombre_"+ this.mantenedor));
-                listaMantenedorTresAtributos.add(mantenedorTresAtributos);
-
-                //llenar lista especifica marca
-                if (mantenedor.equals(SelccionMantenedor.Marca.getSeleccion())) listaMarca.add(mantenedorTresAtributos);
-
-               //llenar lsta especifica sabor
-                if (mantenedor.equals(SelccionMantenedor.Sabor.getSeleccion()))listaSabor.add(mantenedorTresAtributos);
-
-
-
-            }
-
-        }catch (JSONException e) {
-            e.printStackTrace();
+            } else
+                throw new RuntimeException("No se puede contectar al servidor");
+        } finally {
+            conexion.disconnect();
         }
+
+        return listaMantenedorTresAtributos;
     }
+
 }

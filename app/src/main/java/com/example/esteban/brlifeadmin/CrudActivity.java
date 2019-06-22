@@ -1,8 +1,10 @@
 package com.example.esteban.brlifeadmin;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,9 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
+import com.android.volley.RequestQueue;
 import com.example.esteban.brlifeadmin.Adapter.AdaptaderTipoProducto;
 import com.example.esteban.brlifeadmin.Adapter.AdapterComuna;
 import com.example.esteban.brlifeadmin.Adapter.AdapterMantenedorDosAtributos;
@@ -24,15 +26,17 @@ import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorDosAtribu
 import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorTipoProducto;
 import com.example.esteban.brlifeadmin.AlertDialog.AlertNuevoMantenedorTresAtributos;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Producto;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosComuna;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosNuevoId;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProducto;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosProductoNutriente;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantendorComunaHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorDosAtributosHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorProductoHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorProductoNutrienteHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorTipoProductoHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorTresAtributosHttpConecction;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.io.Serializable;
 
 public class CrudActivity extends AppCompatActivity implements  AlertNuevoMantenedorDosAtributos.FinalizoCuadroDialogoAgregar,AlertNuevoMantenedorTresAtributos.FinalizoCuadroDialogoAgregarTrestAtributos, AlertNuevoMantenedorTipoProducto.FinalizoCuadroDialogoAgregar, AlertNuevoMantendorComuna.FinalizoCuadroDialogoAgregar {
@@ -47,6 +51,11 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
  private AdapterComuna adaptaderComuna;
  private AdapterProducto adapterProducto;
  private  String mantenedor;
+ public RequestQueue request;
+ static ProgressDialog progreso;
+
+
+
 
     /**
      * AL momento de agregar un nuevo mantenedor especifico hay que agregarlo en el metodo oncreate
@@ -65,6 +74,15 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
         setContentView(R.layout.activity_crud);
 
 
+        progreso=new ProgressDialog(this);
+        progreso.setMessage(this.getString(R.string.mensajeBarraProgresoCargando));
+        progreso.show();
+
+        StrictMode.ThreadPolicy policy = new
+        StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+
         //Widget
         lvLista=(ListView)findViewById(R.id.lvLista);
         tvTitulo=(TextView)findViewById(R.id.tvTitulo);
@@ -81,12 +99,6 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
         //Limpiar listas
 
         lvLista.setAdapter(null);
-        CargarBaseDeDatosTIpoProducto.getListaTipoProducto().clear();
-        CargarBaseDeDatosDosAtributos.getListaMantenedors().clear();
-        CargarBaseDeDatosTIpoProducto.getListaTipoProducto().clear();
-        CargarBaseDeDatosProducto.getListaProducto().clear();
-        CargarBaseDeDatosComuna.getListaComuna().clear();
-
 
         //Verificar estado de bundle
         if (bundle !=null){
@@ -98,120 +110,147 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
                 case TipoProducto:
 
                    tvTitulo.setText(SelccionMantenedor.TipoProducto.getSeleccion().toString());
-                    //cargarWebService();
-                    new CargarBaseDeDatosTIpoProducto(this,SelccionMantenedor.TipoProducto.getSeleccion());
                     break;
 
                 case Region:
-
                     tvTitulo.setText(SelccionMantenedor.Region.getSeleccion().toString());
-                    //cargarWebService();
-                    new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.Region.getSeleccion());
+
                     break;
                 case Rol:
-
                     tvTitulo.setText(SelccionMantenedor.Rol.getSeleccion().toString());
-                    //cargarWebService();
-                    new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.Rol.getSeleccion());
+
                     break;
                 case Interes:
 
                     tvTitulo.setText(SelccionMantenedor.Interes.getSeleccion().toString());
-                    //cargarWebService();
-                    new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.Interes.getSeleccion());
+
                     break;
                 case HorarioComida:
-
                     tvTitulo.setText(SelccionMantenedor.HorarioComida.getSeleccion().toString());
-                    //cargarWebService();
-                    new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.HorarioComida.getSeleccion());
+
                     break;
                 case Producto:
-
                     tvTitulo.setText(SelccionMantenedor.Producto.getSeleccion().toString());
-                    //cargarWebService();
-                      new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.Nutriente.getSeleccion());
-                    //llenar lsta de productos en actividad
-                    new CargarBaseDeDatosProducto(this,SelccionMantenedor.Producto.getSeleccion());
+                    try {
+                        CargarMantenedorDosAtributosHttpConecction.buscarMantenedorDosAtributos(this,SelccionMantenedor.Nutriente.getSeleccion());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-                    //llenar lista de Marca
-                    new CargarBaseDeDatosTIpoProducto(this,SelccionMantenedor.TipoProducto.getSeleccion());
-
-
+                    try {
+                        CargarMantenedorTipoProductoHttpConecction.buscarMantenedorTipoProducto(this,SelccionMantenedor.TipoProducto.getSeleccion());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     //Limpiar listas sabor y marca
-                    CargarBaseDeDatosMantenedorTresAtributos.limpiarListaMarcaSabor();
+                    CargarMantenedorTresAtributosHttpConecction.limpiarListaMarcaSabor();
 
                     //Cargar listas marca y tipo medicion para spinner de ActivityNuevoProducto con listas dedicadas
-                    new CargarBaseDeDatosMantenedorTresAtributos(this,SelccionMantenedor.Marca.getSeleccion());
+                    //new CargarBaseDeDatosMantenedorTresAtributos(this,SelccionMantenedor.Marca.getSeleccion());
+                    try {
+                        CargarMantenedorTresAtributosHttpConecction.buscarMantenedorTresAtributos(this,SelccionMantenedor.Marca.getSeleccion());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-
-
-                    //Cargar listas Sabor y tipo medicion para spinner de ActivityNuevoProducto con listas dedicadas
-                    new CargarBaseDeDatosMantenedorTresAtributos(this,SelccionMantenedor.Sabor.getSeleccion());
-                    //CargarBaseDeDatosMantenedorTresAtributos.llenarListaSabor();
-
-
+                    try {
+                        CargarMantenedorTresAtributosHttpConecction.buscarMantenedorTresAtributos(this,SelccionMantenedor.Sabor.getSeleccion());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
                     break;
                 case Sabor:
-
 
                     //Cargar titulo dependiento del nombre del mantenedor
                     tvTitulo.setText(SelccionMantenedor.Sabor.getSeleccion().toString());
 
                     //Traer datos de web service para llenar lista;
-                    new CargarBaseDeDatosMantenedorTresAtributos(this,SelccionMantenedor.Sabor.getSeleccion());
 
                     //Traer datos de tipo producto para llenar Spinner
-                    new CargarBaseDeDatosTIpoProducto(this,SelccionMantenedor.TipoProducto.getSeleccion());
+
+                    try {
+                        CargarMantenedorTipoProductoHttpConecction.buscarMantenedorTipoProducto(this,SelccionMantenedor.TipoProducto.getSeleccion());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                     break;
                 case Marca:
-
 
                     //Cargar titulo dependiento del nombre del mantenedor
                     tvTitulo.setText(SelccionMantenedor.Marca.getSeleccion().toString());
 
                     //Traer datos de web service para llenar lista;
-                    new CargarBaseDeDatosMantenedorTresAtributos(this,SelccionMantenedor.Marca.getSeleccion());
 
                    //Traer datos de tipo producto para llenar Spinner
-                    new CargarBaseDeDatosTIpoProducto(this,SelccionMantenedor.TipoProducto.getSeleccion());
+                    try {
+                        CargarMantenedorTipoProductoHttpConecction.buscarMantenedorTipoProducto(this,SelccionMantenedor.TipoProducto.getSeleccion());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case Nutriente:
-
                     tvTitulo.setText(SelccionMantenedor.Nutriente.getSeleccion().toString());
 
-                    new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.Nutriente.getSeleccion());
                     break;
                 case TipoPersona:
-
+                    //CargarBaseDeDatosDosAtributosNuevo.limpiarlista();
                     tvTitulo.setText(SelccionMantenedor.TipoPersona.getSeleccion().toString());
 
-                    new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.TipoPersona.getSeleccion());
                     break;
                 case Objetivo:
-
+                    //CargarBaseDeDatosDosAtributosNuevo.limpiarlista();
                     tvTitulo.setText(SelccionMantenedor.Objetivo.getSeleccion().toString());
 
-                    new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.Objetivo.getSeleccion());
                     break;
                 case Provincia:
 
                     tvTitulo.setText(SelccionMantenedor.Provincia.getSeleccion().toString());
 
-                    new CargarBaseDeDatosMantenedorTresAtributos(this,SelccionMantenedor.Provincia.getSeleccion());
                     //Cargar base de datos para Spinner de AlertNuevoMantenedorTresAtributos con Region
-                    new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.Region.getSeleccion());
+                    try {
+                        CargarMantenedorDosAtributosHttpConecction.buscarMantenedorDosAtributos(this,SelccionMantenedor.Region.getSeleccion());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case Comuna:
 
                     tvTitulo.setText(SelccionMantenedor.Comuna.getSeleccion().toString());
 
-                    new CargarBaseDeDatosComuna(this,SelccionMantenedor.Comuna.getSeleccion());
                     //Para Cargar la provincia
-                    new CargarBaseDeDatosMantenedorTresAtributos(this,SelccionMantenedor.Provincia.getSeleccion());
+                    try {
+                        CargarMantenedorTresAtributosHttpConecction.buscarMantenedorTresAtributos(this,SelccionMantenedor.Provincia.getSeleccion());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                     //Cargar base de datos para Spinner de AlertNuevoMantenedorTresAtributos con Region
-                    new CargarBaseDeDatosDosAtributos(this,SelccionMantenedor.Region.getSeleccion());
+                    try {
+                        CargarMantenedorDosAtributosHttpConecction.buscarMantenedorDosAtributos(this,SelccionMantenedor.Region.getSeleccion());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                     break;
                 default:
                     break;
@@ -231,8 +270,16 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 intent.putExtra("accion","editar");
-                Producto producto = CargarBaseDeDatosProducto.listaProducto.get(position);
-                new CargarBaseDeDatosProductoNutriente(CrudActivity.this,producto.getIdProducto(), SelccionMantenedor.ProductoNutriente.getSeleccion());
+                Producto producto = CargarMantenedorProductoHttpConecction.listaProducto.get(position);
+                //new CargarBaseDeDatosProductoNutriente(CrudActivity.this, producto.getIdProducto(),                         SelccionMantenedor.ProductoNutriente.getSeleccion());
+                try {
+                    CargarMantenedorProductoNutrienteHttpConecction.buscarMantenedorProductoNutriente(this,SelccionMantenedor.ProductoNutriente.getSeleccion(),producto.getIdProducto());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
                 intent.putExtra("Producto", (Serializable) producto);
                 startActivity(intent);
                 return false;
@@ -247,8 +294,13 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
     });
 
 
-
-        llenr();
+        try {
+            llenr();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.nuevoNutriente);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -296,39 +348,36 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
                             break;
                 }
 
-
-
-
-
             }
         });
+        progreso.hide();
     }
 
-    public void llenr(){
+    public void llenr() throws IOException, JSONException {
 
 
        if (mantenedor.equals(SelccionMantenedor.Producto.getSeleccion())) {
-           adapterProducto = new AdapterProducto(this, CargarBaseDeDatosProducto.getListaProducto(), mantenedor);
+           adapterProducto = new AdapterProducto(this, CargarMantenedorProductoHttpConecction.buscarMantenedorProducto(this,mantenedor), mantenedor);
            lvLista.setAdapter(adapterProducto);
-
        }else if (mantenedor.equals(SelccionMantenedor.TipoProducto.getSeleccion())){
-           adaptaderTipoProducto =new AdaptaderTipoProducto(this, CargarBaseDeDatosTIpoProducto.getListaTipoProducto(),mantenedor);
+           adaptaderTipoProducto =new AdaptaderTipoProducto(this, CargarMantenedorTipoProductoHttpConecction.buscarMantenedorTipoProducto(this,mantenedor),mantenedor);
            lvLista.setAdapter(adaptaderTipoProducto);
        }
        else if (mantenedor.equals(SelccionMantenedor.Comuna.getSeleccion())){
-           adaptaderComuna =new AdapterComuna(this, CargarBaseDeDatosComuna.getListaComuna(),mantenedor);
+           adaptaderComuna =new AdapterComuna(this, CargarMantendorComunaHttpConecction.buscarMantenedorComuna(this,mantenedor),mantenedor);
                lvLista.setAdapter(adaptaderComuna);
         }else if (mantenedor.equals(SelccionMantenedor.Sabor.getSeleccion()) || mantenedor.equals(SelccionMantenedor.Marca.getSeleccion()) || mantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
-           adapterMantenedorTresAtributos =new AdapterMantenedorTresAtributos(this,CargarBaseDeDatosMantenedorTresAtributos.getListaMantenedorTresAtributos(),mantenedor);
+//           adapterMantenedorTresAtributos =new AdapterMantenedorTresAtributos(this,CargarBaseDeDatosMantenedorTresAtributos.getListaMantenedorTresAtributos(),mantenedor);
+           adapterMantenedorTresAtributos =new AdapterMantenedorTresAtributos(this, CargarMantenedorTresAtributosHttpConecction.buscarMantenedorTresAtributos(this,mantenedor),mantenedor);
            lvLista.setAdapter(adapterMantenedorTresAtributos);
        }else{
-            adapterMantenedorDosAtributos =new AdapterMantenedorDosAtributos(this, CargarBaseDeDatosDosAtributos.getListaMantenedors(),mantenedor);
-            lvLista.setAdapter(adapterMantenedorDosAtributos);
-        }
+
+           adapterMantenedorDosAtributos =new AdapterMantenedorDosAtributos(this, CargarMantenedorDosAtributosHttpConecction.buscarMantenedorDosAtributos(this,mantenedor),mantenedor);
+           lvLista.setAdapter(adapterMantenedorDosAtributos);
+       }
 
 
     }
-
 
 
 
@@ -347,16 +396,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
         }else adapterMantenedorDosAtributos.notifyDataSetChanged();
 
 
-       // Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
-      //adaptador.actualizarLista(CargarBaseDeDatosDosAtributos.getListaMantenedors());
-      //llenr();
-
-
     }
-
-
-
-
 
     @Override
     public void ResultadoCuadroDialogoAgregar(boolean val) {

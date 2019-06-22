@@ -10,13 +10,13 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosComuna;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosTIpoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorComuna;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorDosAtibutos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTipoProducto;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorTresAtributos;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantendorComunaHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorDosAtributosHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorTipoProductoHttpConecction;
 import com.example.esteban.brlifeadmin.CrudActivity;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.DialogKeyListener;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
@@ -64,19 +64,19 @@ public class AlertDelete {
                 }else if (mantenedor.equals(SelccionMantenedor.TipoProducto.getSeleccion())){
                     //    public CrudMantenedorTipoProducto(String nombre, boolean variedadsabor, boolean variedadmarca, Context context, String tipoConsulta, int id , String mantenedor){
                     new CrudMantenedorTipoProducto("",false,false,contexto,"eliminar", id,mantenedor);
-                    CargarBaseDeDatosTIpoProducto.eliminar(id);
+                    CargarMantenedorTipoProductoHttpConecction.eliminar(id);
                 }
                 else if (mantenedor.equals(SelccionMantenedor.Comuna.getSeleccion())){
                     //    public CrudMantenedorTipoProducto(String nombre, boolean variedadsabor, boolean variedadmarca, Context context, String tipoConsulta, int id , String mantenedor){
                     new CrudMantenedorComuna(id,0,0,"",contexto,"eliminar",mantenedor);
-                    CargarBaseDeDatosComuna.eliminar(id);
+                    CargarMantendorComunaHttpConecction.eliminar(id);
                 }else if (mantenedor.equals(SelccionMantenedor.Sabor.getSeleccion()) || mantenedor.equals(SelccionMantenedor.Marca.getSeleccion()) || mantenedor.equals(SelccionMantenedor.Provincia.getSeleccion())){
                     //new CrudMantenedorTresAtributos(contexto,"",);
                    
                     new CrudMantenedorTresAtributos(contexto,"",0,"eliminar",id,mantenedor);
                 }else{
                     new CrudMantenedorDosAtibutos("",contexto,"eliminar",id,mantenedor);
-                    CargarBaseDeDatosDosAtributos.eliminar(id);
+                    CargarMantenedorDosAtributosHttpConecction.eliminar(id);
                 }
 
 
@@ -127,7 +127,7 @@ public class AlertDelete {
                     //new CrudMantenedorTresAtributos(contexto,"",);
 
                     new CrudMantenedorTresAtributos(contexto,"",fk,"eliminar",id,mantenedor);
-                    CargarBaseDeDatosTIpoProducto.eliminar(id);
+                    CargarMantenedorTipoProductoHttpConecction.eliminar(id);
                      interfaz.ResultadoCuadroDialogo(true);
                 }
 

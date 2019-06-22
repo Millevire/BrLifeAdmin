@@ -11,6 +11,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorDosAtributosHttpConecction;
 
 import org.json.JSONObject;
 
@@ -80,7 +81,7 @@ public class CrudMantenedorDosAtibutos implements Response.Listener<JSONObject>,
 
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
         request.add(jsonObjectRequest);
-        CargarBaseDeDatosDosAtributos.eliminar(id);
+        CargarMantenedorDosAtributosHttpConecction.eliminar(id);
     }
 
     @Override

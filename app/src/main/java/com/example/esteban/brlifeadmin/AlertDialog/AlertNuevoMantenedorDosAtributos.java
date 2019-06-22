@@ -10,9 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosDosAtributos;
 import com.example.esteban.brlifeadmin.ConexionWebService.CrudMantenedorDosAtibutos;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorDosAtributosHttpConecction;
 import com.example.esteban.brlifeadmin.CrudActivity;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.DialogKeyListener;
 import com.example.esteban.brlifeadmin.R;
@@ -80,7 +80,7 @@ public class AlertNuevoMantenedorDosAtributos {
                         new CrudMantenedorDosAtibutos(etAlertNuevoMantenedorDosAtributos.getText().toString(),contexto,"editar", tipoProducto.getIdTipoProducto(),mantenedor);
                         //new CargarBaseDeDatosDosAtributos(contexto);
                         actividad.ResultadoCuadroDialogoAgregar(true);
-                        CargarBaseDeDatosDosAtributos.editar(tipoProducto.getIdTipoProducto(),etAlertNuevoMantenedorDosAtributos.getText().toString());
+                        CargarMantenedorDosAtributosHttpConecction.editar(tipoProducto.getIdTipoProducto(),etAlertNuevoMantenedorDosAtributos.getText().toString());
                         dialogo.dismiss();
                         // contexto.startActivity(intent);
                     }else {
@@ -90,7 +90,7 @@ public class AlertNuevoMantenedorDosAtributos {
                         // new CargarBaseDeDatosDosAtributos(contexto);
                         actividad.ResultadoCuadroDialogoAgregar(true);
 
-                        CargarBaseDeDatosDosAtributos.agregar(new Mantenedor(etAlertNuevoMantenedorDosAtributos.getText().toString()));
+                        CargarMantenedorDosAtributosHttpConecction.agregar(new Mantenedor(etAlertNuevoMantenedorDosAtributos.getText().toString()));
 
                         dialogo.dismiss();
                         //contexto.startActivity(intent);

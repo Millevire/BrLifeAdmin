@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Producto;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorTresAtributosHttpConecction;
 import com.example.esteban.brlifeadmin.R;
 import com.example.esteban.brlifeadmin.Enum.SeleccionTipoProducto;
 
@@ -109,8 +109,8 @@ public class AdapterProducto extends BaseAdapter {
         idSabor=listaProducto.get(position).getIdSabor();
 
         //obtener nombre
-        nombreMarca= CargarBaseDeDatosMantenedorTresAtributos.buscarMarca(idMarca);
-        nombreSabor=CargarBaseDeDatosMantenedorTresAtributos.buscaSabor(idSabor);
+        nombreMarca= CargarMantenedorTresAtributosHttpConecction.buscarMarca(idMarca);
+        nombreSabor=CargarMantenedorTresAtributosHttpConecction.buscaSabor(idSabor);
 
         //Setear nombres en textview
         tvMarcaProducto.setText(nombreMarca);

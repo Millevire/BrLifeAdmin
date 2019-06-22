@@ -64,7 +64,7 @@ public class CargarBaseDeDatosNuevoId implements Response.Listener<JSONObject>,R
 
         //String url=context.getString(R.string.URLwebServicePart1)+mantenedor+context.getString(R.string.URLwebServicePart2);
 
-        String url="http://www.brotherwareoficial.com/WebServices/MantenedorProducto.php?tipoconsulta=n";
+        String url="http://www.brotherwareoficial.com/WebServices/Mantenedor"+mantenedor+".php?tipoconsulta=n";
         url=url.replace(" ","%20");
 
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);

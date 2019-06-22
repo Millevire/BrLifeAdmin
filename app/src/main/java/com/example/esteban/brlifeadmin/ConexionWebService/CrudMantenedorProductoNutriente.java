@@ -11,6 +11,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Producto;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.ProductoNutriente;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorProductoNutrienteHttpConecction;
 
 import org.json.JSONObject;
 
@@ -27,7 +28,7 @@ public class CrudMantenedorProductoNutriente implements Response.Listener<JSONOb
         progreso=new ProgressDialog(context);
         progreso.setMessage("Cargando...");
         progreso.show();
-        ArrayList<ProductoNutriente> listaProductoNutriente= CargarBaseDeDatosProductoNutriente.getListaProductoNutrienteacion();
+        ArrayList<ProductoNutriente> listaProductoNutriente= CargarMantenedorProductoNutrienteHttpConecction.getListaProductoNutrienteacion();
 
         for (ProductoNutriente e: listaProductoNutriente) {
             e.setIdProducto(idproducto);

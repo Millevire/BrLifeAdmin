@@ -12,8 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.esteban.brlifeadmin.Clases.Mantenedor.MantenedorTresAtributos;
-import com.example.esteban.brlifeadmin.ConexionWebService.CargarBaseDeDatosMantenedorTresAtributos;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorTresAtributosHttpConecction;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 
 import org.json.JSONArray;
@@ -111,7 +110,7 @@ public class CrudMantenedorTresAtributos implements Response.Listener<JSONObject
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
         request.add(jsonObjectRequest);
 
-        CargarBaseDeDatosMantenedorTresAtributos.eliminar(id);
+        CargarMantenedorTresAtributosHttpConecction.eliminar(id);
     }
     @Override
     public void onErrorResponse(VolleyError error) {
