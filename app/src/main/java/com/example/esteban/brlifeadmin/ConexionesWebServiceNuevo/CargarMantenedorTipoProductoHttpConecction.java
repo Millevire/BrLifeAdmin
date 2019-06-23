@@ -58,7 +58,27 @@ public class CargarMantenedorTipoProductoHttpConecction {
     }
 
     public static ArrayList<TipoProducto> getListaTipoProducto() {
+
         return listaTipoProducto;
+    }
+    public static ArrayList<TipoProducto> ListaTipoProductoMarca() {
+        ArrayList<TipoProducto> listamarca = new ArrayList<>();
+        for (TipoProducto e:listaTipoProducto) {
+            if (e.isVariedadMarca() == true){
+                listamarca.add(e);
+            }
+        }
+        return listamarca;
+    }
+    public static ArrayList<TipoProducto> ListaTipoProductoSabor() {
+        ArrayList<TipoProducto> listasabor = new ArrayList<>();
+        for (TipoProducto e:listaTipoProducto) {
+            if (e.isVaridadSabor()){
+                listasabor.add(e);
+            }
+        }
+
+        return listasabor;
     }
 
     public static ArrayList<TipoProducto> buscarMantenedorTipoProducto(Context context, String mantenedo) throws IOException, JSONException {

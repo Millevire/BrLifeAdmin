@@ -32,6 +32,7 @@ import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedo
 import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorProductoNutrienteHttpConecction;
 import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorTipoProductoHttpConecction;
 import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorTresAtributosHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarNuevoIdHttpConecction;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 
 import org.json.JSONException;
@@ -51,11 +52,6 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
  private AdapterComuna adaptaderComuna;
  private AdapterProducto adapterProducto;
  private  String mantenedor;
- public RequestQueue request;
- static ProgressDialog progreso;
-
-
-
 
     /**
      * AL momento de agregar un nuevo mantenedor especifico hay que agregarlo en el metodo oncreate
@@ -74,10 +70,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
         setContentView(R.layout.activity_crud);
 
 
-        progreso=new ProgressDialog(this);
-        progreso.setMessage(this.getString(R.string.mensajeBarraProgresoCargando));
-        progreso.show();
-
+        //Para que funcione el HttpConexion
         StrictMode.ThreadPolicy policy = new
         StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -132,41 +125,6 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
                     break;
                 case Producto:
                     tvTitulo.setText(SelccionMantenedor.Producto.getSeleccion().toString());
-                    try {
-                        CargarMantenedorDosAtributosHttpConecction.buscarMantenedorDosAtributos(this,SelccionMantenedor.Nutriente.getSeleccion());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    try {
-                        CargarMantenedorTipoProductoHttpConecction.buscarMantenedorTipoProducto(this,SelccionMantenedor.TipoProducto.getSeleccion());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    //Limpiar listas sabor y marca
-                    CargarMantenedorTresAtributosHttpConecction.limpiarListaMarcaSabor();
-
-                    //Cargar listas marca y tipo medicion para spinner de ActivityNuevoProducto con listas dedicadas
-                    //new CargarBaseDeDatosMantenedorTresAtributos(this,SelccionMantenedor.Marca.getSeleccion());
-                    try {
-                        CargarMantenedorTresAtributosHttpConecction.buscarMantenedorTresAtributos(this,SelccionMantenedor.Marca.getSeleccion());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    try {
-                        CargarMantenedorTresAtributosHttpConecction.buscarMantenedorTresAtributos(this,SelccionMantenedor.Sabor.getSeleccion());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
 
                     break;
                 case Sabor:
@@ -313,11 +271,15 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
 
                     //Enviar a actividad para agregar Producto
                     case Producto:
-                        //Cargar listas Sabor y tipo medicion para spinner de ActivityNuevoProducto con listas dedicadas
-                        //CargarBaseDeDatosNuevoId.getNuevaid();
+                        try {
+                            CargarNuevoIdHttpConecction.buscarMantenedorNuevoId(CrudActivity.this,SelccionMantenedor.Producto.getSeleccion());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         intent.putExtra("accion","agregar");
                         startActivity(intent);
-                        //CargarBaseDeDatosMantenedorTresAtributos.llenarListaSabor();
                         break;
 
                     //Abrir Alert dialogo para agregar Provincia
@@ -351,14 +313,13 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
 
             }
         });
-        progreso.hide();
     }
 
     public void llenr() throws IOException, JSONException {
 
 
        if (mantenedor.equals(SelccionMantenedor.Producto.getSeleccion())) {
-           adapterProducto = new AdapterProducto(this, CargarMantenedorProductoHttpConecction.buscarMantenedorProducto(this,mantenedor), mantenedor);
+           adapterProducto = new AdapterProducto(this, CargarMantenedorProductoHttpConecction.getListaProducto(), mantenedor);
            lvLista.setAdapter(adapterProducto);
        }else if (mantenedor.equals(SelccionMantenedor.TipoProducto.getSeleccion())){
            adaptaderTipoProducto =new AdaptaderTipoProducto(this, CargarMantenedorTipoProductoHttpConecction.buscarMantenedorTipoProducto(this,mantenedor),mantenedor);

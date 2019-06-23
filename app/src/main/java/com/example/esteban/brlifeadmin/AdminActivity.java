@@ -1,12 +1,21 @@
 package com.example.esteban.brlifeadmin;
 
 import android.content.Intent;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorDosAtributosHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorProductoHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorTipoProductoHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorTresAtributosHttpConecction;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
+
+import org.json.JSONException;
+
+import java.io.IOException;
 
 public class AdminActivity extends AppCompatActivity {
     private Button btnTipoProducto,btnRegiones,btnInteres,btnRol,btnHorarioComida,btnProducto,btnSabor,btnMarca,btnNutriente,btnProvincia,btnComuna, btnTipoPersona, btnObjetivo;
@@ -30,6 +39,11 @@ public class AdminActivity extends AppCompatActivity {
         btnTipoPersona=(Button)findViewById(R.id.btnTipoPersona);
         btnObjetivo=(Button)findViewById(R.id.btnObjetivo);
         final Intent intent =new Intent(this,CrudActivity.class);
+
+
+        //Para que funcione el HttpConexion
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         btnTipoProducto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +88,48 @@ public class AdminActivity extends AppCompatActivity {
         btnProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try {
+                    CargarMantenedorProductoHttpConecction.buscarMantenedorProducto(AdminActivity.this,SelccionMantenedor.Producto.getSeleccion());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    CargarMantenedorDosAtributosHttpConecction.buscarMantenedorDosAtributos(AdminActivity.this,SelccionMantenedor.Nutriente.getSeleccion());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
+                try {
+                    CargarMantenedorTipoProductoHttpConecction.buscarMantenedorTipoProducto(AdminActivity.this,SelccionMantenedor.TipoProducto.getSeleccion());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                //Limpiar listas sabor y marca
+                CargarMantenedorTresAtributosHttpConecction.limpiarListaMarcaSabor();
+
+                //Cargar listas marca y tipo medicion para spinner de ActivityNuevoProducto con listas dedicadas
+                //new CargarBaseDeDatosMantenedorTresAtributos(this,SelccionMantenedor.Marca.getSeleccion());
+                try {
+                    CargarMantenedorTresAtributosHttpConecction.buscarMantenedorTresAtributos(AdminActivity.this,SelccionMantenedor.Marca.getSeleccion());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    CargarMantenedorTresAtributosHttpConecction.buscarMantenedorTresAtributos(AdminActivity.this,SelccionMantenedor.Sabor.getSeleccion());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
                 intent.putExtra("mantenedor",SelccionMantenedor.Producto.getSeleccion());
                 startActivity(intent);

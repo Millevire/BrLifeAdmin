@@ -2,6 +2,8 @@ package com.example.esteban.brlifeadmin.AlertDialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -74,6 +76,7 @@ public class AlertNuevoMantendorComuna {
         spAlertMantenedorProvincia.setAdapter(adapterProvincia);
         spAlertMantenedorRegion.setAdapter(adapterRegion);
         tvTituloAlertNuevoMantenedorComuna.setText("Nueva Comuna:");
+
 
 
 

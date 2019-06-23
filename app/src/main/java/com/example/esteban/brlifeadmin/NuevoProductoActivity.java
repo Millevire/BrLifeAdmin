@@ -3,7 +3,11 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -12,6 +16,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.esteban.brlifeadmin.Adapter.AdapterProductoNutriente;
@@ -26,11 +31,15 @@ import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedo
 import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorProductoNutrienteHttpConecction;
 import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorTipoProductoHttpConecction;
 import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorTresAtributosHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarNuevoIdHttpConecction;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 import com.example.esteban.brlifeadmin.Enum.SeleccionTipoMedicion;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class NuevoProductoActivity extends AppCompatActivity implements AlertMantenedorProductoNutriente.FinalizoCuadroDialogoProductoNutriente {
@@ -59,7 +68,7 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
         super.onBackPressed();
         //Se obtiene el id del crud producto para eliminar en caso de cancelar el ingreso del producto
         if (accion.equals("agregar")) {
-            id = CrudProducto.getNuevaid();
+            id = CargarNuevoIdHttpConecction.getNuevaid();
             new CrudProducto(id,NuevoProductoActivity.this,"eliminar",SelccionMantenedor.Producto.getSeleccion());
         }
         CargarMantenedorProductoNutrienteHttpConecction.limpiarlista();
@@ -98,8 +107,11 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
 
         //Para insertar el id y tenerlo al momento de agregar o cancelar
         if (accion.equals("agregar")) {
-            new CrudProducto(0, NuevoProductoActivity.this, "nuevo", SelccionMantenedor.Producto.getSeleccion());
+            //new CrudProducto(0, NuevoProductoActivity.this, "nuevo", SelccionMantenedor.Producto.getSeleccion());
+            id = CargarNuevoIdHttpConecction.getNuevaid();
+            Toast.makeText(this, "Nuevo Id: "+id , Toast.LENGTH_SHORT).show();
             btnAgregarProducto.setText("Agregar");
+
         }
 
 
@@ -140,11 +152,19 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
                listaFiltroSabor = CargarMantenedorTresAtributosHttpConecction.filtroSabor(idTipoproducto);
                adapterSabor = new SpinAdapterTresAtributos(NuevoProductoActivity.this,android.R.layout.simple_list_item_1,listaFiltroSabor);
                spSabor.setAdapter(adapterSabor);
-               if (adapterSabor != null && producto != null){
-                   if (producto.getFkTipoProducto() == idTipoproducto) {
-                       if (accion.equals("editar")) {
-                           int posi = (int) adapterSabor.getItemId(producto.getIdSabor());
-                           spSabor.setSelection(posi);
+
+
+               if (CargarMantenedorTipoProductoHttpConecction.getListaTipoProducto().get(position).isVaridadSabor() == false){
+                   spSabor.setSelection(0);
+                   spSabor.setEnabled(false);
+               }else {
+                   spSabor.setEnabled(true);
+                   if (adapterSabor != null && producto != null) {
+                       if (producto.getFkTipoProducto() == idTipoproducto) {
+                           if (accion.equals("editar")) {
+                               int posi = (int) adapterSabor.getItemId(producto.getIdSabor());
+                               spSabor.setSelection(posi);
+                           }
                        }
                    }
                }
@@ -153,14 +173,22 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
                listaFiltroMarca=CargarMantenedorTresAtributosHttpConecction.filtroMarca(idTipoproducto);
                adapterMarca=new SpinAdapterTresAtributos(NuevoProductoActivity.this,android.R.layout.simple_list_item_1,listaFiltroMarca);
                spMarca.setAdapter(adapterMarca);
-               if (adapterMarca != null && producto != null){
-                   if (producto.getFkTipoProducto() == idTipoproducto) {
-                       if (accion.equals("editar")) {
-                           int posi = (int) adapterMarca.getItemId(producto.getIdMarca());
-                           spMarca.setSelection(posi);
+
+               if (CargarMantenedorTipoProductoHttpConecction.getListaTipoProducto().get(position).isVariedadMarca() == false) {
+                   spMarca.setSelection(0);
+                   spMarca.setEnabled(false);
+               }else{
+                   spMarca.setEnabled(true);
+                   if (adapterMarca != null && producto != null) {
+                       if (producto.getFkTipoProducto() == idTipoproducto) {
+                           if (accion.equals("editar")) {
+                               int posi = (int) adapterMarca.getItemId(producto.getIdMarca());
+                               spMarca.setSelection(posi);
+                           }
                        }
                    }
                }
+
            }
            @Override
            public void onNothingSelected(AdapterView<?> parent) {
@@ -242,7 +270,7 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
             public void onClick(View v) {
                 //Se obtiene el id del crud producto para eliminar en caso de cancelar el ingreso del producto
                 if (accion.equals("agregar")) {
-                    id = CrudProducto.getNuevaid();
+                    id = CargarNuevoIdHttpConecction.getNuevaid();
                     new CrudProducto(id,NuevoProductoActivity.this,"eliminar",SelccionMantenedor.Producto.getSeleccion());
                 }
                 CargarMantenedorProductoNutrienteHttpConecction.limpiarlista();
@@ -266,7 +294,7 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
                 validacion = ValidarDatosFormulario(producto);
                 if (validacion){
                     if (accion.equals("agregar")) {
-                        id = CrudProducto.getNuevaid();
+                        id = CargarNuevoIdHttpConecction.getNuevaid();
                         producto.setIdProducto(id);
                         new CrudMantenedorProductoNutriente(NuevoProductoActivity.this, id, "ProductoNutriente");
                         CargarMantenedorProductoHttpConecction.agregar(producto);
@@ -287,6 +315,7 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
             }
         });
 
+
         //Metodo para pasar datos a formulario
         if (accion.equals("editar")){
             producto = (Producto) getIntent().getExtras().getSerializable("Producto");
@@ -299,6 +328,64 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
             }
             btnAgregarProducto.setText("Editar");
         }
+
+        //Eventos para cuando pierde el foco el editext
+        etnombreproducto.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                String nombreproducto = etnombreproducto.getText().toString();
+                nombreproducto.replace(" ","");
+                if (hasFocus) {
+
+                } else {
+                    if (etnombreproducto.getText().equals("")){
+                        etnombreproducto.setError("Ingrese el nombre del producto");
+                        btnAgregarProducto.setEnabled(false);
+                    }else{
+                        btnAgregarProducto.setEnabled(true);
+                    }
+                    //Toast.makeText(getApplicationContext(), "Pierde el focus", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        etBarCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                String barcode = etBarCode.getText().toString();
+                barcode.replace(" ","");
+                if (hasFocus) {
+
+                } else {
+                    if (barcode.equals("")){
+                        etBarCode.setError("Ingrese codigo de barra");
+                        btnAgregarProducto.setEnabled(false);
+                    }else{
+                        btnAgregarProducto.setEnabled(true);
+                    }
+                    //Toast.makeText(getApplicationContext(), "Pierde el focus", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        etCantidadracion.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                String cantidad = etCantidadracion.getText().toString();
+                cantidad.replace(" ","");
+                if (hasFocus) {
+
+                } else {
+                    if (cantidad.equals("")){
+                        etCantidadracion.setError("Ingrese cantidad de racion del producto");
+                        btnAgregarProducto.setEnabled(false);
+                    }else{
+                        btnAgregarProducto.setEnabled(true);
+                    }
+                    //Toast.makeText(getApplicationContext(), "Pierde el focus", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
 
@@ -338,7 +425,7 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
             producto.setCodigoBarra(etBarCode.getText().toString());
 
         }catch (Exception e){
-            producto.setCodigoBarra("error");
+            producto.setCodigoBarra("");
         }
         try {
             producto.setFkTipoProducto(idTipoproducto);
@@ -386,7 +473,8 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
     }
 
     public boolean ValidarDatosFormulario(Producto producto){
-        if (producto.getCodigoBarra().equals("error")){
+        if (producto.getCodigoBarra().equals("")){
+            etBarCode.setFocusable(true);
             etBarCode.setError("Ingrese el campo de codigo de barra");
             return false;
         }
@@ -396,9 +484,11 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
         }
         if (producto.getNombreProducto().equals("")){
             etnombreproducto.setError("Ingrese el nombre del producto");
+            etnombreproducto.setFocusable(true);
             return  false;
         }
         if (producto.getCantidadRacion() == 0){
+            etCantidadracion.setFocusable(true);
             etCantidadracion.setError("Ingrese Cantidad de racion");
             return false;
         }

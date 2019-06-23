@@ -110,6 +110,13 @@ public class AdapterProducto extends BaseAdapter {
                 break;
             case Fritura:
                 ivImagen.setImageResource(R.drawable.frituras);
+                break;
+            case Cafe:
+                ivImagen.setImageResource(R.drawable.cafe);
+                break;
+            case Caramelo:
+                ivImagen.setImageResource(R.drawable.caramelo);
+                break;
         }
 
 

@@ -1,5 +1,6 @@
 package com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
@@ -19,10 +20,14 @@ import java.util.ArrayList;
 
 public class CargarMantenedorDosAtributosHttpConecction {
     public static ArrayList<Mantenedor> listaMantenedors;
-
+    static ProgressDialog progreso;
 
     public static ArrayList<Mantenedor> buscarMantenedorDosAtributos(Context context, String mantenedo) throws  IOException, JSONException {
         listaMantenedors = new ArrayList<>();
+        progreso=new ProgressDialog(context);
+        progreso.setMessage(context.getString(R.string.mensajeBarraProgresoCargando));
+        progreso.show();
+
         URL url = new URL(context.getString(R.string.URLwebServicePart1)
                 +mantenedo
                 +context.getString(R.string.URLwebServicePart2));
@@ -71,7 +76,7 @@ public class CargarMantenedorDosAtributosHttpConecction {
         }finally {
             conexion.disconnect();
         }
-
+        progreso.hide();
         return listaMantenedors;
     }
 

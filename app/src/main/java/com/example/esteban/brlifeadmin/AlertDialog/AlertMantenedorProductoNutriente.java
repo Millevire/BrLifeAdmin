@@ -71,10 +71,10 @@ public class AlertMantenedorProductoNutriente  {
             public void onClick(View v) {
                 //Agregar nuevo registro a lista producto nutriente
                 //Se agregar con accion  i en el caso de insertar un nutriente al producto
-                CargarMantenedorProductoNutrienteHttpConecction.agregar(new ProductoNutriente(0,0,idNutriente,Float.parseFloat(etAlertProductoNutriente.getText().toString()),"i"));
-                //Comunicar cambio en lista
-                interfaz.ResultadoCuadroDialogoProductoNutriente(true);
-                dialogo.dismiss();
+                    CargarMantenedorProductoNutrienteHttpConecction.agregar(new ProductoNutriente(0, 0, idNutriente, Float.parseFloat(etAlertProductoNutriente.getText().toString()), "i"));
+                    //Comunicar cambio en lista
+                    interfaz.ResultadoCuadroDialogoProductoNutriente(true);
+                    dialogo.dismiss();
             }
 
         });
