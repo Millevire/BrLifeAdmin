@@ -199,11 +199,14 @@ public class AdapterProducto extends BaseAdapter implements AlertDelete.Finalizo
                 {
                     listaProducto.add(producto);
 
-                }else if(nombreMarca.toLowerCase(Locale.getDefault()).contains(filtro)){
-                    listaProducto.add(producto);
-
-                }else if(nombreSabor.toLowerCase(Locale.getDefault()).contains(filtro)){
-                    listaProducto.add(producto);
+                }else {
+                    String sabor=CargarMantenedorTresAtributosHttpConecction.buscaSabor(producto.getIdSabor());
+                    String marca=CargarMantenedorTresAtributosHttpConecction.buscarMarca(producto.getIdMarca());
+                   if (sabor.toLowerCase(Locale.getDefault()).contains(filtro)){
+                       listaProducto.add(producto);
+                   }else if(marca.toLowerCase(Locale.getDefault()).contains(filtro)){
+                       listaProducto.add(producto);
+                   }
 
                 }
 

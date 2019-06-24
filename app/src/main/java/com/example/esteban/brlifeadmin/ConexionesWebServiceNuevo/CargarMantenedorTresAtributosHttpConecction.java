@@ -56,6 +56,16 @@ public class CargarMantenedorTresAtributosHttpConecction {
 
     }
 
+    public static int buscarSabor(String sabor){
+        for (MantenedorTresAtributos mantenedorTresAtributos: listaSabor){
+            if (mantenedorTresAtributos.getNombreMantenedorTresAtributos().equals(sabor)){
+                return mantenedorTresAtributos.getIdMantenedorTresAtributos();
+            }
+
+        }
+        return -1;
+    }
+
     public static void eliminar(int id){
         for(int x = 0; x< listaMantenedorTresAtributos.size(); ++x){
             if (listaMantenedorTresAtributos.get(x).getIdMantenedorTresAtributos()==id){

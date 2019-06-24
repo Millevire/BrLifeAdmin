@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
 import android.view.KeyboardShortcutGroup;
 import android.view.Menu;
 import android.view.View;
@@ -48,6 +50,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
  private Button btnBuscar,btnBack;
  private TextView tvTitulo;
  private ListView lvLista;
+ private SearchView svBuscar;
 
  private AdapterMantenedorDosAtributos adapterMantenedorDosAtributos;
  private AdapterMantenedorTresAtributos adapterMantenedorTresAtributos;
@@ -84,12 +87,15 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
         lvLista=(ListView)findViewById(R.id.lvLista);
         tvTitulo=(TextView)findViewById(R.id.tvTitulo);
         btnBack=(Button)findViewById(R.id.btnBack);
+        svBuscar=(SearchView)findViewById(R.id.svBuscar);
+
 
 
        //intente para actividad nuevo producto
         final Intent intent =new Intent(this,NuevoProductoActivity.class);
         //Bundle para saber de donde estan llamando actividad
         final Bundle bundle=getIntent().getExtras();
+
 
 
 
@@ -229,13 +235,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
 
 
 
-        lvLista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                return false;
-            }
-        });
 
     btnBack.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -303,6 +303,119 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
                             break;
                 }
 
+            }
+        });
+
+
+
+        svBuscar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String filtro) {
+                if (TextUtils.isEmpty(filtro)){
+                    SelccionMantenedor selccionMantenedor  = SelccionMantenedor.valueOf(mantenedor);
+                    switch (selccionMantenedor){
+                        case TipoProducto:
+                           adaptaderTipoProducto.Filtro("");
+                            break;
+
+                        case Region:
+                         adapterMantenedorDosAtributos.Filtro("");
+                            break;
+                        case Rol:
+                            adapterMantenedorDosAtributos.Filtro("");
+                            break;
+                        case Interes:
+                            adapterMantenedorDosAtributos.Filtro("");
+                            break;
+                        case HorarioComida:
+                            adapterMantenedorDosAtributos.Filtro("");
+                            break;
+                        case Producto:
+                            adapterProducto.Filtro("");
+                            break;
+                        case Sabor:
+                           adapterMantenedorTresAtributos.Filtro("");
+                            break;
+                        case Marca:
+                            adapterMantenedorTresAtributos.Filtro("");
+
+                            break;
+                        case Nutriente:
+                            adapterMantenedorDosAtributos.Filtro("");
+                            break;
+                        case TipoPersona:
+                            adapterMantenedorDosAtributos.Filtro("");
+                            break;
+                        case Objetivo:
+                            adapterMantenedorDosAtributos.Filtro("");
+                            break;
+                        case Provincia:
+                            adapterMantenedorTresAtributos.Filtro("");
+                            break;
+                        case Comuna:
+                            adaptaderComuna.Filtro("");
+
+                            break;
+                        default:
+                            break;
+                    }
+
+                    lvLista.clearTextFilter();
+                }else {
+                    SelccionMantenedor selccionMantenedor  = SelccionMantenedor.valueOf(mantenedor);
+                    switch (selccionMantenedor){
+                        case TipoProducto:
+                            adaptaderTipoProducto.Filtro(filtro);
+                            break;
+
+                        case Region:
+                            adapterMantenedorDosAtributos.Filtro(filtro);
+                            break;
+                        case Rol:
+                            adapterMantenedorDosAtributos.Filtro(filtro);
+                            break;
+                        case Interes:
+                            adapterMantenedorDosAtributos.Filtro(filtro);
+                            break;
+                        case HorarioComida:
+                            adapterMantenedorDosAtributos.Filtro(filtro);
+                            break;
+                        case Producto:
+                            adapterProducto.Filtro(filtro);
+                            break;
+                        case Sabor:
+                            adapterMantenedorTresAtributos.Filtro(filtro);
+                            break;
+                        case Marca:
+                            adapterMantenedorTresAtributos.Filtro(filtro);
+
+                            break;
+                        case Nutriente:
+                            adapterMantenedorDosAtributos.Filtro(filtro);
+                            break;
+                        case TipoPersona:
+                            adapterMantenedorDosAtributos.Filtro(filtro);
+                            break;
+                        case Objetivo:
+                            adapterMantenedorDosAtributos.Filtro(filtro);
+                            break;
+                        case Provincia:
+                            adapterMantenedorTresAtributos.Filtro(filtro);
+                            break;
+                        case Comuna:
+                            adaptaderComuna.Filtro(filtro);
+
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                return true;
             }
         });
     }
