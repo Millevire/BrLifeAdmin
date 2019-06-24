@@ -9,6 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorProductoHttpConecction;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -105,6 +106,8 @@ public class CrudProducto  implements Response.Listener<JSONObject>,Response.Err
         progreso.setMessage("Cargando...");
         progreso.show();
 
+        CargarMantenedorProductoHttpConecction.eliminar(id);
+
 
         String url="http://www.brotherwareoficial.com/WebServices/Mantenedor"+
                 mantenedor+".php?tipoconsulta=e&id"+mantenedor+"="
@@ -113,6 +116,8 @@ public class CrudProducto  implements Response.Listener<JSONObject>,Response.Err
 
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
         request.add(jsonObjectRequest);
+
+
     }
 
     public static int getNuevaid() {
@@ -126,9 +131,10 @@ public class CrudProducto  implements Response.Listener<JSONObject>,Response.Err
 
     @Override
     public void onResponse(JSONObject response) {
+        progreso.hide();
+
         if (tipoconsula != null) {
             if (tipoconsula.equals("nuevo") && nuevaid == 0) {
-                progreso.hide();
                 JSONArray json = response.optJSONArray("Id_Producto_Nuevo");
                 try {
                     for (int i = 0; i < json.length(); i++) {

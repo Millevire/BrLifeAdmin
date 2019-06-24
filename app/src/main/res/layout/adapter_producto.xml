@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 <LinearLayout
@@ -13,7 +14,7 @@
     android:layout_marginBottom="10dp"
     android:background="@drawable/estilotarjeta"
     android:elevation="3dp"
-    android:gravity="center"
+
     android:orientation="horizontal">
 
     <ImageView
@@ -27,64 +28,68 @@
         android:layout_weight="1"
         app:srcCompat="@drawable/agua" />
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="240dp"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:gravity="center">
-<LinearLayout
-    android:layout_width="130dp"
-    android:layout_height="90dp"
-    android:layout_marginLeft="10dp"
-    android:orientation="vertical"
-    android:gravity="center|left"
-    >
+        >
 
-    <TextView
-        android:id="@+id/tvNombreProducto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nombre"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/tvSaborProducto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sabor"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/tvMarcaProducto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Marca"
-        android:textSize="14sp" />
-</LinearLayout>
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center|left"
             android:orientation="vertical"
-            android:gravity="center">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/tvNombreProducto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:text="Calorias:"
+                android:text="Nombre"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/tvCaloriasProducto"
+                android:id="@+id/tvSaborProducto"
                 android:layout_width="wrap_content"
-
                 android:layout_height="wrap_content"
-                android:text="Calorias:"
-                android:textColor="@android:color/holo_orange_dark"
+                android:text="Sabor"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvMarcaProducto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Marca"
                 android:textSize="14sp" />
         </LinearLayout>
-    </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="top"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteY="16dp">
+
+            <Button
+                android:id="@+id/btnEliminarProducto"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:drawableStart="@drawable/ic_action_delete" />
+            <Button
+                android:id="@+id/btnEditarProducto"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:drawableStart="@drawable/ic_action_edit" />
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 </LinearLayout>
 </LinearLayout>

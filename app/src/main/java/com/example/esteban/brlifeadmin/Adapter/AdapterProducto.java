@@ -1,22 +1,33 @@
 package com.example.esteban.brlifeadmin.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.esteban.brlifeadmin.AlertDialog.AlertDelete;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Producto;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorProductoHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorProductoNutrienteHttpConecction;
 import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorTresAtributosHttpConecction;
+import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
+import com.example.esteban.brlifeadmin.NuevoProductoActivity;
 import com.example.esteban.brlifeadmin.R;
 import com.example.esteban.brlifeadmin.Enum.SeleccionTipoProducto;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class AdapterProducto extends BaseAdapter {
+public class AdapterProducto extends BaseAdapter implements AlertDelete.FinalizoCuadroDialogo {
     private Context context;
     private ArrayList<Producto> listaProducto =new ArrayList<>();
     private ArrayList<Producto>listaAux=new ArrayList<>();
@@ -51,18 +62,24 @@ public class AdapterProducto extends BaseAdapter {
         return position;
     }
 
+
+
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView==null){
             LayoutInflater layoutInflater=(LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
             convertView = View.inflate(context, R.layout.adapter_producto,null);
 
         }
+
+        final Intent intent =new Intent(context, NuevoProductoActivity.class);
+
         TextView tvNombreProducto=(TextView)convertView.findViewById(R.id.tvNombreProducto);
         TextView tvSaborProducto=(TextView)convertView.findViewById(R.id.tvSaborProducto);
         TextView tvMarcaProducto=(TextView)convertView.findViewById(R.id.tvMarcaProducto);
-        TextView tvCaloriasProducto=(TextView)convertView.findViewById(R.id.tvCaloriasProducto);
         ImageView ivImagen=(ImageView)convertView.findViewById(R.id.ivImagen);
+        Button btnEliminarProducto=convertView.findViewById(R.id.btnEliminarProducto);
+        Button btnEditarProducto=convertView.findViewById(R.id.btnEditarProducto);
 
 
         //Variables id
@@ -139,8 +156,34 @@ public class AdapterProducto extends BaseAdapter {
         tvNombreProducto.setText(listaProducto.get(position).getNombreProducto());
 
 
+        btnEliminarProducto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDelete(context,listaProducto.get(position).getIdProducto(),AdapterProducto.this, SelccionMantenedor.Producto.getSeleccion());
+            }
+        });
 
 
+        btnEditarProducto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                intent.putExtra("accion","editar");
+                Producto producto = CargarMantenedorProductoHttpConecction.listaProducto.get(position);
+                //new CargarBaseDeDatosProductoNutriente(CrudActivity.this, producto.getIdProducto(),                         SelccionMantenedor.ProductoNutriente.getSeleccion());
+                try {
+                    CargarMantenedorProductoNutrienteHttpConecction.buscarMantenedorProductoNutriente(context,SelccionMantenedor.ProductoNutriente.getSeleccion(),producto.getIdProducto());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                intent.putExtra("Producto", (Serializable) producto);
+                context.startActivity(intent);
+            }
+        });
         return convertView;
     }
 
@@ -170,5 +213,10 @@ public class AdapterProducto extends BaseAdapter {
         }
         notifyDataSetChanged();
 
+    }
+
+    @Override
+    public void ResultadoCuadroDialogo(Boolean val) {
+        notifyDataSetChanged();
     }
 }

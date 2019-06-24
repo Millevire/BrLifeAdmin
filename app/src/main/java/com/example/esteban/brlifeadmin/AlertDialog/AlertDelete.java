@@ -19,6 +19,7 @@ import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedo
 import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorTipoProductoHttpConecction;
 import com.example.esteban.brlifeadmin.CrudActivity;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.DialogKeyListener;
+import com.example.esteban.brlifeadmin.CrudProducto;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 import com.example.esteban.brlifeadmin.R;
 
@@ -60,7 +61,7 @@ public class AlertDelete {
 
                     interfaz.ResultadoCuadroDialogo(true);
                 if (mantenedor.equals(SelccionMantenedor.Producto.getSeleccion())) {
-                    //adapterProducto.notifyDataSetChanged();}
+                    new CrudProducto(id,contexto,"eliminar",SelccionMantenedor.Producto.getSeleccion());
                 }else if (mantenedor.equals(SelccionMantenedor.TipoProducto.getSeleccion())){
                     //    public CrudMantenedorTipoProducto(String nombre, boolean variedadsabor, boolean variedadmarca, Context context, String tipoConsulta, int id , String mantenedor){
                     new CrudMantenedorTipoProducto("",false,false,contexto,"eliminar", id,mantenedor);

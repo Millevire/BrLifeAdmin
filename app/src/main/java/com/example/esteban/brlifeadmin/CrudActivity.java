@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyboardShortcutGroup;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -39,6 +41,7 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
 public class CrudActivity extends AppCompatActivity implements  AlertNuevoMantenedorDosAtributos.FinalizoCuadroDialogoAgregar,AlertNuevoMantenedorTresAtributos.FinalizoCuadroDialogoAgregarTrestAtributos, AlertNuevoMantenedorTipoProducto.FinalizoCuadroDialogoAgregar, AlertNuevoMantendorComuna.FinalizoCuadroDialogoAgregar {
  private EditText etBuscar;
@@ -52,6 +55,7 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
  private AdapterComuna adaptaderComuna;
  private AdapterProducto adapterProducto;
  private  String mantenedor;
+
 
     /**
      * AL momento de agregar un nuevo mantenedor especifico hay que agregarlo en el metodo oncreate
@@ -219,28 +223,16 @@ public class CrudActivity extends AppCompatActivity implements  AlertNuevoManten
 
 
         }
-        lvLista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Toast.makeText(CrudActivity.this, ""+position, Toast.LENGTH_SHORT).show();
-            }
-        });
+
+
+
+
+
+
         lvLista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                intent.putExtra("accion","editar");
-                Producto producto = CargarMantenedorProductoHttpConecction.listaProducto.get(position);
-                //new CargarBaseDeDatosProductoNutriente(CrudActivity.this, producto.getIdProducto(),                         SelccionMantenedor.ProductoNutriente.getSeleccion());
-                try {
-                    CargarMantenedorProductoNutrienteHttpConecction.buscarMantenedorProductoNutriente(this,SelccionMantenedor.ProductoNutriente.getSeleccion(),producto.getIdProducto());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
-                intent.putExtra("Producto", (Serializable) producto);
-                startActivity(intent);
                 return false;
             }
         });

@@ -70,7 +70,7 @@ public class CargarMantenedorProductoNutrienteHttpConecction {
         listaProductoNutriente.remove(productoNutrientere);
     }
 
-    public static ArrayList<ProductoNutriente> buscarMantenedorProductoNutriente(AdapterView.OnItemLongClickListener context, String mantenedo, int idProducto) throws IOException, JSONException {
+    public static ArrayList<ProductoNutriente> buscarMantenedorProductoNutriente(Context context, String mantenedo, int idProducto) throws IOException, JSONException {
         listaProductoNutriente = new ArrayList<>();
 
 
