@@ -38,6 +38,15 @@ public class CargarMantenedorTipoProductoHttpConecction {
         }
         return null;
     }
+
+    public static String buscarNombre(int idMantenedor){
+        for(TipoProducto tipoProducto: listaTipoProducto){
+            if (tipoProducto.getIdTipoProducto()==idMantenedor){
+                return tipoProducto.getNombreTipoProducto();
+            }
+        }
+        return null;
+    }
     //Se pasan todos los parametros para actualizarlo en la lista
     public static void editar(int id,String nombre, boolean sabor, boolean marca){
         for(int x = 0; x< listaTipoProducto.size(); ++x){

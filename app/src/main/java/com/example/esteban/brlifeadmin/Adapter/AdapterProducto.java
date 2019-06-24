@@ -14,6 +14,7 @@ import com.example.esteban.brlifeadmin.AlertDialog.AlertDelete;
 import com.example.esteban.brlifeadmin.Clases.Mantenedor.Producto;
 import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorProductoHttpConecction;
 import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorProductoNutrienteHttpConecction;
+import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorTipoProductoHttpConecction;
 import com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo.CargarMantenedorTresAtributosHttpConecction;
 import com.example.esteban.brlifeadmin.Enum.SelccionMantenedor;
 import com.example.esteban.brlifeadmin.NuevoProductoActivity;
@@ -202,9 +203,12 @@ public class AdapterProducto extends BaseAdapter implements AlertDelete.Finalizo
                 }else {
                     String sabor=CargarMantenedorTresAtributosHttpConecction.buscaSabor(producto.getIdSabor());
                     String marca=CargarMantenedorTresAtributosHttpConecction.buscarMarca(producto.getIdMarca());
+                    String tipoProducto= CargarMantenedorTipoProductoHttpConecction.buscarNombre(producto.getFkTipoProducto());
                    if (sabor.toLowerCase(Locale.getDefault()).contains(filtro)){
                        listaProducto.add(producto);
                    }else if(marca.toLowerCase(Locale.getDefault()).contains(filtro)){
+                       listaProducto.add(producto);
+                   }else if(tipoProducto.toLowerCase(Locale.getDefault()).contains(filtro)){
                        listaProducto.add(producto);
                    }
 
