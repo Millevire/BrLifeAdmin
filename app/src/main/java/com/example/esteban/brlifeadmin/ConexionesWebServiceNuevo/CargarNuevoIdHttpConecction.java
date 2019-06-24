@@ -1,10 +1,7 @@
 package com.example.esteban.brlifeadmin.ConexionesWebServiceNuevo;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 
-import com.example.esteban.brlifeadmin.Clases.Mantenedor.Mantenedor;
-import com.example.esteban.brlifeadmin.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,7 +13,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class CargarNuevoIdHttpConecction {
     public static int nuevaid;
@@ -47,14 +43,13 @@ public class CargarNuevoIdHttpConecction {
                     responseSTR.append(linea);
 
                 JSONObject response = new JSONObject(responseSTR.toString());
-                JSONArray json=response.optJSONArray("Id_Producto_Nuevo");
+                JSONArray json=response.optJSONArray("Id_"+mantenedo+"_Nuevo");
 
                 try {
                     for (int i=0; i<json.length(); i++){
                         JSONObject jsonObject=null;
                         jsonObject=json.getJSONObject(i);
                         nuevaid = jsonObject.getInt("nuevoid");
-                        //Toast.makeText(contexto, "" + nuevaid, Toast.LENGTH_SHORT).show();
                     }
 
                 }catch (JSONException e) {

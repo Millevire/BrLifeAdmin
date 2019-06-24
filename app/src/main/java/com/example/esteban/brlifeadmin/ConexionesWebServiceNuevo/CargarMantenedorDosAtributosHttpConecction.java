@@ -38,6 +38,7 @@ public class CargarMantenedorDosAtributosHttpConecction {
             conexion.setReadTimeout(20000);
             conexion.setUseCaches(false);
             if (conexion.getResponseCode() == 200) {
+                progreso.hide();
                 String jsonCompleto = "";
                 InputStream responseBody = conexion.getInputStream();
                 InputStreamReader isr = new InputStreamReader(responseBody, "UTF-8");
@@ -76,7 +77,6 @@ public class CargarMantenedorDosAtributosHttpConecction {
         }finally {
             conexion.disconnect();
         }
-        progreso.hide();
         return listaMantenedors;
     }
 
