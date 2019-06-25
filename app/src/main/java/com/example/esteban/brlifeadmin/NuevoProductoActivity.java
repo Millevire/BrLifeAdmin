@@ -116,8 +116,8 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
 
 
         //Cargar lista con productonutriente
-        adapterProductoNutriente=new AdapterProductoNutriente(this, CargarMantenedorProductoNutrienteHttpConecction.getListaProductoNutriente());
-        lvProductoNutriente.setAdapter(adapterProductoNutriente);
+        //adapterProductoNutriente=new AdapterProductoNutriente(this, CargarMantenedorProductoNutrienteHttpConecction.getListaProductoNutriente());
+        //lvProductoNutriente.setAdapter(adapterProductoNutriente);
 
 
 
@@ -309,6 +309,8 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
                         //CargarBaseDeDatosProductoNutriente.limpiarlista();
                         adapterProductoNutriente.notifyDataSetChanged();
                     }
+                    CargarMantenedorProductoNutrienteHttpConecction.limpiarlista();
+                    adapterProductoNutriente.notifyDataSetChanged();
                     finish();
                 }
 
