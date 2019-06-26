@@ -274,7 +274,7 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
                     new CrudProducto(id,NuevoProductoActivity.this,"eliminar",SelccionMantenedor.Producto.getSeleccion());
                 }
                 CargarMantenedorProductoNutrienteHttpConecction.limpiarlista();
-                adapterProductoNutriente.notifyDataSetChanged();
+                //adapterProductoNutriente.notifyDataSetChanged();
                 finish();
             }
         });
