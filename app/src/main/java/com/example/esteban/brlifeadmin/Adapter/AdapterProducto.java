@@ -135,6 +135,15 @@ public class AdapterProducto extends BaseAdapter implements AlertDelete.Finalizo
             case Caramelo:
                 ivImagen.setImageResource(R.drawable.caramelo);
                 break;
+            case Chocolate:
+                ivImagen.setImageResource(R.drawable.chocolate);
+                break;
+            case Te:
+                ivImagen.setImageResource(R.drawable.te);
+                break;
+            case Pan:
+                ivImagen.setImageResource(R.drawable.pan);
+                break;
         }
 
 
