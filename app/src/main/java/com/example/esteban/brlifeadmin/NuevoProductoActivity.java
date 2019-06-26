@@ -111,13 +111,14 @@ public class NuevoProductoActivity extends AppCompatActivity implements AlertMan
             id = CargarNuevoIdHttpConecction.getNuevaid();
             Toast.makeText(this, "Nuevo Id: "+id , Toast.LENGTH_SHORT).show();
             btnAgregarProducto.setText("Agregar");
+            adapterProductoNutriente=new AdapterProductoNutriente(this, CargarMantenedorProductoNutrienteHttpConecction.getListaProductoNutriente());
+            lvProductoNutriente.setAdapter(adapterProductoNutriente);
 
         }
 
 
         //Cargar lista con productonutriente
-        //adapterProductoNutriente=new AdapterProductoNutriente(this, CargarMantenedorProductoNutrienteHttpConecction.getListaProductoNutriente());
-        //lvProductoNutriente.setAdapter(adapterProductoNutriente);
+
 
 
 
