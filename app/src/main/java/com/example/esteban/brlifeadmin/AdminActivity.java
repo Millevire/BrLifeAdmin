@@ -40,6 +40,19 @@ public class AdminActivity extends AppCompatActivity {
         btnObjetivo=(Button)findViewById(R.id.btnObjetivo);
         final Intent intent =new Intent(this,CrudActivity.class);
 
+        btnTipoProducto.setEnabled(true);
+        btnRegiones.setEnabled(true);
+        btnRol.setEnabled(true);
+        btnInteres.setEnabled(true);
+        btnHorarioComida.setEnabled(true);
+        btnProducto.setEnabled(true);
+        btnSabor.setEnabled(true);
+        btnMarca.setEnabled(true);
+        btnNutriente.setEnabled(true);
+        btnProvincia.setEnabled(true);
+        btnComuna.setEnabled(true);
+        btnTipoPersona.setEnabled(true);
+        btnObjetivo.setEnabled(true);
 
         //Para que funcione el HttpConexion
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -48,7 +61,7 @@ public class AdminActivity extends AppCompatActivity {
         btnTipoProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                btnTipoProducto.setEnabled(false);
                 intent.putExtra("mantenedor", SelccionMantenedor.TipoProducto.getSeleccion());
                 startActivity(intent);
             }
@@ -58,6 +71,7 @@ public class AdminActivity extends AppCompatActivity {
         btnRegiones.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnRegiones.setEnabled(false);
                 intent.putExtra("mantenedor",SelccionMantenedor.Region.getSeleccion());
                 startActivity(intent);
             }
@@ -66,6 +80,7 @@ public class AdminActivity extends AppCompatActivity {
         btnRol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnRol.setEnabled(false);
                 intent.putExtra("mantenedor",SelccionMantenedor.Rol.getSeleccion());
                 startActivity(intent);
             }
@@ -74,6 +89,7 @@ public class AdminActivity extends AppCompatActivity {
         btnInteres.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnInteres.setEnabled(false);
                 intent.putExtra("mantenedor",SelccionMantenedor.Interes.getSeleccion());
                 startActivity(intent);
             }
@@ -81,6 +97,7 @@ public class AdminActivity extends AppCompatActivity {
         btnHorarioComida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnHorarioComida.setEnabled(false);
                 intent.putExtra("mantenedor",SelccionMantenedor.HorarioComida.getSeleccion());
                 startActivity(intent);
             }
@@ -88,6 +105,7 @@ public class AdminActivity extends AppCompatActivity {
         btnProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnProducto.setEnabled(false);
                 try {
                     CargarMantenedorProductoHttpConecction.buscarMantenedorProducto(AdminActivity.this,SelccionMantenedor.Producto.getSeleccion());
                 } catch (IOException e) {
@@ -138,6 +156,7 @@ public class AdminActivity extends AppCompatActivity {
         btnSabor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnSabor.setEnabled(false);
                 intent.putExtra("mantenedor",SelccionMantenedor.Sabor.getSeleccion());
                 startActivity(intent);
             }
@@ -145,6 +164,7 @@ public class AdminActivity extends AppCompatActivity {
         btnMarca.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnMarca.setEnabled(false);
                 intent.putExtra("mantenedor",SelccionMantenedor.Marca.getSeleccion());
                 startActivity(intent);
             }
@@ -152,6 +172,7 @@ public class AdminActivity extends AppCompatActivity {
         btnNutriente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnNutriente.setEnabled(false);
                 intent.putExtra("mantenedor",SelccionMantenedor.Nutriente.getSeleccion());
                 startActivity(intent);
             }
@@ -159,6 +180,7 @@ public class AdminActivity extends AppCompatActivity {
         btnProvincia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnProvincia.setEnabled(false);
                 intent.putExtra("mantenedor",SelccionMantenedor.Provincia.getSeleccion());
                 startActivity(intent);
             }
@@ -167,6 +189,7 @@ public class AdminActivity extends AppCompatActivity {
         btnComuna.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnComuna.setEnabled(false);
                 intent.putExtra("mantenedor",SelccionMantenedor.Comuna.getSeleccion());
                 startActivity(intent);
             }
@@ -175,6 +198,7 @@ public class AdminActivity extends AppCompatActivity {
         btnTipoPersona.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnTipoPersona.setEnabled(false);
                 intent.putExtra("mantenedor",SelccionMantenedor.TipoPersona.getSeleccion());
                 startActivity(intent);
             }
@@ -182,9 +206,28 @@ public class AdminActivity extends AppCompatActivity {
         btnObjetivo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnObjetivo.setEnabled(false);
                 intent.putExtra("mantenedor",SelccionMantenedor.Objetivo.getSeleccion());
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        btnTipoProducto.setEnabled(true);
+        btnRegiones.setEnabled(true);
+        btnRol.setEnabled(true);
+        btnInteres.setEnabled(true);
+        btnHorarioComida.setEnabled(true);
+        btnProducto.setEnabled(true);
+        btnSabor.setEnabled(true);
+        btnMarca.setEnabled(true);
+        btnNutriente.setEnabled(true);
+        btnProvincia.setEnabled(true);
+        btnComuna.setEnabled(true);
+        btnTipoPersona.setEnabled(true);
+        btnObjetivo.setEnabled(true);
     }
 }
